@@ -23,11 +23,8 @@ export class CanvasDrawer {
     }
 
     public scaleCanvas = () => {
-        this.canvas.style.width = '100%';
-        this.canvas.style.height = '100%';
-
-        this.canvas.width = this.canvas.offsetWidth;
-        this.canvas.height = this.canvas.offsetHeight;
+        this.canvas.width = this.imageSizePx;
+        this.canvas.height = this.imageSizePx;
 
         const scale = this.canvas.width / this.imageSizePx
         console.log(`Canvas scale: ${scale}`)
