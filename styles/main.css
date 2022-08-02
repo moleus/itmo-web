@@ -4,7 +4,7 @@
     height: 100vh;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 600px) {
     .page {
         grid-template-columns: 1fr;
         grid-template-rows: 0.1fr 1fr 0.5fr 1fr;
@@ -16,7 +16,7 @@
     }
 }
 
-@media (min-width: 450px) {
+@media (min-width: 600px) {
     .page {
         grid-template-columns: auto 1fr;
         grid-template-rows: 0.1fr 1fr 2fr;
@@ -27,7 +27,7 @@
     }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
     .page {
         grid-template-columns: auto 1fr 1fr;
         grid-template-rows: 0.1fr 1fr 1fr 1fr;
@@ -57,6 +57,7 @@
 
 #canvas-container {
     grid-area: axis;
+    place-self: center;
     aspect-ratio: 1/1;
 }
 
@@ -65,13 +66,17 @@ svg > .figure:hover {
 }
 
 #axis-canvas {
-    /*width: 150px;*/
-    /*height: 150px;*/
+    width: 200px;
+    height: 200px;
     /*background: cornflowerblue;*/
 }
 
 .resultsTable {
     grid-area: resultsTable;
+}
+
+#result-table {
+
 }
 
 .inputValues {
