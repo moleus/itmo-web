@@ -2,6 +2,12 @@ import {FormManager} from "./FormManager.js";
 import {Vector} from "./Shapes.js";
 import {CanvasDrawer} from "./Drawer.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
+import {FormValidator} from "./FormsValidator.js";
+
+const X_VALUES = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+const Y_MIN = -3
+const Y_MAX = 5;
+const R_VALUES = [1, 1.5, 2, 2.5, 3];
 
 export class FormProcessor {
     private readonly canvasDrawer: CanvasDrawer;
@@ -18,7 +24,13 @@ export class FormProcessor {
         const paramX = FormManager.getValueX()
         const paramY = FormManager.getValueY()
         const paramR = FormManager.getValueR()
-        // TODO: check that validation hook triggers
+
+        if (!(FormValidator.isInList(paramX, X_VALUES) &&
+            FormValidator.isInRange(paramY, Y_MIN, Y_MAX) &&
+            FormValidator.isInList(paramR, R_VALUES))) {
+            console.error("Some value is missing!")
+            return
+        }
         this.sendSubmitRequest(paramX, paramY, paramR)
     }
 
