@@ -1,16 +1,12 @@
 <?php
 
 require_once 'vendor/autoload.php';
-require_once 'get_results.php';
 
 session_start();
 if (!isset($_SESSION['hit_results'])) {
     $_SESSION['hit_results'] = [];
 }
 
-//FIXME: lose of data on page reload
-
-//TODO: load table on page startup
 //TODO: return error code if params are invalid
 //TODO: check float conversion (replace , with .)
 //TODO: check numeric
