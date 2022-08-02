@@ -4,12 +4,7 @@ import {ElementsContext} from "./common.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
 import {FormProcessor} from "./FormProcessor.js";
 
-{
-    const X_VALUES = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
-    const Y_MIN = -3
-    const Y_MAX = 5;
-    const R_VALUES = [1, 1.5, 2, 2.5, 3];
-
+window.onload = () => {
     const imageSizePx = 300
     const numberOfIntervals = 3
     const canvas = ElementsContext.canvas;
@@ -25,14 +20,12 @@ import {FormProcessor} from "./FormProcessor.js";
     //TODO: bind graph click on submit click
 
     submitProcessor.initTable()
-
-    const inputForm = ElementsContext.inputForm
-    const inputX = ElementsContext.inputX
-    const inputY = ElementsContext.inputY
-
-    ValidationHooks.bindValidationHook(inputX, (value) => FormValidator.isInList(value, X_VALUES))
-    ValidationHooks.bindValidationHook(inputY, (value) => FormValidator.isInRange(value, Y_MIN, Y_MAX))
-    ValidationHooks.bindSubmitHook(inputForm, (value) => FormValidator.isInList(value, R_VALUES))
-
-
 }
+
+$(".numeric-input").on('keypress', function (event) {
+    const numericSymbol = /[\d.,\-+]/
+    let isNumeric = numericSymbol.test(event.key);
+    if (!isNumeric) {
+        event.preventDefault();
+    }
+})
