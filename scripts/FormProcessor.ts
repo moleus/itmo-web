@@ -36,8 +36,8 @@ export class FormProcessor {
 
     public sendSubmitRequest = (x: number, y: number, r: number) => {
         let formData = new FormData();
-        formData.append("paramX", x.toString());
-        formData.append("paramY", y.toString());
+        formData.append("paramX", x.toFixed(2));
+        formData.append("paramY", y.toFixed(2));
         formData.append("paramR", r.toString());
         this.updateTable("php/main.php", formData)
     }
