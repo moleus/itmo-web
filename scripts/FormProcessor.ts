@@ -52,9 +52,6 @@ export class FormProcessor {
     }
 
     private updateTable = (scriptName: string, body?: BodyInit) => {
-        //TODO: fill table and graph on page reload
-        //TODO: reuse POST request code
-        // redraw all points on each request
         fetch(scriptName, {
             method: 'POST',
             body: body,
@@ -72,5 +69,11 @@ export class FormProcessor {
                     this.canvasDrawer.drawPoint(norm_coords.x, norm_coords.y, res)
                 })
             });
+        FormProcessor.scrollToBottom()
+    }
+
+    private static scrollToBottom() {
+        const tableContainer = $('#tableContainer')
+        tableContainer.animate({scrollTop: tableContainer.prop('scrollHeight')});
     }
 }
