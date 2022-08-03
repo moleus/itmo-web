@@ -12,6 +12,8 @@ const R_VALUES = [1, 1.5, 2, 2.5, 3];
 export class FormProcessor {
     private readonly canvasDrawer: CanvasDrawer;
     private coordinateNormalizer: CoordinateNormalizer;
+    private scrollTimer: NodeJS.Timeout;
+    private lastScrollFireTime: number = 0;
 
     constructor(
         coordinateNormalizer: CoordinateNormalizer,
@@ -69,11 +71,29 @@ export class FormProcessor {
                     this.canvasDrawer.drawPoint(norm_coords.x, norm_coords.y, res)
                 })
             });
-        FormProcessor.scrollToBottom()
+        this.scrollToBottom()
     }
 
-    private static scrollToBottom() {
+    private scrollToBottom = () => {
+        let minScrollTime = 500
+        let now = new Date().getTime()
+
+        if (!this.scrollTimer) {
+            if (now - this.lastScrollFireTime > (3 * minScrollTime)) {
+                FormProcessor.processScroll()  /* immediate scroll */
+                this.lastScrollFireTime = now;
+            }
+            this.scrollTimer = setTimeout(() => {
+                this.scrollTimer = undefined;
+                this.lastScrollFireTime = new Date().getTime()
+                FormProcessor.processScroll()  /* delayed scroll */
+            }, minScrollTime);
+        }
+    }
+
+    private static processScroll() {
+        const scrollAnimationMs = 400
         const tableContainer = $('#tableContainer')
-        tableContainer.animate({scrollTop: tableContainer.prop('scrollHeight')});
+        tableContainer.animate({scrollTop: tableContainer.prop('scrollHeight')}, scrollAnimationMs);
     }
 }
