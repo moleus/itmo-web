@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="styles/main.css"/>
     <link rel="stylesheet" type="text/css" href="styles/buttons.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/table.css"/>
     <meta charset="UTF-8">
     <title>Main page</title>
 </head>
@@ -58,21 +59,21 @@
     </div>
 
     <section class="grid-area resultsTable">
-        <table id="result-table">
-            <thead>
-            <tr>
-                <th class="coords-col">X</th>
-                <th class="coords-col">Y</th>
-                <th class="coords-col">R</th>
-                <th class="result-col">Hit result</th>
-                <th class="current_time-col">Current time</th>
-                <th class="exec_time-col">Execution time</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
+        <div id="tableContainer">
+            <table id="result-table">
+                <thead>
+                <tr>
+                    <th class="coords-col">X</th>
+                    <th class="coords-col">Y</th>
+                    <th class="coords-col">R</th>
+                    <th class="result-col">Hit result</th>
+                    <th class="current_time-col">Current time</th>
+                    <th class="exec_time-col">Execution time</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </section>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

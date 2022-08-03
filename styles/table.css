@@ -1,0 +1,35 @@
+#tableContainer {
+    height: 100%;
+    overflow: scroll;
+}
+
+table {
+    width: calc(100% - 10px);
+    border-collapse: collapse;
+}
+
+thead {
+    color: white;
+    background: #3cb6b2;
+}
+
+thead th {
+   position: sticky;
+   background: #3cb6b2;
+   top: 0;
+}
+
+th, td {
+    text-align: center;
+    padding: 5px 0;
+    font-size: 20px;
+}
+
+tbody tr:nth-child(even) {
+    background: #ECF0F1;
+}
+
+tbody tr:hover {
+    background: #BDC3C7;
+    color: #FFFFFF;
+}
