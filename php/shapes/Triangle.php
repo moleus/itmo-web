@@ -5,10 +5,10 @@
 
 class Triangle extends Shape
 {
-    private int $a;
-    private int $b;
+    private float $a;
+    private float $b;
 
-    public function __construct(Quadrant $quadrant, int $a, int $b)
+    public function __construct(Quadrant $quadrant, float $a, float $b)
     {
         parent::__construct($quadrant);
         $this->a = $a;

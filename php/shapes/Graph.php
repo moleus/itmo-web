@@ -13,8 +13,8 @@ class Graph
     {
         return sizeof(
                 array_filter($this->shapes,
-                    function (Shape $shape) use ($y, $x) {
-                        $shape->isInShape($x, $y);
+                    function (Shape $shape) use ($y, $x): bool {
+                        return $shape->isInShape($x, $y);
                     })
             ) > 0;
     }

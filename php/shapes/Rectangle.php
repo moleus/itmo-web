@@ -5,10 +5,10 @@
 
 class Rectangle extends Shape
 {
-    private int $width;
-    private int $height;
+    private float $width;
+    private float $height;
 
-    public function __construct(Quadrant $quadrant, int $width, int $height)
+    public function __construct(Quadrant $quadrant, float $width, float $height)
     {
         parent::__construct($quadrant);
         $this->width = $width;
