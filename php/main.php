@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 session_start();
 if (!isset($_SESSION['hit_results'])) {

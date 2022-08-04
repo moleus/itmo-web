@@ -1,0 +1,16 @@
+{
+  "name": "moleus/web-itmo-lab1",
+  "readme": "./README.md",
+  "license": "MIT",
+  "autoload": {
+    "files": [
+      "php/shapes/Quadrant.php",
+      "php/shapes/Shape.php",
+      "php/shapes/Circle.php",
+      "php/shapes/Triangle.php",
+      "php/shapes/Rectangle.php",
+      "php/shapes/Graph.php",
+      "php/validation.php"
+    ]
+  }
+}
