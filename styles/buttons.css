@@ -1,0 +1,50 @@
+button {
+    margin: 20px;
+    letter-spacing: 0.1em;
+    padding: 10px 25px;
+}
+
+.backlight {
+    color: #000;
+    border-radius: 5px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    transition: all 0.3s ease;
+    box-shadow: inset 2px 2px 2px  0 rgba(255, 255, 255, .5),
+                      7px 7px 20px 0 rgba(0, 0, 0, .1),
+                      4px 4px 5px  0 rgba(0, 0, 0, .1);
+    outline: none;
+    border: none;
+}
+
+.backlight:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    direction: rtl;
+    /*z-index: -1;*/
+    background: #aaaaaa44;
+    box-shadow: -7px -7px 20px 0 #fff9,
+                -4px -4px  5px 0 #fff9,
+                7px   7px 20px 0 #0002,
+                4px   4px  5px 0 #0001;
+    transition: all 0.3s ease;
+}
+
+.backlight:hover {
+    top: 2px;
+    color: #006cff;
+}
+
+.backlight:hover:after {
+    left: auto;
+    right: 0;
+    width: 100%;
+}

@@ -1,0 +1,8 @@
+.*
+!.gitignore
+
+node_modules/
+**/*lock*
+**/vendor/
+*.phar
+*.js*

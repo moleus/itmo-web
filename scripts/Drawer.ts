@@ -1,0 +1,50 @@
+'use strict';
+
+export enum DotColor {
+    miss = 'red',
+    hit = 'green'
+}
+
+export class CanvasDrawer {
+    private readonly canvas: HTMLCanvasElement;
+    private ctx: CanvasRenderingContext2D;
+    private readonly image: HTMLImageElement;
+    private readonly imageSizePx: number;
+
+    constructor(canvas: HTMLCanvasElement, imageSizePx: number) {
+        this.canvas = canvas;
+        this.imageSizePx = imageSizePx;
+        this.ctx = canvas.getContext('2d');
+        this.image = new Image(this.canvas.offsetWidth, this.canvas.offsetHeight);
+        this.image.onload = () => {
+            this.ctx.drawImage(this.image, 0, 0)
+        }
+        this.image.src = '../images/graph.svg';
+    }
+
+    public scaleCanvas = () => {
+        this.canvas.style.width = '100%';
+        this.canvas.style.height = '100%';
+
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
+
+        const scale = this.canvas.width / this.imageSizePx
+        console.log(`Canvas scale: ${scale}`)
+        console.log(`Canvas width: ${this.canvas.width}`)
+        this.ctx.scale(scale, scale)
+    }
+
+    public drawPoint(x: number, y: number, isValid: boolean) {
+        this.ctx.fillStyle = isValid ? DotColor.hit.toString() : DotColor.miss.toString()
+        let dot = new Path2D();
+        dot.arc(x, y, 3, 0, 2 * Math.PI)
+        this.ctx.fill(dot);
+    }
+
+    public clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
+        this.ctx.drawImage(this.image, 0, 0)
+    }
+}
+

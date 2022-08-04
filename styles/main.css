@@ -1,0 +1,142 @@
+.page {
+    display: grid;
+    grid-gap: 1em;
+    height: 100vh;
+}
+
+@media (max-width: 450px) {
+    .page {
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.1fr 1fr 0.5fr 1fr;
+        grid-template-areas:
+        "heading"
+        "axis"
+        "inputValues"
+        "resultsTable";
+    }
+}
+
+@media (min-width: 450px) {
+    .page {
+        grid-template-columns: auto 1fr;
+        grid-template-rows: 0.1fr 1fr 2fr;
+        grid-template-areas:
+        "heading heading"
+        "axis inputValues"
+        "resultsTable resultsTable";
+    }
+}
+
+@media (min-width: 900px) {
+    .page {
+        grid-template-columns: auto 1fr 1fr;
+        grid-template-rows: 0.1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "heading     heading      heading"
+        "axis        resultsTable resultsTable"
+        "inputValues resultsTable resultsTable"
+        ".           resultsTable resultsTable";
+    }
+}
+
+.heading {
+    grid-area: heading;
+    display: flex;
+    justify-content: space-between;
+}
+
+.centered {
+    align-self: center;
+}
+
+.grid-area {
+    padding: 1em;
+    /*border: 1px  outset;*/
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.35);
+}
+
+#canvas-container {
+    grid-area: axis;
+    aspect-ratio: 1/1;
+}
+
+svg > .figure:hover {
+    fill: rgba(255, 00, 255, 0.6);
+}
+
+#axis-canvas {
+    /*width: 150px;*/
+    /*height: 150px;*/
+    /*background: cornflowerblue;*/
+}
+
+.resultsTable {
+    grid-area: resultsTable;
+}
+
+.inputValues {
+    grid-area: inputValues;
+    display: grid;
+    background: aquamarine;
+}
+
+/*.input-field {*/
+/*    justify-content: space-between;*/
+/*}*/
+
+input:invalid {
+    background-color: ivory;
+    border: none;
+    outline: 2px solid red;
+    border-radius: 5px;
+}
+
+#r-container {
+    grid-area: r-container;
+    display: flex;
+}
+
+.input-label {
+    justify-self: center;
+    align-self: center;
+}
+
+.pretty-checkboxes {
+    justify-content: space-between;
+}
+
+.pretty-checkboxes label {
+    margin: 4px;
+    background-color: #dafccb;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    overflow: hidden;
+    float: left;
+    line-height: 2em;
+    width: 2.5em;
+    height: 2em;
+}
+
+.pretty-checkboxes label span {
+    text-align: center;
+    padding: 1px 0;
+    display: block;
+}
+
+.pretty-checkboxes label input {
+    position: absolute;
+    display: none;
+    color: #fff !important;
+}
+
+/* selects all of the text within the input element and changes the color of the text */
+/*.checkboxes label input + span {*/
+/*    color: #fff;*/
+/*}*/
+
+/* This will declare how a selected input will look giving generic properties */
+.pretty-checkboxes input:checked + span {
+    color: #ffffff;
+    background-color: #3cb6b2;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}

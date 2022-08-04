@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="styles/main.css"/>
+    <link rel="stylesheet" type="text/css" href="styles/buttons.css"/>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+</head>
+<body>
+<main class="page">
+    <section class="grid-area heading">
+        <span class="centered">FIO</span>
+        <span class="centered">3114</span>
+    </section>
+    <section id="canvas-container" class="grid-area">
+        <canvas id="axis-canvas"></canvas>
+        <!--        <figure-axis></figure-axis>-->
+        <!--        <object id="dynamic-figures" data="images/graph.svg" type="image/svg+xml"></object>-->
+    </section>
+
+    <div class="grid-area inputValues">
+        <form id="input-form" novalidate>
+            <div id="r-container">
+                <span class="input-label">R:</span>
+                <section class="pretty-checkboxes" id="form-checkboxes">
+                    <label class="backlight"><input name="paramR" type="checkbox" value="1"
+                                                    checked><span>1</span></label>
+                    <label class="backlight"><input name="paramR" type="checkbox" value="1.5"><span>1.5</span></label>
+                    <label class="backlight"><input name="paramR" type="checkbox" value="2"><span>2</span></label>
+                    <label class="backlight"><input name="paramR" type="checkbox" value="2.5"><span>2.5</span></label>
+                    <label class="backlight"><input name="paramR" type="checkbox" value="3"><span>3</span></label>
+                </section>
+            </div>
+            <div id="x-container">
+                <label class="input-label" for="x-input">X:</label>
+                <select class="input-field" id="x-input" name="paramX" required="required">
+                    <option value="-5">-5</option>
+                    <option value="-4">-4</option>
+                    <option value="-3">-3</option>
+                    <option value="-2">-2</option>
+                    <option value="-1">-1</option>
+                    <option selected value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div id="y-container">
+                <label class="input-label" for="y-input">Y:</label>
+                <input autocomplete="off" class="input-field numeric-input" id="y-input"
+                       max="5" maxlength="5" min="-3"
+                       name="paramY" placeholder="-3..5" required="required" step="0.1"
+                       type="number" value="0">
+            </div>
+            <div class="submit-container">
+                <button class="backlight" id="submit" type="submit">Submit</button>
+                <button class="backlight" id="reset" type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <section class="grid-area resultsTable">
+        <table id="result-table">
+            <thead>
+            <tr>
+                <th class="coords-col">X</th>
+                <th class="coords-col">Y</th>
+                <th class="coords-col">R</th>
+                <th class="result-col">Hit result</th>
+                <th class="current_time-col">Current time</th>
+                <th class="exec_time-col">Execution time</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </section>
+</main>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="module" src="scripts/main.js"></script>
+<!--<script type="module" src="templates/FigureAxis.js"></script>-->
+</body>
+</html>
