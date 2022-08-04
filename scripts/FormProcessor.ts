@@ -58,9 +58,12 @@ export class FormProcessor {
             method: 'POST',
             body: body,
         })
-            .then((response) => response.text())
-            .then(res => {
-                $('#result-table tbody').html(res)
+            .then((response) => {
+                if (!response.ok) throw Error()
+                return response.text()
+            })
+            .then(resp_text => {
+                $('#result-table tbody').html(resp_text)
                 const rows = $('#result-table tbody tr')
                 rows.each((index, _) => {
                     const x: number = +$('.table-x_val')[index].innerText
@@ -70,7 +73,7 @@ export class FormProcessor {
                     const norm_coords = this.coordinateNormalizer.fromUnitsToPx(new Vector(x, y), r);
                     this.canvasDrawer.drawPoint(norm_coords.x, norm_coords.y, res)
                 })
-            });
+            }).catch(() => console.error("Invalid data sent"));
         this.scrollToBottom()
     }
 

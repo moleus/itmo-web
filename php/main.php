@@ -7,30 +7,45 @@ if (!isset($_SESSION['hit_results'])) {
     $_SESSION['hit_results'] = [];
 }
 
-//TODO: return error code if params are invalid
-//TODO: check float conversion (replace , with .)
-//TODO: check numeric
+function check_param(mixed $param): bool
+{
+    return is_numeric($param);
+}
 
-$x = floatval($_POST['paramX']);
-$y = floatval($_POST['paramY']);
-$unitR = floatval($_POST['paramR']);
+function main(): void
+{
+    $x_param = $_POST['paramX'];
+    $y_param = $_POST['paramY'];
+    $unitR_param = $_POST['paramR'];
 
-$validator = new Validator();
-$isValid = $validator->isPointInShape($x, $y, $unitR) ? "true" : "false";
+    if (!(check_param($x_param) && check_param($y_param) && check_param($unitR_param))) {
+        http_response_code(400);
+        echo "Invalid parameters";
+        return;
+    }
 
-date_default_timezone_set('Europe/Moscow');
-$currentTime = date('H:i:s', time());
-$executionTime = round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 5);
+    $x = floatval($x_param);
+    $y = floatval($y_param);
+    $unitR = floatval($unitR_param);
 
-$data = [
-    "x" => $x,
-    "y" => $y,
-    "r" => $unitR,
-    "inShape" => $isValid,
-    "currentTime" => $currentTime,
-    "executionTime" => $executionTime
-];
+    $validator = new Validator();
+    $isValid = $validator->isPointInShape($x, $y, $unitR) ? "true" : "false";
 
-$_SESSION['hit_results'][] = $data;
+    date_default_timezone_set('Europe/Moscow');
+    $currentTime = date('H:i:s', time());
+    $executionTime = round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 5);
 
-include 'get_results.php';
+    $data = [
+        "x" => $x,
+        "y" => $y,
+        "r" => $unitR,
+        "inShape" => $isValid,
+        "currentTime" => $currentTime,
+        "executionTime" => $executionTime
+    ];
+
+    $_SESSION['hit_results'][] = $data;
+    include 'get_results.php';
+}
+
+main();
