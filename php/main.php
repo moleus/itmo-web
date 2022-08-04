@@ -18,6 +18,7 @@ $unitR = floatval($_POST['paramR']);
 $validator = new Validator();
 $isValid = $validator->isPointInShape($x, $y, $unitR) ? "true" : "false";
 
+date_default_timezone_set('Europe/Moscow');
 $currentTime = date('H:i:s', time());
 $executionTime = round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 5);
 
