@@ -5,5 +5,6 @@ export const ElementsContext = {
     checkboxesR: document.getElementsByName('paramR') as NodeListOf<HTMLInputElement>,
     submitButton: document.getElementById('submit') as HTMLButtonElement,
     resetButton: document.getElementById('reset') as HTMLButtonElement,
-    inputForm: document.getElementById('input-form') as HTMLFormElement
+    inputForm: document.getElementById('input-form') as HTMLFormElement,
+    dataTable: document.getElementById('result-table') as HTMLTableElement
 }

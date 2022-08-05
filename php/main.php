@@ -1,8 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 require_once '../vendor/autoload.php';
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 if (!isset($_SESSION['hit_results'])) {
     $_SESSION['hit_results'] = [];
 }
@@ -17,8 +19,9 @@ function main(): void
     $x_param = $_POST['paramX'];
     $y_param = $_POST['paramY'];
     $unitR_param = $_POST['paramR'];
+    $data_version = $_POST['data_version'];
 
-    if (!(check_param($x_param) && check_param($y_param) && check_param($unitR_param))) {
+    if (!(check_param($x_param) && check_param($y_param) && check_param($unitR_param) && check_param($data_version))) {
         http_response_code(400);
         echo "Invalid parameters";
         return;
@@ -45,7 +48,7 @@ function main(): void
     ];
 
     $_SESSION['hit_results'][] = $data;
-    include 'get_results.php';
+    echo_results(intval($data_version));
 }
 
 main();

@@ -3,6 +3,7 @@ import {Vector} from "./Shapes.js";
 import {CanvasDrawer} from "./Drawer.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
 import {FormValidator} from "./FormsValidator.js";
+import {ElementsContext} from "./common.js";
 
 const X_VALUES = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
 const Y_MIN = -3
@@ -38,14 +39,18 @@ export class FormProcessor {
 
     public sendSubmitRequest = (x: number, y: number, r: number) => {
         let formData = new FormData();
+        const next_row_index = FormProcessor.countRows()
+        console.log(`Rows count: ${next_row_index}`)
         formData.append("paramX", x.toFixed(2));
         formData.append("paramY", y.toFixed(2));
         formData.append("paramR", r.toString());
+        formData.append("data_version", next_row_index.toString());
         this.updateTable("php/main.php", formData)
     }
 
     public resetTable = () => {
         this.updateTable("php/reset_session.php")
+        $("#result-table tbody tr").remove();
         this.canvasDrawer.clearCanvas()
     }
 
@@ -63,19 +68,24 @@ export class FormProcessor {
                 return response.text()
             })
             .then(resp_text => {
-                $('#result-table tbody').html(resp_text)
-                const rows = $('#result-table tbody tr')
-                rows.each((index, _) => {
-                    const x: number = +$('.table-x_val')[index].innerText
-                    const y: number = +$('.table-y_val')[index].innerText
-                    const r: number = +$('.table-r_val')[index].innerText
-                    const res: boolean = $('.table-hit_res')[index].innerText == "true"
+                const next_row_idx = FormProcessor.countRows()
+                console.log(`Next Rows count: ${next_row_idx}`)
+                $('#result-table tbody').append(resp_text)
+                const total_rows_count = FormProcessor.countRows()
+                console.log(`Total Rows count: ${total_rows_count}`)
+                for (let i = next_row_idx; i < total_rows_count; i++) {
+                    const x: number = +$('.table-x_val')[i].innerText
+                    const y: number = +$('.table-y_val')[i].innerText
+                    const r: number = +$('.table-r_val')[i].innerText
+                    const res: boolean = $('.table-hit_res')[i].innerText == "true"
                     const norm_coords = this.coordinateNormalizer.fromUnitsToPx(new Vector(x, y), r);
                     this.canvasDrawer.drawPoint(norm_coords.x, norm_coords.y, res)
-                })
+                }
             }).catch(() => console.error("Invalid data sent"));
         this.scrollToBottom()
     }
+
+    private static countRows = (): number => ElementsContext.dataTable.rows.length - 1;
 
     private scrollToBottom = () => {
         let minScrollTime = 500

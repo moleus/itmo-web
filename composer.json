@@ -10,7 +10,8 @@
       "php/shapes/Triangle.php",
       "php/shapes/Rectangle.php",
       "php/shapes/Graph.php",
-      "php/validation.php"
+      "php/validation.php",
+      "php/echo_results.php"
     ]
   }
 }
