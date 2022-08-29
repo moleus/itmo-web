@@ -40,7 +40,6 @@ export class FormProcessor {
     public sendSubmitRequest = (x: number, y: number, r: number) => {
         let formData = new FormData();
         const next_row_index = FormProcessor.countRows()
-        console.log(`Rows count: ${next_row_index}`)
         formData.append("paramX", x.toFixed(2));
         formData.append("paramY", y.toFixed(2));
         formData.append("paramR", r.toString());
@@ -69,10 +68,8 @@ export class FormProcessor {
             })
             .then(resp_text => {
                 const next_row_idx = FormProcessor.countRows()
-                console.log(`Next Rows count: ${next_row_idx}`)
                 $('#result-table tbody').append(resp_text)
                 const total_rows_count = FormProcessor.countRows()
-                console.log(`Total Rows count: ${total_rows_count}`)
                 for (let i = next_row_idx; i < total_rows_count; i++) {
                     const x: number = +$('.table-x_val')[i].innerText
                     const y: number = +$('.table-y_val')[i].innerText
