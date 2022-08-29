@@ -27,8 +27,12 @@ import {Axis3d} from "./axis3d.js";
     ToggleCanvasHook.init()
 })();
 
+ElementsContext.inputY.addEventListener('input' , function() {
+    if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength)
+})
+
 $(".numeric-input").on('keypress', function (event) {
-    const numericSymbol = /[\d.,\-+]/
+    const numericSymbol = /[\d.\-+]/
     let isNumeric = numericSymbol.test(event.key);
     if (!isNumeric) {
         event.preventDefault();
