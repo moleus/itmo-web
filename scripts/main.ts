@@ -3,8 +3,10 @@ import {ClickProcessor} from "./clickProcessor.js";
 import {ElementsContext} from "./common.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
 import {FormProcessor} from "./FormProcessor.js";
+import {ToggleCanvasHook} from "./ToggleCanvas.js";
+import {Axis3d} from "./axis3d.js";
 
-window.onload = () => {
+(() => {
     const imageSizePx = 300
     const numberOfIntervals = 3
     const canvas = ElementsContext.canvas;
@@ -20,7 +22,10 @@ window.onload = () => {
     //TODO: bind graph click on submit click
 
     submitProcessor.initTable()
-}
+    Axis3d.init()
+    Axis3d.animate()
+    ToggleCanvasHook.init()
+})();
 
 $(".numeric-input").on('keypress', function (event) {
     const numericSymbol = /[\d.,\-+]/
