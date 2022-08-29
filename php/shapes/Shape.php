@@ -1,6 +1,6 @@
 <?php
 
-//require_once "Quadrant.php";
+require_once "Quadrant.php";
 
 abstract class Shape
 {

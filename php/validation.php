@@ -1,5 +1,11 @@
 <?php
 
+require_once 'shapes/Circle.php';
+require_once 'shapes/Rectangle.php';
+require_once 'shapes/Triangle.php';
+require_once 'shapes/Quadrant.php';
+require_once 'shapes/Graph.php';
+
 class Validator
 {
     private Graph $graph;

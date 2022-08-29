@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Shape.php';
+
 class Graph
 {
     private array $shapes;

@@ -1,7 +1,7 @@
 <?php
 
-//require_once "Shape.php";
-//require_once "Quadrant.php";
+require_once "Shape.php";
+require_once "Quadrant.php";
 
 class Triangle extends Shape
 {

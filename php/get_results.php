@@ -1,5 +1,5 @@
 <?php
 
-require_once '../vendor/autoload.php';
+require_once 'echo_results.php';
 
 echo_results(0);

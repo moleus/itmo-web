@@ -1,6 +1,7 @@
 <?php declare(strict_types = 1);
 
-require_once '../vendor/autoload.php';
+require_once 'validation.php';
+require_once 'echo_results.php';
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
