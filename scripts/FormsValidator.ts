@@ -4,7 +4,7 @@ export const FormValidator = {
         return isNumber(value) && allowed.includes(value)
     },
     isInRange(value: number, min: number, max: number) {
-        return isNumber(value) && (value >= min && value <= max)
+        return isNumber(value) && (value > min && value < max)
     },
 }
 
