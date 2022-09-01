@@ -5,7 +5,9 @@
   "main": "scripts/main.ts",
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
+    "sass" : "./node_modules/sass/sass.js",
     "build": "tsc -p scripts/tsconfig.json",
+    "scss": "sass styles:css",
     "postinstall": "npm run build"
   },
   "author": "",
@@ -15,7 +17,8 @@
     "@types/node": "^18.6.3",
     "@types/three": "^0.143.2",
     "typescript": "^4.7.4",
-    "three": "^0.143.0"
+    "three": "^0.143.0",
+    "sass": "^1.54.8"
   },
   "engines": {
     "node": "v18.x.x",

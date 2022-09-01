@@ -3,7 +3,10 @@
 
 node_modules/
 **/vendor/
+css/
 *.phar
 *.js*
+*.css
+*.map
 
 !composer.json
