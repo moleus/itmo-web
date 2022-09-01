@@ -1,4 +1,4 @@
-#tableContainer {
+#table-container {
     height: 100%;
     overflow: scroll;
 }
@@ -8,14 +8,10 @@ table {
     border-collapse: collapse;
 }
 
-thead {
-    color: white;
-    background: #3cb6b2;
-}
-
 thead th {
    position: sticky;
-   background: #3cb6b2;
+    color: var(--white-color);
+   background: var(--dark-green-color);
    top: 0;
 }
 
@@ -26,10 +22,11 @@ th, td {
 }
 
 tbody tr:nth-child(even) {
-    background: #ECF0F1;
+    background: var(--gray-color);
 }
 
 tbody tr:hover {
-    background: #BDC3C7;
-    color: #FFFFFF;
+    /*background: var(--gray-dark-color);*/
+    background: linear-gradient(90deg, white, var(--blue-color) 50%, white);
+    transition: opacity 0.3s linear;
 }

@@ -4,47 +4,35 @@ button {
     padding: 10px 25px;
 }
 
+.clickable:active {
+    box-shadow: 1px 2px 3px 1px rgba(0, 0, 0, 0.14);
+    transform: translateY(1px);
+}
+
 .backlight {
-    color: #000;
-    border-radius: 5px;
-    font-family: 'Lato', sans-serif;
-    font-weight: 500;
-    background: transparent;
-    cursor: pointer;
     position: relative;
-    display: inline-block;
-    transition: all 0.3s ease;
-    box-shadow: inset 2px 2px 2px  0 rgba(255, 255, 255, .5),
-                      7px 7px 20px 0 rgba(0, 0, 0, .1),
-                      4px 4px 5px  0 rgba(0, 0, 0, .1);
-    outline: none;
-    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+
+    cursor: pointer;
+    overflow: hidden;
 }
 
 .backlight:after {
-    position: absolute;
     content: "";
-    width: 0;
+    position: absolute;
+    width: 150%;
     height: 100%;
     top: 0;
     left: 0;
-    direction: rtl;
-    /*z-index: -1;*/
-    background: #aaaaaa44;
-    box-shadow: -7px -7px 20px 0 #fff9,
-                -4px -4px  5px 0 #fff9,
-                7px   7px 20px 0 #0002,
-                4px   4px  5px 0 #0001;
-    transition: all 0.3s ease;
+    background: linear-gradient(90deg, transparent, var(--blue-color) 45%, var(--blue-color) 55%, transparent 100%);
+    z-index: 9999;
+    transform: translateX(calc(var(--x) * 1px)) translateX(-50%);
+
+    opacity: 0;
+    transition: opacity 0.3s linear;
 }
 
-.backlight:hover {
-    top: 2px;
-    color: #006cff;
-}
-
-.backlight:hover:after {
-    left: auto;
-    right: 0;
-    width: 100%;
+.backlight:hover::after {
+    opacity: 0.4;
 }

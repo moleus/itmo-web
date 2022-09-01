@@ -103,7 +103,7 @@ export class FormProcessor {
 
     private static processScroll() {
         const scrollAnimationMs = 400
-        const tableContainer = $('#tableContainer')
+        const tableContainer = $('#table-container')
         tableContainer.animate({scrollTop: tableContainer.prop('scrollHeight')}, scrollAnimationMs);
     }
 }

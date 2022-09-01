@@ -4,6 +4,25 @@
     margin: 0;
 }
 
+:root {
+    /* Palette */
+    --white-color: #fff;
+    --black-color: #171717;
+    --gray-color: #f1f6f5;
+    --gray-dark-color: #d6d5d2;
+    --green-color: #c5ffef;
+    --blue-color: #81e5fa;
+    --dark-blue-color: #172a3a;
+    --dark-green-color: #3cb6b2;
+    --red-color: #e04053;
+
+    /* App Theme / Brand */
+    --primary-color: var(--green-color);
+    --destructive-color: var(--red-color);
+    --text-on-light-bg-color: var(--black-color);
+    --text-on-dark-bg-color: var(--white-color);
+}
+
 .page {
     display: grid;
     grid-gap: 1em;
@@ -46,7 +65,7 @@
     }
 }
 
-.heading {
+.header {
     grid-area: heading;
     display: flex;
     justify-content: space-between;
@@ -61,7 +80,7 @@
     align-self: center;
 }
 
-.grid-area {
+.grid-section {
     padding: 1em;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.35);
 }
@@ -82,27 +101,27 @@ svg > .figure:hover {
     fill: rgba(255, 00, 255, 0.6);
 }
 
-.resultsTable {
+.results-table {
     min-height: 0;
     grid-area: resultsTable;
 }
 
-.inputValues {
+.input-section {
     grid-area: inputValues;
     place-content: center;
     display: flex;
-    background: aquamarine;
+    background: var(--green-color);
 }
 
 .input-field {
-    justify-content: space-between;
+    border-radius: 3px;
+    border: 1px solid var(--blue-color);
+    background-color: var(--white-color);
 }
 
 input:invalid {
-    background-color: ivory;
     border: none;
-    outline: 2px solid red;
-    border-radius: 5px;
+    outline: 2px solid var(--destructive-color);
 }
 
 #r-container {
@@ -125,9 +144,9 @@ input:invalid {
 
 .pretty-checkboxes label {
     margin: 4px;
-    background-color: #dafccb;
+    background-color: var(--white-color);
     border-radius: 4px;
-    border: 1px solid #fff;
+    border: 1px solid var(--blue-color);
     overflow: hidden;
     float: left;
     line-height: 2em;
@@ -144,11 +163,11 @@ input:invalid {
 .pretty-checkboxes label input {
     position: absolute;
     display: none;
-    color: #fff !important;
+    color: var(--white-color) !important;
 }
 
 .pretty-checkboxes input:checked + span {
-    color: #ffffff;
-    background-color: #3cb6b2;
+    color: var(--white-color);
+    background-color: var(--dark-green-color);
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
 }
