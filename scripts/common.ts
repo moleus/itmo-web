@@ -8,3 +8,31 @@ export const ElementsContext = {
     inputForm: document.getElementById('input-form') as HTMLFormElement,
     dataTable: document.getElementById('result-table') as HTMLTableElement
 }
+
+export class Vector {
+    readonly x: number;
+    readonly y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x
+        this.y = y
+    }
+
+    public toString = () => {
+        return `{${this.x}, ${this.y}}`
+    }
+}
+
+export class HitResult {
+    readonly x: number;
+    readonly y: number;
+    readonly r: number;
+    readonly isHit: boolean;
+
+    constructor(x: number, y: number, r: number, isHit: boolean) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.isHit = isHit;
+    }
+}

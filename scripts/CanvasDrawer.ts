@@ -1,6 +1,6 @@
 'use strict';
 
-export enum DotColor {
+enum DotColor {
     miss = 'red',
     hit = 'green'
 }
@@ -20,16 +20,7 @@ export class CanvasDrawer {
             this.ctx.drawImage(this.image, 0, 0)
         }
         this.image.src = './images/graph.svg';
-    }
-
-    public scaleCanvas = () => {
-        this.canvas.width = this.imageSizePx;
-        this.canvas.height = this.imageSizePx;
-
-        const scale = this.canvas.width / this.imageSizePx
-        console.log(`Canvas scale: ${scale}`)
-        console.log(`Canvas width: ${this.canvas.width}`)
-        this.ctx.scale(scale, scale)
+        this.scaleCanvas();
     }
 
     public drawPoint(x: number, y: number, isValid: boolean) {
@@ -42,6 +33,14 @@ export class CanvasDrawer {
     public clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight);
         this.ctx.drawImage(this.image, 0, 0)
+    }
+
+    private scaleCanvas = () => {
+        this.canvas.width = this.imageSizePx;
+        this.canvas.height = this.imageSizePx;
+
+        const scale = this.canvas.width / this.imageSizePx
+        this.ctx.scale(scale, scale)
     }
 }
 
