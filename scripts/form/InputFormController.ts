@@ -1,8 +1,8 @@
 import {InputFormView} from "./InputFormView.js";
-import {TableView} from "./TableView.js";
-import {CanvasView} from "./CanvasView.js";
+import {TableView} from "../table/TableView.js";
+import {CanvasView} from "../canvas/CanvasView.js";
 import {InputFormModel} from "./InputFormModel.js";
-import {InputRangeValidator} from "./InputRangeValidator.js";
+import {InputRangeValidator} from "../util/InputRangeValidator.js";
 
 export class InputFormController {
     private inputFormView: InputFormView;

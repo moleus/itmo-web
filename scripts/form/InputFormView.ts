@@ -1,4 +1,4 @@
-import {ElementsContext} from "./common.js";
+import {ElementsContext} from "../util/common.js";
 
 export class InputFormView {
     private readonly inputX: HTMLSelectElement;

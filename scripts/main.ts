@@ -1,11 +1,11 @@
-import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
-import {Axis3d} from "./axis3d.js";
-import {CanvasController} from "./CanvasController.js";
-import {CanvasView} from "./CanvasView.js";
-import {InputFormView} from "./InputFormView.js";
-import {TableView} from "./TableView.js";
-import {InputFormModel} from "./InputFormModel.js";
-import {InputFormController} from "./InputFormController.js";
+import {CoordinateNormalizer} from "./canvas/CoordinateNormalizer.js";
+import {Axis3d} from "./canvas/axis3d.js";
+import {CanvasController} from "./canvas/CanvasController.js";
+import {CanvasView} from "./canvas/CanvasView.js";
+import {InputFormView} from "./form/InputFormView.js";
+import {TableView} from "./table/TableView.js";
+import {InputFormModel} from "./form/InputFormModel.js";
+import {InputFormController} from "./form/InputFormController.js";
 
 (() => {
     const imageSizePx = 300

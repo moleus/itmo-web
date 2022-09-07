@@ -1,4 +1,4 @@
-import {ElementsContext, Vector} from "./common.js";
+import {ElementsContext, Vector} from "../util/common.js";
 import {CanvasDrawer} from "./CanvasDrawer.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
 

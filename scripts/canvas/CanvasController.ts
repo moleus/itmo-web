@@ -1,9 +1,9 @@
 import {CanvasView} from "./CanvasView.js";
-import {InputFormModel} from "./InputFormModel.js";
-import {Vector} from "./common.js";
-import {InputFormView} from "./InputFormView.js";
+import {InputFormModel} from "../form/InputFormModel.js";
+import {Vector} from "../util/common.js";
+import {InputFormView} from "../form/InputFormView.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
-import {TableView} from "./TableView.js";
+import {TableView} from "../table/TableView.js";
 
 export class CanvasController {
     private canvasView: CanvasView;
