@@ -136,7 +136,6 @@ function createNewPoint(event: JQuery.ClickEvent) {
         const axisPlane = new THREE.Plane( new THREE.Vector3( 0, 0, 1 ), 0 );
         const intersectionPoint = new THREE.Vector3();
         rayCaster.ray.intersectPlane(axisPlane, intersectionPoint);
-        console.log(intersectionPoint)
         addIntersectionPoint(intersectionPoint, "red")
         return
     }
