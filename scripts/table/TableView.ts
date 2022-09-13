@@ -32,7 +32,7 @@ export class TableView {
                 +(xRow[i] as HTMLElement).innerText,
                 +(yRow[i] as HTMLElement).innerText,
                 +(rRow[i] as HTMLElement).innerText,
-                (isHitRow[i] as HTMLElement).innerText == "true"
+                (isHitRow[i] as HTMLElement).innerText === "true"
             ));
         }
         return valueRows

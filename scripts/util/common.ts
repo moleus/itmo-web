@@ -1,5 +1,6 @@
 export const ElementsContext = {
     canvas: document.getElementById('axis-canvas') as HTMLCanvasElement,
+    axis3d: document.getElementById('axis-canvas-3d') as HTMLElement,
     inputX: document.getElementById('x-input') as HTMLSelectElement,
     inputY: document.getElementById('y-input') as HTMLInputElement,
     checkboxesR: document.getElementsByName('paramR') as NodeListOf<HTMLInputElement>,

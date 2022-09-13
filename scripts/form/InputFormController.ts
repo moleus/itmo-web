@@ -1,20 +1,23 @@
 import {InputFormView} from "./InputFormView.js";
 import {TableView} from "../table/TableView.js";
-import {CanvasView} from "../canvas/CanvasView.js";
+import {Axis2dView} from "../canvas/Axis2dView.js";
 import {InputFormModel} from "./InputFormModel.js";
 import {InputRangeValidator} from "../util/InputRangeValidator.js";
+import {Axis3dView} from "../axis_3d/Axis3dView";
 
 export class InputFormController {
     private inputFormView: InputFormView;
     private tableView: TableView;
-    private canvasView: CanvasView;
+    private canvasView: Axis2dView;
     private inputFormModel: InputFormModel;
+    private axis3dView: Axis3dView;
 
-    constructor(inputFormView: InputFormView, inputFormModel: InputFormModel, tableView: TableView, canvasView: CanvasView) {
+    constructor(inputFormView: InputFormView, inputFormModel: InputFormModel, tableView: TableView, canvasView: Axis2dView, axis3dView: Axis3dView) {
         this.inputFormView = inputFormView;
         this.inputFormModel = inputFormModel;
         this.tableView = tableView;
         this.canvasView = canvasView;
+        this.axis3dView = axis3dView;
 
         this.inputFormView.bindInputX(this.handleInputX);
         this.inputFormView.bindInputY(this.handleInputY);
@@ -29,9 +32,8 @@ export class InputFormController {
         this.inputFormModel.x = Number(event.data);
     }
 
-    private handleInputY = (trigger: HTMLInputElement) => {
-        if (trigger.value.length > trigger.maxLength) trigger.value = trigger.value.slice(0, trigger.maxLength);
-        this.inputFormModel.y = trigger.valueAsNumber;
+    private handleInputY(this: HTMLInputElement) {
+        if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);
     }
 
     private static handleKeyPress(event: KeyboardEvent) {
@@ -54,7 +56,10 @@ export class InputFormController {
     private processUpdate = (respHtml: string) => {
         this.tableView.updateTable(respHtml);
         this.tableView.getRows(this.inputFormModel.version).forEach(
-            result => this.canvasView.addPoint(result.x, result.y, result.r, result.isHit)
+            result => {
+                this.canvasView.addPoint(result.x, result.y, result.r, result.isHit);
+                this.axis3dView.addPoint(result.x, result.y, result.r, result.isHit);
+            }
         )
     }
 
@@ -64,7 +69,8 @@ export class InputFormController {
 
     private handleReset = () => {
         this.inputFormModel.resetData();
-        this.canvasView.clearCanvas();
+        this.canvasView.clear();
+        this.axis3dView.clear();
         this.tableView.clearTable();
     }
 }

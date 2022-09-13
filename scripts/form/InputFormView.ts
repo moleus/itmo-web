@@ -19,11 +19,11 @@ export class InputFormView {
         this.numericInput = document.querySelectorAll('.numeric-input');
     }
 
-    public bindInputX = (handler) => {
+    public bindInputX = (handler: (this: HTMLSelectElement, ev: Event) => void) => {
         this.inputX.addEventListener('input', handler);
     }
 
-    public bindInputY = (handler) => {
+    public bindInputY = (handler: (this: HTMLInputElement, ev: Event) => void) => {
         this.inputY.addEventListener('input', handler);
     }
 

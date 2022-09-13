@@ -1,48 +1,81 @@
-import {CanvasView} from "./CanvasView.js";
+import {Axis2dView} from "./Axis2dView.js";
 import {InputFormModel} from "../form/InputFormModel.js";
-import {Vector} from "../util/common.js";
+import {HitResult, Vector} from "../util/common.js";
 import {InputFormView} from "../form/InputFormView.js";
 import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
 import {TableView} from "../table/TableView.js";
+import {Axis3dView} from "../axis_3d/Axis3dView.js";
+import {ModeSwitcherView} from "./ModeSwitcherView.js";
 
 export class CanvasController {
-    private canvasView: CanvasView;
-    private dataModel: InputFormModel;
-    private inputFormView: InputFormView;
-    private tableView: TableView;
-    private coordinateNormalizer: CoordinateNormalizer;
+    private readonly axis2dView: Axis2dView;
+    private readonly dataModel: InputFormModel;
+    private readonly inputFormView: InputFormView;
+    private readonly tableView: TableView;
+    private readonly modeSwitcherView: ModeSwitcherView;
+    private readonly axis3dView: Axis3dView;
+    private readonly coordinateNormalizer: CoordinateNormalizer;
 
     constructor(
         coordinateNormalizer: CoordinateNormalizer,
-        canvasView: CanvasView,
+        canvasView: Axis2dView,
         inputFormView: InputFormView,
         tableView: TableView,
+        axis3dView: Axis3dView,
+        modeSwitcherView: ModeSwitcherView,
         canvasModel: InputFormModel) {
         this.tableView = tableView;
         this.coordinateNormalizer = coordinateNormalizer;
-        this.canvasView = canvasView;
+        this.axis2dView = canvasView;
         this.dataModel = canvasModel;
         this.inputFormView = inputFormView;
+        this.axis3dView = axis3dView;
+        this.modeSwitcherView = modeSwitcherView;
 
-        this.canvasView.bindClick(this.handleClick);
+        this.axis2dView.bindClick(this.handleMouseClick);
+        this.axis3dView.bindClick(this.handle3dClick);
+        this.modeSwitcherView.bindToggle(this.onCanvasSwitch);
     }
 
-    private handleClick = (event: MouseEvent) => {
+    private handleMouseClick = (event: MouseEvent) => {
         const position = getPosition(event);
         const unitR = this.inputFormView.getR();
         const normalized = this.coordinateNormalizer.fromPxToUnits(position, unitR);
-        this.dataModel.x = normalized.x;
-        this.dataModel.y = normalized.y;
+        this.sendCoordinates(normalized, unitR, result => {
+                this.axis2dView.addPoint(result.x, result.y, result.r, result.isHit)
+                this.axis3dView.addPoint(result.x, result.y, result.r, result.isHit);
+            }
+        );
+    }
+
+    private handle3dClick = (x: number, y: number) => {
+        const fixed_r = 1;
+        this.sendCoordinates(new Vector(x, y), fixed_r, result => {
+            this.axis2dView.addPoint(result.x, result.y, result.r, result.isHit)
+        });
+    }
+
+    private sendCoordinates(coordinates: Vector, unitR: number, onResult: (result: HitResult) => void) {
+        this.dataModel.x = coordinates.x;
+        this.dataModel.y = coordinates.y;
         this.dataModel.r = unitR
         this.dataModel.version = this.tableView.countRows();
         this.dataModel.fetchUpdates().then(
             respHtml => {
                 this.tableView.updateTable(respHtml);
-                this.tableView.getRows(this.dataModel.version).forEach(
-                    result => this.canvasView.addPoint(result.x, result.y, result.r, result.isHit)
-                )
+                this.tableView.getRows(this.dataModel.version).forEach(onResult)
             }
         ).catch(reason => console.error("Failed to receive data: ", reason))
+    }
+
+    onCanvasSwitch = (isChecked: boolean) => {
+        if (isChecked) {
+            this.axis2dView.hide();
+            this.axis3dView.display();
+        } else {
+            this.axis3dView.hide();
+            this.axis2dView.display();
+        }
     }
 }
 
