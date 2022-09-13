@@ -10,6 +10,8 @@ export class Axis2dView implements Canvas, Switchable {
     private readonly canvasDrawer: CanvasDrawer;
     private readonly coordinateNormalizer: CoordinateNormalizer;
 
+    private clearRequiredFlag: boolean = false;
+
     constructor(imageSizePx: number, coordinatesNormalizer: CoordinateNormalizer) {
         this.coordinateNormalizer = coordinatesNormalizer;
         this.axis2d = ElementsContext.canvas;
@@ -19,13 +21,23 @@ export class Axis2dView implements Canvas, Switchable {
 
     display() {
         this.axis2d.style.display = "block";
+        if (this.clearRequiredFlag) {
+            this.clear();
+            this.clearRequiredFlag = false;
+        }
     }
 
     hide() {
         this.axis2d.style.display = "none";
     }
 
-    clear = () => this.canvasDrawer.clearCanvas()
+    clear() {
+        if (this.axis2d.style.display !== "none") {
+            this.canvasDrawer.clearCanvas()
+        } else {
+            this.clearRequiredFlag = true;
+        }
+    }
 
     addPoint = (x: number, y: number, r: number, isHit: boolean) => {
         const normalized = this.coordinateNormalizer.fromUnitsToPx(new Vector(x, y), r);
