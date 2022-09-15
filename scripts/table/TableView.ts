@@ -1,4 +1,4 @@
-import {ElementsContext, HitResult} from "../util/common.js";
+import {ElementsContext, HitResult} from "../util/common";
 
 export class TableView {
     private readonly tableElement: HTMLTableElement;

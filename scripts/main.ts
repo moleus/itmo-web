@@ -1,12 +1,17 @@
-import {CoordinateNormalizer} from "./canvas/CoordinateNormalizer.js";
-import {CanvasController} from "./canvas/CanvasController.js";
-import {Axis2dView} from "./canvas/Axis2dView.js";
-import {InputFormView} from "./form/InputFormView.js";
-import {TableView} from "./table/TableView.js";
-import {InputFormModel} from "./form/InputFormModel.js";
-import {InputFormController} from "./form/InputFormController.js";
-import {Axis3dView} from "./axis_3d/Axis3dView.js";
-import {ModeSwitcherView} from "./canvas/ModeSwitcherView.js";
+import "../styles/main.scss"
+import "../styles/buttons.scss"
+import "../styles/sliders.scss"
+import "../styles/table.scss"
+
+import {CoordinateNormalizer} from "./canvas/CoordinateNormalizer";
+import {CanvasController} from "./canvas/CanvasController";
+import {Axis2dView} from "./canvas/Axis2dView";
+import {InputFormView} from "./form/InputFormView";
+import {TableView} from "./table/TableView";
+import {InputFormModel} from "./form/InputFormModel";
+import {InputFormController} from "./form/InputFormController";
+import {Axis3dView} from "./axis_3d/Axis3dView";
+import {ModeSwitcherView} from "./canvas/ModeSwitcherView";
 
 (() => {
     const imageSizePx = 300

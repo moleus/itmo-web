@@ -1,4 +1,4 @@
-import {RangeValidator} from "./RangeValidator.js";
+import {RangeValidator} from "./RangeValidator";
 
 const X_VALUES = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
 const Y_MIN = -3

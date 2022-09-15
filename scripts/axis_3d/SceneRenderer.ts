@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import {ObjectsScene, ObjectType} from "./ObjectsScene.js";
-import {OrbitControls} from '../../node_modules/three/examples/jsm/controls/OrbitControls.js';
+import {ObjectsScene, ObjectType} from "./ObjectsScene";
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 
 class HitResult {
     readonly point: THREE.Vector3;

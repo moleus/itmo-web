@@ -1,11 +1,11 @@
-import {Axis2dView} from "./Axis2dView.js";
-import {InputFormModel} from "../form/InputFormModel.js";
-import {HitResult, Vector} from "../util/common.js";
-import {InputFormView} from "../form/InputFormView.js";
-import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
-import {TableView} from "../table/TableView.js";
-import {Axis3dView} from "../axis_3d/Axis3dView.js";
-import {ModeSwitcherView} from "./ModeSwitcherView.js";
+import {Axis2dView} from "./Axis2dView";
+import {InputFormModel} from "../form/InputFormModel";
+import {HitResult, Vector} from "../util/common";
+import {InputFormView} from "../form/InputFormView";
+import {CoordinateNormalizer} from "./CoordinateNormalizer";
+import {TableView} from "../table/TableView";
+import {Axis3dView} from "../axis_3d/Axis3dView";
+import {ModeSwitcherView} from "./ModeSwitcherView";
 
 export class CanvasController {
     private readonly axis2dView: Axis2dView;

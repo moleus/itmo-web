@@ -1,8 +1,8 @@
-import {InputFormView} from "./InputFormView.js";
-import {TableView} from "../table/TableView.js";
-import {Axis2dView} from "../canvas/Axis2dView.js";
-import {InputFormModel} from "./InputFormModel.js";
-import {InputRangeValidator} from "../util/InputRangeValidator.js";
+import {InputFormView} from "./InputFormView";
+import {TableView} from "../table/TableView";
+import {Axis2dView} from "../canvas/Axis2dView";
+import {InputFormModel} from "./InputFormModel";
+import {InputRangeValidator} from "../util/InputRangeValidator";
 import {Axis3dView} from "../axis_3d/Axis3dView";
 
 export class InputFormController {

@@ -1,5 +1,7 @@
 'use strict';
 
+import GraphImg from "../../images/graph.svg";
+
 enum DotColor {
     miss = 'red',
     hit = 'green'
@@ -19,7 +21,7 @@ export class CanvasDrawer {
         this.image.onload = () => {
             this.ctx.drawImage(this.image, 0, 0)
         }
-        this.image.src = './images/graph.svg';
+        this.image.src = GraphImg;
         this.scaleCanvas();
     }
 

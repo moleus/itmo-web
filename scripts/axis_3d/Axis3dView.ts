@@ -1,8 +1,8 @@
-import {ElementsContext} from "../util/common.js";
+import {ElementsContext} from "../util/common";
 import * as THREE from "three";
-import {SceneRenderer} from "./SceneRenderer.js";
-import {ObjectsScene} from "./ObjectsScene.js";
-import {Canvas} from "../canvas/Canvas.js";
+import {SceneRenderer} from "./SceneRenderer";
+import {ObjectsScene} from "./ObjectsScene";
+import {Canvas} from "../canvas/Canvas";
 
 const WIDTH = 300
 const HEIGHT = 300

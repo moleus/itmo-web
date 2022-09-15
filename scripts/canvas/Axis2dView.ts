@@ -1,8 +1,8 @@
-import {ElementsContext, Vector} from "../util/common.js";
-import {CanvasDrawer} from "./CanvasDrawer.js";
-import {CoordinateNormalizer} from "./CoordinateNormalizer.js";
-import {Canvas} from "./Canvas.js";
-import {Switchable} from "./Switchable.js";
+import {ElementsContext, Vector} from "../util/common";
+import {CanvasDrawer} from "./CanvasDrawer";
+import {CoordinateNormalizer} from "./CoordinateNormalizer";
+import {Canvas} from "./Canvas";
+import {Switchable} from "./Switchable";
 
 export class Axis2dView implements Canvas, Switchable {
     private readonly axis2d: HTMLCanvasElement;

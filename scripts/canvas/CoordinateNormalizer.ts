@@ -1,4 +1,4 @@
-import {Vector} from "../util/common.js";
+import {Vector} from "../util/common";
 
 export class CoordinateNormalizer {
     private readonly intervalsCount: number

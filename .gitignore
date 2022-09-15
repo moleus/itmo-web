@@ -8,5 +8,6 @@ css/
 *.js*
 *.css
 *.map
+dist/
 
 !composer.json

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import {SceneUtil} from "./SceneUtil.js";
+import {SceneUtil} from "./SceneUtil";
 
 class Materials {
     static readonly yellow = new THREE.MeshPhongMaterial({color: "yellow", opacity: 0.7, transparent: true});
