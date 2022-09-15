@@ -15,6 +15,10 @@ function check_param(mixed $param): bool
     return is_numeric($param);
 }
 
+function toFixed(string $value, int $decimals): float {
+    return floatval(substr($value, 0, strpos($value, ".") + $decimals + 1));
+}
+
 function main(): void
 {
     $x_param = $_POST['paramX'];
@@ -28,9 +32,9 @@ function main(): void
         return;
     }
 
-    $x = floatval($x_param);
-    $y = floatval($y_param);
-    $unitR = floatval($unitR_param);
+    $x = toFixed($x_param, 2);
+    $y = toFixed($y_param, 2);
+    $unitR = toFixed($unitR_param, 2);
 
     $validator = new Validator();
     $isValid = $validator->isPointInShape($x, $y, $unitR) ? "true" : "false";
