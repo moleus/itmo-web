@@ -28,7 +28,7 @@ export class Axis3dView implements Canvas {
     }
 
     addPoint = (x: number, y: number, r: number, isHit: boolean) => {
-        this.scene.addIntersectionPoint(new THREE.Vector3(x, y, 0), isHit);
+        this.scene.addIntersectionPoint(new THREE.Vector3(x/r, y/r, 0), isHit);
     }
 
     clear() {
