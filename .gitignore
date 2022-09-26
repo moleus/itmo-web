@@ -1,12 +1,18 @@
 .*
 !.gitignore
 
-node_modules/
+**/node_modules/
 **/vendor/
 css/
 *.phar
 *.css
 *.map
 dist/
+.gradle
+**/build/
+**/lib/
+**/webapp/static
 
-!composer.json
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
