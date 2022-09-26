@@ -1,0 +1,24 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+         http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <persistence-unit name="hits-unit" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:jboss/datasources/PostgresDS</jta-data-source>
+
+        <!-- Make all annotated entities part of this unit configuration: -->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <!-- If provider has a second-level cache, make all entities use it unless annotated otherwise: -->
+        <shared-cache-mode>DISABLE_SELECTIVE</shared-cache-mode>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.temp.use_jdbc_metadata_defaults" value="true"/>
+            <!-- Is nighthack for WildFly: https://issues.jboss.org/browse/WFLY-2727 -->
+            <property name="wildfly.jpa.twophasebootstrap" value="false" />
+        </properties>
+    </persistence-unit>
+</persistence>

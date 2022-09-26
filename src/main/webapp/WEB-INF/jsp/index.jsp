@@ -1,13 +1,18 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/main.css" />
     <title>Main page</title>
 </head>
 <body>
 <main class="page">
     <section class="grid-section header">
         <span class="centered">Solovev Pavel Andreevich. P32302</span>
+
+        <a href="${pageContext.request.contextPath}/">Hello Servlet</a>
+
         <span class="centered">3114</span>
     </section>
     <section class="grid-section" id="canvas-container">
@@ -61,22 +66,12 @@
     </div>
 
     <section class="grid-section results-table">
-        <div id="table-container">
-            <table id="result-table">
-                <thead>
-                <tr>
-                    <th class="coords-col">X</th>
-                    <th class="coords-col">Y</th>
-                    <th class="coords-col">R</th>
-                    <th class="result-col">Hit result</th>
-                    <th class="current_time-col">Current time</th>
-                    <th class="exec_time-col">Execution time</th>
-                </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+        <iframe name="hit-results" id="table-container_frame" class="full-block">
+        <%--    onload="resizeIframe(this) --%>
+            hits history
+        </iframe>
     </section>
 </main>
+<script type="module" src="${pageContext.request.contextPath}/static/script.js"></script>
 </body>
 </html>
