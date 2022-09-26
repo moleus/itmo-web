@@ -14,14 +14,14 @@ export class InputFormModel {
 
     public fetchUpdates(): Promise<string> {
         const formData = RequestProcessor.prepareBody(this.x, this.y, this.r, this.version);
-        return RequestProcessor.makeRequest("../php/main.php", formData);
+        return RequestProcessor.makeRequest("update", formData);
     };
 
     public fetchAllData(): Promise<string> {
-        return RequestProcessor.makeRequest("../php/get_results.php");
+        return RequestProcessor.makeRequest("update");
     };
 
     public resetData() {
-        RequestProcessor.makeRequest("../php/reset_session.php");
+        RequestProcessor.makeRequest("reset_hits");
     };
 }

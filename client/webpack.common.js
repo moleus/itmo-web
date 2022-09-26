@@ -36,12 +36,8 @@ module.exports = {
             $: "jquery",
             jQuery: "jquery",
         }),
-        new HtmlWebpackPlugin({
-            template: "./index.html",
-            inject: 'body'
-        }),
         new MiniCssExtractPlugin({
-            filename: "[name][contenthash].css",
+            filename: "main.css",
         }),
         new CleanWebpackPlugin(),
     ],

@@ -5,8 +5,8 @@
   "scripts": {
     "tsc": "./node_modules/typescript/bin/tsc",
     "sass" : "./node_modules/sass/sass.js",
-    "dev": "webpack --config webpack.dev.js",
-    "build":  "webpack --config webpack.prod.js",
+    "dev": "webpack --config webpack.dev.js --output-path ../src/main/webapp/static",
+    "build":  "webpack --config webpack.prod.js --output-path ../src/main/webapp/static",
     "scss": "sass styles:css",
     "postinstall": "npm run build"
   },

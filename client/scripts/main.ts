@@ -12,6 +12,7 @@ import {InputFormModel} from "./form/InputFormModel";
 import {InputFormController} from "./form/InputFormController";
 import {Axis3dView} from "./axis_3d/Axis3dView";
 import {ModeSwitcherView} from "./canvas/ModeSwitcherView";
+import {ElementsContext} from "./util/common";
 
 (() => {
     const imageSizePx = 300
@@ -20,7 +21,8 @@ import {ModeSwitcherView} from "./canvas/ModeSwitcherView";
     const coordinateNormalizer = new CoordinateNormalizer(imageSizePx, numberOfIntervals);
     const inputFormView = new InputFormView();
     const inputFormModel = new InputFormModel();
-    const tableView = new TableView();
+    const tableIframe = ElementsContext.hitTableIframe;
+    const tableView = new TableView(tableIframe);
     const canvasView = new Axis2dView(imageSizePx, coordinateNormalizer);
     const axis3dView = new Axis3dView();
     const modeSwitcherView = new ModeSwitcherView();

@@ -1,6 +1,6 @@
-# Lab 1
+# Lab 2
 ### Link to the website
-click [here](https://se.ifmo.ru/~s336764/itmo-web/dist) to preview.
+click [Work in progress...](https://se.ifmo.ru/~s336764/itmo-web/dist) to preview.
 
 ### The task text
-![task](images/task.png)
+![task](client/images/task2.png)

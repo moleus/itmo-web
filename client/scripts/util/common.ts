@@ -7,7 +7,7 @@ export const ElementsContext = {
     submitButton: document.getElementById('submit') as HTMLButtonElement,
     resetButton: document.getElementById('reset') as HTMLButtonElement,
     inputForm: document.getElementById('input-form') as HTMLFormElement,
-    dataTable: document.getElementById('result-table') as HTMLTableElement
+    hitTableIframe: document.getElementById('table-container_frame') as HTMLIFrameElement
 }
 
 export class Vector {

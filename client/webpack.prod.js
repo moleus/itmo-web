@@ -5,7 +5,7 @@ require("webpack");
 module.exports = merge(common, {
     mode: "production",
     output: {
-        filename: "script.[contenthash].js",
+        filename: "script.js",
         path: path.resolve(__dirname, "dist"),
     },
 });
