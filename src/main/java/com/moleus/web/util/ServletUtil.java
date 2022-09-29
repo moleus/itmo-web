@@ -7,22 +7,12 @@ public class ServletUtil {
         return Float.parseFloat(getRequestParameter(context, paramName));
     }
 
-    public static <T> T getAttrOrSetDefault(ServletApplicationContext context, String attrName, T defaultValue) {
-        var session = context.getSession();
-        Object value = session.getAttribute(attrName);
-        if (value != null) {
-            return (T) value;
-        }
-        session.setAttribute(attrName, defaultValue);
-        return defaultValue;
-    }
-
     public static Object getSessionAttribute(ServletApplicationContext context, String attrName) {
         return context.getSession().getAttribute(attrName);
     }
 
-    public static long paramToLong(ServletApplicationContext context, String paramName) {
-        return Long.parseLong(getRequestParameter(context, paramName));
+    public static void setSessionAttribute(ServletApplicationContext context, String attrName, Object attribute) {
+        context.getSession().setAttribute(attrName, attribute);
     }
 
     public static String getRequestParameter(ServletApplicationContext context, String paramName) {

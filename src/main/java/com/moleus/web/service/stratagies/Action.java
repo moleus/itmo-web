@@ -5,10 +5,13 @@ import com.moleus.web.service.exceptions.ActionException;
 import com.moleus.web.service.helpers.ViewPath;
 
 /**
- * Represents Business Model.
- * The main part of the Strategy pattern.
+ * Implementation represents a service layer of the Web Application
  */
 public interface Action {
+    /**
+     * Implementation should processes a request
+     * @return A path to the jsp
+     */
     ViewPath execute(ServletApplicationContext context) throws ActionException;
 
     /**

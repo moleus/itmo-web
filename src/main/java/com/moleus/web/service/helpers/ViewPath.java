@@ -4,16 +4,17 @@ public enum ViewPath {
     HOME("index"),
     HIT_RESULTS("hit_results"),
     ERROR("error"),
-    LOGIN("login");
+    LOGIN("login"),
 
-    private final String path;
+    DEFAULT("");
+
+    private final String name;
 
     ViewPath(String path) {
-        this.path = path;
+        this.name = path;
     }
 
-    @Override
-    public String toString() {
-        return this.path;
+    public String getName() {
+        return name;
     }
 }

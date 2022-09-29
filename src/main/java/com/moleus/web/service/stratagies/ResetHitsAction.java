@@ -2,26 +2,40 @@ package com.moleus.web.service.stratagies;
 
 import com.moleus.web.controller.ServletApplicationContext;
 import com.moleus.web.model.HitResult;
-import com.moleus.web.dao.persistence.HitResultsRepository;
+import com.moleus.web.dao.HitResultsRepository;
+import com.moleus.web.service.exceptions.ActionException;
+import com.moleus.web.service.helpers.SessionAttributes;
 import com.moleus.web.service.helpers.ViewPath;
 import com.moleus.web.util.ServletUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 
-public class ResetHitsAction implements Action {
+@ApplicationScoped
+public class ResetHitsAction extends PathBasedAction {
+    private static final ApplicationPath APPLICABLE_PATH = ApplicationPath.RESET_HITS;
+
     @Inject
     HitResultsRepository hitResultsRepository;
 
     @Override
-    public ViewPath execute(ServletApplicationContext context) {
+    public ViewPath execute(ServletApplicationContext context) throws ActionException {
+        if (super.isNotLoggedIn(context)) {
+            throw new ActionException(APPLICABLE_PATH, "User not logged in. Session is null");
+        }
         try {
-            long userId = ServletUtil.paramToLong(context, "userId");
+            long userId = (long) ServletUtil.getSessionAttribute(context, SessionAttributes.USER_ID.getName());
             hitResultsRepository.removeByUserId(userId);
-            context.getSession().setAttribute("hitResults", new ArrayList<HitResult>());
+            ServletUtil.setSessionAttribute(context, SessionAttributes.HIT_RESULTS.getName(), new ArrayList<HitResult>());
         } catch (NumberFormatException | NullPointerException e) {
-            context.getSession().setAttribute("error", e.getMessage());
+            context.getRequest().setAttribute("errorMessage", e.getMessage());
         }
         return ViewPath.HIT_RESULTS;
+    }
+
+    @Override
+    protected ApplicationPath getProcessPath() {
+        return APPLICABLE_PATH;
     }
 }

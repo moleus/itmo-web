@@ -1,4 +1,4 @@
-package com.moleus.web.dao.persistence;
+package com.moleus.web.dao;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Disposes;

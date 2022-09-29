@@ -8,12 +8,16 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
 
 
+/**
+ * Stores all services and produces an appropriate one based on a request
+ */
 @ApplicationScoped
 public class ActionFactory {
     @Inject Instance<Action> actions;
 
-    @Produces
-    @RequestScoped
+    /**
+     * Returns a service which is applicable to the request.
+     */
     public Action getActionStrategy(HttpServletRequest request) {
         String signature = request.getMethod() + request.getPathInfo();
         for (Action action : actions) {

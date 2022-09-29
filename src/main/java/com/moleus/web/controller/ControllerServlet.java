@@ -1,9 +1,9 @@
 package com.moleus.web.controller;
 
 import com.moleus.web.service.exceptions.ActionException;
+import com.moleus.web.service.helpers.ViewPath;
 import com.moleus.web.service.stratagies.Action;
 import com.moleus.web.service.stratagies.ActionFactory;
-import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 
@@ -22,10 +23,11 @@ import java.io.IOException;
  * <p>  Actions (business logic, validation) -> Service layer
  * <p>  Repository, Entities, hibernate -> DAO Layer
  */
-@WebServlet(name = "FrontController", urlPatterns = "/pages/*")
+@Log4j2
+@WebServlet(name = "FrontController", urlPatterns = "/jsp/*")
 @MultipartConfig
 public class ControllerServlet extends HttpServlet {
-    @Inject @SessionScoped ActionFactory actionFactory;
+    @Inject ActionFactory actionFactory;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         processRequest(request, response);
@@ -41,18 +43,19 @@ public class ControllerServlet extends HttpServlet {
         try (ServletApplicationContext context = ServletApplicationContext.create(request, response)) {
             runAction(context, action);
         } catch (ActionException e) {
-            throw new RuntimeException("Failed to execute action: " + e.getMessage());
+            log.error(e.getMessage());
         }
     }
 
     private void runAction(ServletApplicationContext context, Action action) throws ActionException, IOException, ServletException {
-        String view = action.execute(context).toString();
+        ViewPath view = action.execute(context);
+        String forwardPath = view.equals(ViewPath.DEFAULT) ? context.getRequest().getPathInfo() : view.getName();
         HttpServletRequest request = context.getRequest();
         HttpServletResponse response = context.getResponse();
 
         //TODO: remove debug output
-        System.out.println("path info: " + view);
-        request.getRequestDispatcher("/WEB-INF/jsp/" + view + ".jsp").forward(request, response);
+        log.info("Forwarding request after action processing to /WEB-INF/jsp/{}.jsp", forwardPath);
+        request.getRequestDispatcher("/WEB-INF/jsp/" + forwardPath + ".jsp").forward(request, response);
     }
 
     public void destroy() {

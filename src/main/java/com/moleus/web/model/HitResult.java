@@ -1,8 +1,7 @@
 package com.moleus.web.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,13 +10,14 @@ import java.time.LocalDateTime;
 @Table(name = "hit_results")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class HitResult implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private long id;
+    private long userId;
 
-    @OneToOne
-    private User user;
     private float x;
     private float y;
     private float r;
