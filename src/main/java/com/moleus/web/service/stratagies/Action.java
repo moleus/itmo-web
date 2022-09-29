@@ -10,4 +10,9 @@ import com.moleus.web.service.helpers.ViewPath;
  */
 public interface Action {
     ViewPath execute(ServletApplicationContext context) throws ActionException;
+
+    /**
+     * Returns true if the implementation can handle a request to the specified path. Otherwise - returns false.
+     */
+    boolean isApplicable(String path);
 }
