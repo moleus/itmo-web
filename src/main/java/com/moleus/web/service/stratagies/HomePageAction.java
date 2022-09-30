@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class HomePageAction extends PathBasedAction {
-    private static final ApplicationPath applicationPath = ApplicationPath.DEFAULT;
+    private static final ApplicationPath applicationPath = ApplicationPath.HOME;
 
     @Override
     public ViewPath execute(ServletApplicationContext context) throws ActionException {

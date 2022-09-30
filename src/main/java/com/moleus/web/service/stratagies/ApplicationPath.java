@@ -2,21 +2,23 @@ package com.moleus.web.service.stratagies;
 
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+import java.util.List;
+
 @NoArgsConstructor
 public enum ApplicationPath {
-    DEFAULT("GET/index"),
+    HOME("GET/index", "GET/"),
     UPDATE_HITS("POST/update"),
     RESET_HITS("POST/reset_hits"),
-    LOGIN("POST/login"),
-    CHECK("POST/checklogin");
+    LOGIN("POST/login");
 
-    private String path;
+    private List<String> supportedPaths;
 
-    ApplicationPath(String path) {
-        this.path = path;
+    ApplicationPath(String ... supportedPaths) {
+        this.supportedPaths = Arrays.stream(supportedPaths).toList();
     }
 
-    public String getName() {
-        return path;
+    public List<String> getNames() {
+        return supportedPaths;
     }
 }

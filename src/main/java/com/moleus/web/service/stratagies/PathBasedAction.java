@@ -6,7 +6,7 @@ import com.moleus.web.service.helpers.SessionAttributes;
 public abstract class PathBasedAction implements Action {
     @Override
     public boolean isApplicable(String requestPath) {
-        return Objects.equals(getProcessPath().getName(), requestPath);
+        return getProcessPath().getNames().contains(requestPath);
     }
 
     protected abstract ApplicationPath getProcessPath();
