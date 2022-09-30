@@ -10,9 +10,6 @@
 <main class="page">
     <section class="grid-section header">
         <span class="centered">Solovev Pavel Andreevich. P32302</span>
-
-        <a href="${pageContext.request.contextPath}/">Hello Servlet</a>
-
         <span class="centered">3114</span>
     </section>
     <section class="grid-section" id="canvas-container">

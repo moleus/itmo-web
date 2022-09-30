@@ -24,7 +24,7 @@
                 <td class=".table-x_val"><c:out value="${point.x}"/></td>
                 <td class=".table-y_val"><c:out value="${point.y}"/></td>
                 <td class=".table-r_val"><c:out value="${point.r}"/></td>
-                <td class=".table-hit_res">${point.hit}></td>
+                <td class=".table-hit_res">${point.hit}</td>
                 <td>${point.hitTime}</td>
                 <td>${point.executionTime}</td>
             </tr>

@@ -39,7 +39,6 @@ public class ControllerServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Action action = actionFactory.getActionStrategy(request);
-        System.out.println("GET path: " + request);
         try (ServletApplicationContext context = ServletApplicationContext.create(request, response)) {
             runAction(context, action);
         } catch (ActionException e) {

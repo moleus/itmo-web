@@ -1,8 +1,8 @@
 package com.moleus.web.service.helpers;
 
 public enum SessionAttributes {
-    USER_ID("UserId"),
-    HIT_RESULTS("HitResults");
+    USER_ID("userId"),
+    HIT_RESULTS("hitResults");
 
     private final String attributeName;
 

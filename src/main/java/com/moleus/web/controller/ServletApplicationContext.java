@@ -1,6 +1,5 @@
 package com.moleus.web.controller;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -41,10 +40,6 @@ public final class ServletApplicationContext implements AutoCloseable {
 
     public HttpSession getSession() {
         return request.getSession();
-    }
-
-    public ServletContext getServletContext() {
-        return request.getServletContext();
     }
 
 }
