@@ -11,7 +11,7 @@ public class HomePageAction extends PathBasedAction {
 
     @Override
     public ViewPath execute(ServletApplicationContext context) throws ActionException {
-        if (super.isNotLoggedIn(context)) {
+        if (super.isNotLoggedIn()) {
             throw new ActionException(applicationPath, "User not logged in. Session is null");
         }
         return ViewPath.HOME;

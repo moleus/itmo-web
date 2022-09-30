@@ -31,25 +31,28 @@ public class ValidateHitAction extends PathBasedAction {
 
     @Override
     public ViewPath execute(ServletApplicationContext context) throws ActionException {
-        if (super.isNotLoggedIn(context)) {
+        if (super.isNotLoggedIn()) {
+            log.error("User not logged in");
             throw new ActionException(ApplicationPath.UPDATE_HITS, "User not logged in. Session is null");
         }
 
         // User must be logged in and has session attributes.
-        List<HitResult> hitResults = (List<HitResult>) ServletUtil.getSessionAttribute(context, SessionAttributes.HIT_RESULTS.getName());
+        List<HitResult> hitResults = (List<HitResult>) ServletUtil.getSessionAttribute(SessionAttributes.HIT_RESULTS.getName());
 
         try {
-            HitResultDto hitInfo = parseCoordinates(context);
+            HitResultDto hitInfo = parseCoordinates();
             calculateHit(hitInfo);
             HitResult hitResult = HitResultMapper.INSTANCE.hitResultDtoToHitResult(hitInfo);
-            hitResults.add(hitResultsRepository.save(hitResult));
-            log.info("Persisting hit results: {}", hitResults);
+            log.info("Mapped hitResult");
+            hitResultsRepository.save(hitResult);
+            log.info("Persisted hitResult: {}", hitResult.getId());
+            hitResults.add(hitResult);
             //TODO: do I need to recreate an object?
-            ServletUtil.setSessionAttribute(context, SessionAttributes.HIT_RESULTS.getName(), hitResults);
+            ServletUtil.setSessionAttribute(SessionAttributes.HIT_RESULTS.getName(), hitResults);
         } catch (NumberFormatException | NullPointerException e) {
             log.error("Failed to parse params {} with error {}", context.getRequest().getParameterMap().toString(), e.getMessage());
             context.getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            ServletUtil.setSessionAttribute(context,"errorMessage", e.getMessage());
+            ServletUtil.setSessionAttribute("errorMessage", e.getMessage());
             return ViewPath.ERROR;
         }
 
@@ -61,11 +64,11 @@ public class ValidateHitAction extends PathBasedAction {
         return APPLICABLE_PATH;
     }
 
-    private HitResultDto parseCoordinates(ServletApplicationContext context) {
+    private HitResultDto parseCoordinates() {
         HitResultDto hitInfo = new HitResultDto();
-        hitInfo.setX(ServletUtil.paramToFloat(context, "paramX"));
-        hitInfo.setY(ServletUtil.paramToFloat(context, "paramY"));
-        hitInfo.setR(ServletUtil.paramToFloat(context, "paramR"));
+        hitInfo.setX(ServletUtil.paramToFloat("paramX"));
+        hitInfo.setY(ServletUtil.paramToFloat("paramY"));
+        hitInfo.setR(ServletUtil.paramToFloat("paramR"));
         return hitInfo;
     }
 

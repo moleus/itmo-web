@@ -1,8 +1,7 @@
 package com.moleus.web.service.stratagies;
 
 import com.moleus.web.controller.ServletApplicationContext;
-
-import java.util.Objects;
+import com.moleus.web.service.helpers.SessionAttributes;
 
 public abstract class PathBasedAction implements Action {
     @Override
@@ -12,7 +11,8 @@ public abstract class PathBasedAction implements Action {
 
     protected abstract ApplicationPath getProcessPath();
 
-    protected boolean isNotLoggedIn(ServletApplicationContext context) {
-        return context.getRequest().getSession(false) == null;
+    protected boolean isNotLoggedIn() {
+        var session = ServletApplicationContext.getCurrentInstance().getRequest().getSession(false);
+        return session == null || session.getAttribute(SessionAttributes.USER_ID.getName()) == null;
     }
 }

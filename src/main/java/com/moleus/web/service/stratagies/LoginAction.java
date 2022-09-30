@@ -40,10 +40,10 @@ public class LoginAction extends PathBasedAction {
         byte[] hashedProvidedPass = PasswordEncryption.encrypt(providedPassword);
         Optional<User> user = usersRepository.findByUsername(username);
         if (user.isPresent()) {
-            return processLogin(context, user.get(), hashedProvidedPass);
+            return processLogin(user.get(), hashedProvidedPass);
         }
 
-        return processRegister(context, username, hashedProvidedPass);
+        return processRegister(username, hashedProvidedPass);
     }
 
     @Override
@@ -51,45 +51,48 @@ public class LoginAction extends PathBasedAction {
         return APPLICABLE_PATH;
     }
 
-    private ViewPath processRegister(ServletApplicationContext context, String username, byte[] providedPassword) {
+    private ViewPath processRegister(String username, byte[] providedPassword) {
+        log.info("Registeing new user: {}", username);
         var user = new User();
         user.setUsername(username);
         user.setPasswordHash(providedPassword);
-        this.usersRepository.save(user);
-        this.setSessionAttributes(context, user.getId());
+        usersRepository.save(user);
+        setSessionAttributes(user.getId());
         return ViewPath.HOME;
     }
 
-    private boolean checkCredentialsValidity(ServletApplicationContext context, String username, String password) {
+    private boolean checkCredentialsValidity(String username, String password) {
         log.info("Username: {}; password: {}", username, password);
         if (username.length() < 4) {
-            setError(context, "Username should be longer than 4 symbols", HttpServletResponse.SC_BAD_REQUEST);
+            setError("Username should be longer than 4 symbols", HttpServletResponse.SC_BAD_REQUEST);
             return false;
         }
         if (password.length() < 4) {
-            setError(context, "Password should be longer than 4 symbols", HttpServletResponse.SC_BAD_REQUEST);
+            setError("Password should be longer than 4 symbols", HttpServletResponse.SC_BAD_REQUEST);
             return false;
         }
         return true;
     }
 
-    private ViewPath processLogin(ServletApplicationContext context, User user, byte[] hashedProvidedPass) {
+    private ViewPath processLogin(User user, byte[] hashedProvidedPass) {
         if (user.getPasswordHash() == hashedProvidedPass) {
-            this.setSessionAttributes(context, user.getId());
+            setSessionAttributes(user.getId());
+            log.info("Login successful");
             return ViewPath.HOME;
         }
-        setError(context, "Invalid Login or Password", HttpServletResponse.SC_BAD_REQUEST);
+        setError("Invalid Login or Password", HttpServletResponse.SC_UNAUTHORIZED);
         return ViewPath.LOGIN;
     }
 
-    private void setError(ServletApplicationContext context, String message, int responseStatus) {
-        context.getResponse().setStatus(responseStatus);
-        context.getRequest().setAttribute("errorMessage", message);
+    private void setError(String message, int responseStatus) {
+        log.info("error occurred while login: {}", message);
+        ServletApplicationContext.getCurrentInstance().getResponse().setStatus(responseStatus);
+        ServletApplicationContext.getCurrentInstance().getRequest().setAttribute("errorMessage", message);
     }
 
-    private void setSessionAttributes(ServletApplicationContext context, long userId) {
+    private void setSessionAttributes(long userId) {
         List<HitResult> hitResults = this.hitResultsRepository.findByUser(userId);
-        ServletUtil.setSessionAttribute(context, SessionAttributes.USER_ID.getName(), userId);
-        ServletUtil.setSessionAttribute(context, SessionAttributes.HIT_RESULTS.getName(), hitResults);
+        ServletUtil.setSessionAttribute(SessionAttributes.USER_ID.getName(), userId);
+        ServletUtil.setSessionAttribute(SessionAttributes.HIT_RESULTS.getName(), hitResults);
     }
 }

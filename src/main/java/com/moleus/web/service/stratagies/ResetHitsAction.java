@@ -21,13 +21,13 @@ public class ResetHitsAction extends PathBasedAction {
 
     @Override
     public ViewPath execute(ServletApplicationContext context) throws ActionException {
-        if (super.isNotLoggedIn(context)) {
+        if (super.isNotLoggedIn()) {
             throw new ActionException(APPLICABLE_PATH, "User not logged in. Session is null");
         }
         try {
-            long userId = (long) ServletUtil.getSessionAttribute(context, SessionAttributes.USER_ID.getName());
+            long userId = (long) ServletUtil.getSessionAttribute(SessionAttributes.USER_ID.getName());
             hitResultsRepository.removeByUserId(userId);
-            ServletUtil.setSessionAttribute(context, SessionAttributes.HIT_RESULTS.getName(), new ArrayList<HitResult>());
+            ServletUtil.setSessionAttribute(SessionAttributes.HIT_RESULTS.getName(), new ArrayList<HitResult>());
         } catch (NumberFormatException | NullPointerException e) {
             context.getRequest().setAttribute("errorMessage", e.getMessage());
         }
