@@ -1,11 +1,7 @@
 package com.moleus.web.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
-
-import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
@@ -15,6 +11,7 @@ import java.io.Serializable;
 @Setter
 public class User {
     @Id
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private long id;
     private String username;
     private byte[] passwordHash;
