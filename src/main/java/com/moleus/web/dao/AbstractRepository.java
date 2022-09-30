@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -18,8 +19,11 @@ public abstract class AbstractRepository<T> implements GenericDao<T> {
     }
 
     @Override
+    @Transactional
     public T save(T entity) {
-        this.entityManager.persist(entity);
+        //TODO: Fix "detached entity passed to persist" on new user.
+        entityManager.persist(entity);
+        entityManager.flush();
         return entity;
     }
 
