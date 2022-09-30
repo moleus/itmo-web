@@ -48,7 +48,8 @@ public class ControllerServlet extends HttpServlet {
 
     private void runAction(ServletApplicationContext context, Action action) throws ActionException, IOException, ServletException {
         ViewPath view = action.execute(context);
-        String forwardPath = view.equals(ViewPath.DEFAULT) ? context.getRequest().getPathInfo() : view.getName();
+        // if viewPath is unknown - forward to requested URI
+        String forwardPath = view.equals(ViewPath.UNKNOWN) ? context.getRequest().getPathInfo().substring(1) : view.getName();
         HttpServletRequest request = context.getRequest();
         HttpServletResponse response = context.getResponse();
 

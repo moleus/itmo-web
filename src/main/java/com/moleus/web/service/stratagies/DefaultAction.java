@@ -8,7 +8,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class DefaultAction implements Action {
     @Override
     public ViewPath execute(ServletApplicationContext context) {
-        return ViewPath.DEFAULT;
+        return ViewPath.UNKNOWN;
     }
 
     /**

@@ -6,7 +6,7 @@ public enum ViewPath {
     ERROR("error"),
     LOGIN("login"),
 
-    DEFAULT("");
+    UNKNOWN("");
 
     private final String name;
 
