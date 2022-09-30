@@ -24,16 +24,16 @@ public abstract class AbstractRepository<T> implements GenericDao<T> {
     }
 
     protected CriteriaDelete<T> criteriaDeleteEqual(Object value, String columnName) {
-        var cBuilder = this.entityManager.getCriteriaBuilder();
-        CriteriaDelete<T> q = cBuilder.createCriteriaDelete(this.clazz);
-        Root<T> entity = q.from(this.clazz);
+        var cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaDelete<T> q = cBuilder.createCriteriaDelete(clazz);
+        Root<T> entity = q.from(clazz);
         return q.where(cBuilder.equal(entity.get(columnName), value));
     }
 
     protected CriteriaQuery<T> criteriaSelectEqual(Object value, String columnName) {
-        var cBuilder = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> q = cBuilder.createQuery(this.clazz);
-        Root<T> entity = q.from(this.clazz);
+        var cBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> q = cBuilder.createQuery(clazz);
+        Root<T> entity = q.from(clazz);
         return q.select(entity).where(cBuilder.equal(entity.get(columnName), value));
     }
 }
