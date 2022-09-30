@@ -17,15 +17,18 @@ import java.io.IOException;
 public class MainFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
+        var req = (HttpServletRequest) request;
+        var resp = (HttpServletResponse) response;
         String path = req.getRequestURI().substring(req.getContextPath().length());
-        HttpSession session = req.getSession(false);
+        var session = req.getSession(false);
 
         boolean unauthorized = session == null || session.getAttribute(SessionAttributes.USER_ID.getName()) == null;
+        boolean isLoginURI = path.equals("/login");
 
         log.info("New request to {}", path);
-        if (unauthorized && !path.equals("/login")) {
-            req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+        if (unauthorized && !(isLoginURI)) {
+            log.info("Redirecting to login page");
+            resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 

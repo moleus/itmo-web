@@ -29,11 +29,16 @@ public class LoginAction extends PathBasedAction {
 
     @Override
     public ViewPath execute(ServletApplicationContext context) {
-        if (!isNotLoggedIn(context)) return ViewPath.HOME;
+        log.info("Processing login");
+        if (!super.isNotLoggedIn()) {
+            return ViewPath.HOME;
+        }
+        log.info("User not logged in");
 
-        String username = ServletUtil.getRequestParameter(context, "username");
-        String providedPassword = ServletUtil.getRequestParameter(context, "password");
-        if (!checkCredentialsValidity(context, username, providedPassword)) {
+        String username = ServletUtil.getRequestParameter("username");
+        String providedPassword = ServletUtil.getRequestParameter("password");
+        if (!checkCredentialsValidity(username, providedPassword)) {
+            log.info("Invalid login; repeat");
             return ViewPath.LOGIN;
         }
 
