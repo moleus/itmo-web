@@ -25,7 +25,7 @@ export class InputFormController {
         this.inputFormView.bindSubmit(this.handleSubmit);
         this.inputFormView.bindReset(this.handleReset);
 
-        this.inputFormModel.fetchAllData().then(this.processUpdate);
+        // this.inputFormModel.fetchAllData().then(this.processUpdate);
     }
 
     private handleInputX = (event: InputEvent) => {
@@ -54,13 +54,14 @@ export class InputFormController {
     }
 
     private processUpdate = (respHtml: string) => {
-        this.tableView.updateTable(respHtml);
-        this.tableView.getRows(this.inputFormModel.version).forEach(
-            result => {
-                this.canvasView.addPoint(result.x, result.y, result.r, result.isHit);
-                this.axis3dView.addPoint(result.x, result.y, result.r, result.isHit);
-            }
-        )
+        this.tableView.updateTable(respHtml).then(_ =>
+            this.tableView.getRows(this.inputFormModel.version).forEach(
+                result => {
+                    this.canvasView.addPoint(result.x, result.y, result.r, result.isHit);
+                    this.axis3dView.addPoint(result.x, result.y, result.r, result.isHit);
+                }
+            )
+        );
     }
 
     private validateInput = (): boolean => {

@@ -62,8 +62,9 @@ export class CanvasController {
         this.dataModel.version = this.tableView.countRows();
         this.dataModel.fetchUpdates().then(
             respHtml => {
-                this.tableView.updateTable(respHtml);
-                this.tableView.getRows(this.dataModel.version).forEach(onResult)
+                this.tableView.updateTable(respHtml).then(_ =>
+                    this.tableView.getRows(this.dataModel.version).forEach(onResult)
+                );
             }
         ).catch(reason => console.error("Failed to receive data: ", reason))
     }

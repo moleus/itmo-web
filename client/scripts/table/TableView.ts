@@ -1,28 +1,27 @@
 import {HitResult} from "../util/common";
 
 class FrameContext {
-    private frameDocument: Document;
+    private frame: HTMLIFrameElement
 
-    constructor(frameDocument: Document) {
-        this.frameDocument = frameDocument;
+    constructor(frame: HTMLIFrameElement) {
+        this.frame = frame;
     }
 
-    public readonly dataTable = (): HTMLTableElement | null => this.frameDocument.getElementById('result-table') as HTMLTableElement;
-    public readonly tableContainer = (): HTMLElement | null => this.frameDocument.getElementById('table-container');
+    public readonly dataTable = (): HTMLTableElement | null => this.getDoc().getElementById('result-table') as HTMLTableElement;
+    public readonly tableContainer = (): HTMLElement | null => this.getDoc().getElementById('table-container');
+    private readonly getDoc = (): Document => this.frame.contentDocument;
 }
 
 
 export class TableView {
     private frameContext: FrameContext;
     private readonly tableFrame: HTMLIFrameElement;
-    private tableElement: HTMLTableElement | null;
-
     private scrollTimer: NodeJS.Timeout;
     private lastScrollFireTime: number = 0;
 
     constructor(tableFrame: HTMLIFrameElement) {
         this.tableFrame = tableFrame;
-        this.frameContext = new FrameContext(this.tableFrame.contentDocument);
+        this.frameContext = new FrameContext(this.tableFrame);
     }
 
     public countRows = (): number => this.tablePresent() ? this.frameContext.dataTable().rows.length - 1 : 0
@@ -34,18 +33,23 @@ export class TableView {
     }
 
     public updateTable = (tableFrame: string) => {
-        //TODO: fix showing undefined
+        if (tableFrame === undefined || tableFrame === "") return;
         this.tableFrame.srcdoc = tableFrame;
-        // this.scrollToBottom()
+        return new Promise((resolve) => {
+            this.tableFrame.onload = (ev: Event) => {
+                resolve(ev);
+                this.scrollToBottom();
+            };
+        });
     }
 
-    public getRows(fromIndex: number): Array<HitResult> {
+    public getRows = (fromIndex: number): Array<HitResult> => {
         if (!this.tablePresent()) return [];
         const valueRows = [];
-        const xRow = this.tableElement.querySelectorAll('.table-x_val');
-        const yRow = this.tableElement.querySelectorAll('.table-y_val');
-        const rRow = this.tableElement.querySelectorAll('.table-r_val');
-        const isHitRow = this.tableElement.querySelectorAll('.table-hit_res');
+        const xRow = this.frameContext.dataTable().getElementsByClassName('.table-x_val');
+        const yRow = this.frameContext.dataTable().getElementsByClassName('.table-y_val');
+        const rRow = this.frameContext.dataTable().getElementsByClassName('.table-r_val');
+        const isHitRow = this.frameContext.dataTable().getElementsByClassName('.table-hit_res');
 
         for (let i = fromIndex; i < this.countRows(); i++) {
             valueRows.push(new HitResult(
@@ -59,8 +63,7 @@ export class TableView {
     }
 
     private tablePresent = (): boolean => {
-        this.tableElement = this.frameContext.dataTable();
-        return this.tableElement !== null;
+        return Boolean(this.frameContext.dataTable());
     }
 
     private scrollToBottom = () => {
