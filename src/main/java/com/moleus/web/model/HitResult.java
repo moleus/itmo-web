@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "hit_results")
@@ -22,6 +22,6 @@ public class HitResult implements Serializable {
     private float y;
     private float r;
     private boolean hit;
-    private LocalDateTime hitTime;
-    private long executionTime;
+    private Date hitTime;
+    private long executionTimeMs;
 }

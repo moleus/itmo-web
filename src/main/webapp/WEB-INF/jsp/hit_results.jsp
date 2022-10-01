@@ -1,9 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Hit results</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/main.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/main.css"/>
 </head>
 <body>
 <div id="table-container">
@@ -25,8 +26,8 @@
                 <td class=".table-y_val"><c:out value="${point.y}"/></td>
                 <td class=".table-r_val"><c:out value="${point.r}"/></td>
                 <td class=".table-hit_res">${point.hit}</td>
-                <td>${point.hitTime}</td>
-                <td>${point.executionTime}</td>
+                <td><fmt:formatDate value="${point.hitTime}" pattern="HH:mm:ss"/></td>
+                <td>${point.executionTimeMs}ms</td>
             </tr>
         </c:forEach>
         </tbody>

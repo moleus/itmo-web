@@ -2,7 +2,7 @@ package com.moleus.web.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 public class HitResultDto {
@@ -10,6 +10,6 @@ public class HitResultDto {
     private float y;
     private float r;
     private boolean hit;
-    private LocalDateTime hitTime;
-    private long executionTime;
+    private Date hitTime;
+    private long executionTimeMs;
 }

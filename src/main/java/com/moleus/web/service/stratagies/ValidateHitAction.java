@@ -11,16 +11,16 @@ import com.moleus.web.service.helpers.SessionAttributes;
 import com.moleus.web.service.helpers.ViewPath;
 import com.moleus.web.service.mapping.HitResultMapper;
 import com.moleus.web.util.ServletUtil;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Log4j2
-@ApplicationScoped
+@RequestScoped
 public class ValidateHitAction extends PathBasedAction {
     private static final ApplicationPath APPLICABLE_PATH = ApplicationPath.UPDATE_HITS;
 
@@ -29,12 +29,17 @@ public class ValidateHitAction extends PathBasedAction {
     @Inject
     private Graph shapesGraph;
 
+    private Date requestDate;
+    private long requestNano;
+
     @Override
     public ViewPath execute(ServletApplicationContext context) throws ActionException {
         if (super.isNotLoggedIn()) {
             log.error("User not logged in");
             throw new ActionException(ApplicationPath.UPDATE_HITS, "User not logged in. Session is null");
         }
+        this.requestDate = new Date();
+        this.requestNano = System.nanoTime();
 
         // User must be logged in and has session attributes.
         List<HitResult> hitResults = (List<HitResult>) ServletUtil.getSessionAttribute(SessionAttributes.HIT_RESULTS.getName());
@@ -74,14 +79,13 @@ public class ValidateHitAction extends PathBasedAction {
 
     //TODO: separate to the lower abstraction layer
     private void calculateHit(HitResultDto hitInfo) {
-        var startTime = LocalDateTime.now();
-        var endTime = LocalDateTime.now();
         //TODO: adjust coordinates according to R value.
         boolean isHit = this.shapesGraph.isInGraph(new Point(hitInfo.getX(), hitInfo.getY()));
-        long executionTime = endTime.getNano() - startTime.getNano();
+        var endTime = System.nanoTime();
+        long executionTimeMs = (endTime - requestNano) / 1000;
         hitInfo.setHit(isHit);
-        hitInfo.setExecutionTime(executionTime);
-        hitInfo.setHitTime(startTime);
+        hitInfo.setExecutionTimeMs(executionTimeMs);
+        hitInfo.setHitTime(requestDate);
         log.info("Calculated hit: {}", hitInfo);
     }
 }
