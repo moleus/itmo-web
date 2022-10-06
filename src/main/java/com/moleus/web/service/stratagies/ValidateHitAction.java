@@ -48,12 +48,10 @@ public class ValidateHitAction extends PathBasedAction {
             HitResultDto hitInfo = parseCoordinates();
             calculateHit(hitInfo);
             HitResult hitResult = HitResultMapper.INSTANCE.hitResultDtoToHitResult(hitInfo);
-            log.info("Mapped hitResult");
+            hitResult.setUserId((long) ServletUtil.getSessionAttribute(SessionAttributes.USER_ID.getName()));
             hitResultsRepository.save(hitResult);
             log.info("Persisted hitResult: {}", hitResult.getId());
             hitResults.add(hitResult);
-            //TODO: do I need to recreate an object?
-            ServletUtil.setSessionAttribute(SessionAttributes.HIT_RESULTS.getName(), hitResults);
         } catch (NumberFormatException | NullPointerException e) {
             log.error("Failed to parse params {} with error {}", context.getRequest().getParameterMap().toString(), e.getMessage());
             context.getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -86,6 +84,5 @@ public class ValidateHitAction extends PathBasedAction {
         hitInfo.setHit(isHit);
         hitInfo.setExecutionTimeMs(executionTimeMs);
         hitInfo.setHitTime(requestDate);
-        log.info("Calculated hit: {}", hitInfo);
     }
 }
