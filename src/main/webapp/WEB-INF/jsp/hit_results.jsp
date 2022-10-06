@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Hit results</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/main.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/styles-table.css"/>
 </head>
 <body>
 <div id="table-container">

@@ -1,8 +1,3 @@
-import "../styles/main.scss"
-import "../styles/buttons.scss"
-import "../styles/sliders.scss"
-import "../styles/table.scss"
-
 import {CoordinateNormalizer} from "./canvas/CoordinateNormalizer";
 import {CanvasController} from "./canvas/CanvasController";
 import {Axis2dView} from "./canvas/Axis2dView";

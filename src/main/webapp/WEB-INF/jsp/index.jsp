@@ -3,12 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/main.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/styles-main.css" />
     <title>Main page</title>
 </head>
 <body>
-<main class="page">
-    <section class="grid-section header">
+<main class="main-page">
+    <section class="grid-section main-header">
         <span class="centered">Solovev Pavel Andreevich. P32302</span>
         <span class="centered">3114</span>
     </section>

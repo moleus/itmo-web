@@ -1,0 +1,19 @@
+:root {
+  /* Palette */
+  --white-color: #fff;
+  --black-color: #171717;
+  --gray-color: #f1f6f5;
+  --gray-dark-color: #d6d5d2;
+  --green-color: #c5ffef;
+  --blue-color: #81e5fa;
+  --dark-blue-color: #172a3a;
+  --dark-green-color: #3cb6b2;
+  --red-color: #e04053;
+
+  /* App Theme */
+  --primary-color: var(--green-color);
+  --destructive-color: var(--red-color);
+  --text-on-light-bg-color: var(--black-color);
+  --text-on-dark-bg-color: var(--white-color);
+}
+
