@@ -26,16 +26,20 @@ public class MainFilter implements Filter {
         boolean isLoginURI = path.equals("/login");
 
         log.info("New request to {}", path);
+        if (path.startsWith("/static")) {
+            chain.doFilter(request, response); // Goes to default servlet.
+            return;
+        }
+
         if (unauthorized && !(isLoginURI)) {
             log.info("Redirecting to login page");
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
+        } else if (!(unauthorized) && isLoginURI) {
+            resp.sendRedirect(req.getContextPath() + "/index");
+            return;
         }
 
-        if (path.startsWith("/static")) {
-            chain.doFilter(request, response); // Goes to default servlet.
-        } else {
-            request.getRequestDispatcher("/jsp" + path).forward(request, response);
-        }
+        request.getRequestDispatcher("/jsp" + path).forward(request, response);
     }
 }
