@@ -5,17 +5,30 @@
     <title>Web Login</title>
 </head>
 <body>
-<form action="login" method="POST">
-<%--    <c:if test="${not empty errorMessage}">--%>
-<%--        * error: ${errorMessage}--%>
-<%--    </c:if>--%>
-    <label>
-        <input type="text" name="username"/>
-    </label>Username<br/><br/>
-    <label>
-        <input type="password" name="password"/>
-    </label>Password<br/><br/>
-    <input type="submit" value="login"/>"
-</form>
+<main class="login-page">
+    <section class="login-heading">
+        <span class="centered">Login</span>
+    </section>
+    <section class="login-input-form">
+        <form class="centered" action="login" method="POST">
+            <div class="input-container">
+                <label class="input-label" for="username">Username</label>
+                <input class="input-field" id="username" name="username" type="text" minlength="4"/>
+            </div>
+            <div class="input-container">
+                <label class="input-label" for="password">Password</label>
+                <input class="input-field" id="password" name="password" type="password" minlength="4"/>
+            </div>
+            <div class="input-container">
+                <button class="input-field backlight clickable" type="submit">Login</button>
+            </div>
+            <div class="error-box input-container">
+                <c:if test="${not empty errorMessage}">
+                    error: ${errorMessage}
+                </c:if>
+            </div>
+        </form>
+    </section>
+</main>
 </body>
 </html>
