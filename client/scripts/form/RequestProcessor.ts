@@ -13,7 +13,9 @@ export class RequestProcessor {
             method: 'POST',
             body: body,
         }).then((response) => {
-            if (response.ok) return response.text();
+            if (response.redirected || response.status == 302) {
+                window.location.replace(response.url);
+            } else if (response.ok) return response.text();
         })
     }
 }

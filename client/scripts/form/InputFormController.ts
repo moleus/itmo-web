@@ -25,7 +25,7 @@ export class InputFormController {
         this.inputFormView.bindSubmit(this.handleSubmit);
         this.inputFormView.bindReset(this.handleReset);
 
-        // this.inputFormModel.fetchAllData().then(this.processUpdate);
+        this.inputFormModel.fetchAllData().then(this.processUpdate);
     }
 
     private handleInputX = (event: InputEvent) => {
