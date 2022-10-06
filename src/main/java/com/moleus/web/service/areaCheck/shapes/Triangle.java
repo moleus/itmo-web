@@ -9,7 +9,7 @@ public class Triangle extends AbstractShape {
 
     public Triangle(Quadrant quadrant, float a, float b) {
         super(quadrant);
-        this.a = b;
+        this.a = a;
         this.b = b;
     }
 

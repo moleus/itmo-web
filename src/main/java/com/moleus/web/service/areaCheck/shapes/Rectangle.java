@@ -16,6 +16,6 @@ public class Rectangle extends AbstractShape {
     @Override
     public boolean isInShape(Point point) {
         return super.isInQuadrant(point) &&
-            this.quadrant.x * point.x() <= this.width && this.quadrant.y <= this.height;
+            this.quadrant.x * point.x() <= this.width && this.quadrant.y * point.y() <= this.height;
     }
 }
