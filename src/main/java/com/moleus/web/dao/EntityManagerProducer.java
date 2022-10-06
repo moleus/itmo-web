@@ -1,19 +1,19 @@
 package com.moleus.web.dao;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Disposes;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
 
-@RequestScoped
+@ApplicationScoped
 public class EntityManagerProducer {
     @PersistenceUnit
     EntityManagerFactory factory;
 
     @Produces
-    @RequestScoped
+    @ApplicationScoped
     public EntityManager newEntityManager() {
         return factory.createEntityManager();
     }
