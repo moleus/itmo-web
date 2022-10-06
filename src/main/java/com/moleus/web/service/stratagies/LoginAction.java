@@ -14,6 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,19 +37,18 @@ public class LoginAction extends PathBasedAction {
         log.info("User not logged in");
 
         String username = ServletUtil.getRequestParameter("username");
-        String providedPassword = ServletUtil.getRequestParameter("password");
-        if (!checkCredentialsValidity(username, providedPassword)) {
-            log.info("Invalid login; repeat");
+        String rawPassword = ServletUtil.getRequestParameter("password");
+        if (!checkCredentialsValidity(username, rawPassword)) {
+            log.info("Invalid login data; reenter");
             return ViewPath.LOGIN;
         }
 
-        byte[] hashedProvidedPass = PasswordEncryption.encrypt(providedPassword);
         Optional<User> user = usersRepository.findByUsername(username);
         if (user.isPresent()) {
-            return processLogin(user.get(), hashedProvidedPass);
+            return processLogin(user.get(), rawPassword);
         }
 
-        return processRegister(username, hashedProvidedPass);
+        return processRegister(username, rawPassword);
     }
 
     @Override
@@ -56,11 +56,12 @@ public class LoginAction extends PathBasedAction {
         return APPLICABLE_PATH;
     }
 
-    private ViewPath processRegister(String username, byte[] providedPassword) {
+    private ViewPath processRegister(String username, String providedPassword) {
         log.info("Registeing new user: {}", username);
+        var hashedPassword = PasswordEncryption.encrypt(providedPassword);
         var user = new User();
         user.setUsername(username);
-        user.setPasswordHash(providedPassword);
+        user.setPasswordHash(hashedPassword);
         usersRepository.save(user);
         setSessionAttributes(user.getId());
         return ViewPath.HOME;
@@ -79,8 +80,8 @@ public class LoginAction extends PathBasedAction {
         return true;
     }
 
-    private ViewPath processLogin(User user, byte[] hashedProvidedPass) {
-        if (user.getPasswordHash() == hashedProvidedPass) {
+    private ViewPath processLogin(User user, String rawPassword) {
+        if (PasswordEncryption.isValid(rawPassword.getBytes(StandardCharsets.UTF_8), user.getPasswordHash())) {
             setSessionAttributes(user.getId());
             log.info("Login successful");
             return ViewPath.HOME;
