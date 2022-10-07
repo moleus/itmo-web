@@ -78,7 +78,7 @@ public class ValidateHitAction extends PathBasedAction {
     //TODO: separate to the lower abstraction layer
     private void calculateHit(HitResultDto hitInfo) {
         //TODO: adjust coordinates according to R value.
-        boolean isHit = this.shapesGraph.isInGraph(new Point(hitInfo.getX(), hitInfo.getY()));
+        boolean isHit = this.shapesGraph.isInGraph(new Point(hitInfo.getX() / hitInfo.getR(), hitInfo.getY() / hitInfo.getR()));
         var endTime = System.nanoTime();
         long executionTimeMs = (endTime - requestNano) / 1000;
         hitInfo.setHit(isHit);
