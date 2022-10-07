@@ -18,7 +18,7 @@ export class InputFormModel {
     };
 
     public fetchAllData(): Promise<string> {
-        return RequestProcessor.makeRequest("update");
+        return RequestProcessor.makeRequest("get_hits");
     };
 
     public resetData() {

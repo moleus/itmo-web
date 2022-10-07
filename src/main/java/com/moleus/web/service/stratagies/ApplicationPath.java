@@ -9,6 +9,7 @@ import java.util.List;
 public enum ApplicationPath {
     HOME("GET/index", "GET/"),
     UPDATE_HITS("POST/update"),
+    GET_HITS("POST/get_hits"),
     RESET_HITS("POST/reset_hits"),
     LOGIN("POST/login");
 
