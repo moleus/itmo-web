@@ -1,7 +1,7 @@
 package com.moleus.web.dao;
 
-import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public abstract class AbstractRepository<T> implements GenericDao<T> {
-    @Inject
+    @PersistenceContext
     protected EntityManager entityManager;
     protected Class<T> clazz;
 
