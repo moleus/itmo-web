@@ -53,8 +53,6 @@ public class ControllerServlet extends HttpServlet {
         HttpServletRequest request = context.getRequest();
         HttpServletResponse response = context.getResponse();
 
-        //TODO: remove debug output
-        log.info("Forwarding request after action processing to /WEB-INF/jsp/{}.jsp", forwardPath);
         request.getRequestDispatcher("/WEB-INF/jsp/" + forwardPath + ".jsp").forward(request, response);
     }
 

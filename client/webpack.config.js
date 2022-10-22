@@ -13,6 +13,7 @@ const devServer = {
     open: false,
     hot: false,
     static: false,
+    port: 9999,
     watchFiles: [
         path.resolve(__dirname, 'styles/**/*.scss'),
         path.resolve(__dirname, 'scripts/**/*.ts'),

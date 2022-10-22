@@ -2,6 +2,7 @@ package com.moleus.web.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -21,7 +22,6 @@ public abstract class AbstractRepository<T> implements GenericDao<T> {
     @Override
     @Transactional
     public T save(T entity) {
-        //TODO: Fix "detached entity passed to persist" on new user.
         entityManager.persist(entity);
         entityManager.flush();
         return entity;
