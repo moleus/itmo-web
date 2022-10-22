@@ -2,10 +2,10 @@ package com.moleus.web.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 
@@ -27,17 +27,17 @@ public abstract class AbstractRepository<T> implements GenericDao<T> {
         return entity;
     }
 
-    protected CriteriaDelete<T> criteriaDeleteEqual(Object value, String columnName) {
+    protected <V> CriteriaDelete<T> criteriaDeleteEqual(V value, SingularAttribute<T, V> attribute) {
         var cBuilder = entityManager.getCriteriaBuilder();
         CriteriaDelete<T> q = cBuilder.createCriteriaDelete(clazz);
         Root<T> entity = q.from(clazz);
-        return q.where(cBuilder.equal(entity.get(columnName), value));
+        return q.where(cBuilder.equal(entity.get(attribute), value));
     }
 
-    protected CriteriaQuery<T> criteriaSelectEqual(Object value, String columnName) {
+    protected <V> CriteriaQuery<T> criteriaSelectEqual(V value, SingularAttribute<T, V> attribute) {
         var cBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> q = cBuilder.createQuery(clazz);
         Root<T> entity = q.from(clazz);
-        return q.select(entity).where(cBuilder.equal(entity.get(columnName), value));
+        return q.select(entity).where(cBuilder.equal(entity.get(attribute), value));
     }
 }
