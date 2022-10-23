@@ -1,20 +1,20 @@
 import {Axis2dView} from "./Axis2dView";
-import {InputFormModel} from "../form/InputFormModel";
 import {HitResult, Vector} from "../util/common";
 import {InputFormView} from "../form/InputFormView";
 import {CoordinateNormalizer} from "./CoordinateNormalizer";
 import {TableView} from "../table/TableView";
 import {Axis3dView} from "../axis_3d/Axis3dView";
 import {ModeSwitcherView} from "./ModeSwitcherView";
+import {HitsModel} from "../table/HitsModel";
 
 export class CanvasController {
     private readonly axis2dView: Axis2dView;
-    private readonly dataModel: InputFormModel;
     private readonly inputFormView: InputFormView;
     private readonly tableView: TableView;
     private readonly modeSwitcherView: ModeSwitcherView;
     private readonly axis3dView: Axis3dView;
     private readonly coordinateNormalizer: CoordinateNormalizer;
+    private hitsModel: HitsModel;
 
     constructor(
         coordinateNormalizer: CoordinateNormalizer,
@@ -23,11 +23,11 @@ export class CanvasController {
         tableView: TableView,
         axis3dView: Axis3dView,
         modeSwitcherView: ModeSwitcherView,
-        canvasModel: InputFormModel) {
+        hitsModel: HitsModel) {
         this.tableView = tableView;
         this.coordinateNormalizer = coordinateNormalizer;
         this.axis2dView = canvasView;
-        this.dataModel = canvasModel;
+        this.hitsModel = hitsModel;
         this.inputFormView = inputFormView;
         this.axis3dView = axis3dView;
         this.modeSwitcherView = modeSwitcherView;
@@ -41,32 +41,29 @@ export class CanvasController {
         const position = getPosition(event);
         const unitR = this.inputFormView.getR();
         const normalized = this.coordinateNormalizer.fromPxToUnits(position, unitR);
-        this.sendCoordinates(normalized, unitR, result => {
-                this.axis2dView.addPoint(result.x, result.y, result.r, result.isHit)
-                this.axis3dView.addPoint(result.x, result.y, result.r, result.isHit);
-            }
-        );
+        this.sendCoordinates(normalized, unitR).then(results => this.updateViews(results));
     }
 
     private handle3dClick = (x: number, y: number) => {
         const fixed_r = 1;
-        this.sendCoordinates(new Vector(x, y), fixed_r, result => {
-            this.axis2dView.addPoint(result.x, result.y, result.r, result.isHit)
-        });
+        this.sendCoordinates(new Vector(x, y), fixed_r).then(results => this.updateViews(results, true));
     }
 
-    private sendCoordinates(coordinates: Vector, unitR: number, onResult: (result: HitResult) => void) {
-        this.dataModel.x = coordinates.x;
-        this.dataModel.y = coordinates.y;
-        this.dataModel.r = unitR
-        this.dataModel.version = this.tableView.countRows();
-        this.dataModel.fetchUpdates().then(
-            respHtml => {
-                this.tableView.updateTable(respHtml).then(_ =>
-                    this.tableView.getRows(this.dataModel.version).forEach(onResult)
-                );
+    private sendCoordinates(coordinates: Vector, unitR: number): Promise<Array<HitResult>> {
+        this.hitsModel.constructingHit.x = coordinates.x;
+        this.hitsModel.constructingHit.y = coordinates.y;
+        this.hitsModel.constructingHit.r = unitR
+        return this.hitsModel.postHit().then(() => this.hitsModel.getHits())
+    }
+
+    private updateViews = (newHits: Array<HitResult>, isFrom3d: boolean = false) => {
+        this.tableView.updateTable(newHits);
+        newHits.forEach(result => {
+                this.axis2dView.addPoint(result.x, result.y, result.r, result.hit);
+                if (isFrom3d) return;
+                this.axis3dView.addPoint(result.x, result.y, result.r, result.hit);
             }
-        ).catch(reason => console.error("Failed to receive data: ", reason))
+        )
     }
 
     onCanvasSwitch = (isChecked: boolean) => {

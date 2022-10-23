@@ -1,10 +1,6 @@
 package com.moleus.web.controller;
 
-import com.moleus.web.service.exceptions.ActionException;
-import com.moleus.web.service.helpers.ViewPath;
-import com.moleus.web.service.stratagies.Action;
-import com.moleus.web.service.stratagies.ActionFactory;
-import jakarta.inject.Inject;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -27,8 +23,6 @@ import java.io.IOException;
 @WebServlet(name = "FrontController", urlPatterns = "/jsp/*")
 @MultipartConfig
 public class ControllerServlet extends HttpServlet {
-    @Inject ActionFactory actionFactory;
-
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         processRequest(request, response);
     }
@@ -38,24 +32,8 @@ public class ControllerServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Action action = actionFactory.getActionStrategy(request);
-        try (ServletApplicationContext context = ServletApplicationContext.create(request, response)) {
-            runAction(context, action);
-        } catch (ActionException e) {
-            log.error(e.getMessage());
-        }
-    }
-
-    private void runAction(ServletApplicationContext context, Action action) throws ActionException, IOException, ServletException {
-        ViewPath view = action.execute(context);
-        // if viewPath is unknown - forward to requested URI
-        String forwardPath = view.equals(ViewPath.UNKNOWN) ? context.getRequest().getPathInfo().substring(1) : view.getName();
-        HttpServletRequest request = context.getRequest();
-        HttpServletResponse response = context.getResponse();
-
+        String forwardPath = request.getPathInfo().substring(1);
+        log.info("Controller servlet processing: {}", forwardPath);
         request.getRequestDispatcher("/WEB-INF/jsp/" + forwardPath + ".jsp").forward(request, response);
-    }
-
-    public void destroy() {
     }
 }

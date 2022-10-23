@@ -7,7 +7,7 @@ export const ElementsContext = {
     submitButton: document.getElementById('submit') as HTMLButtonElement,
     resetButton: document.getElementById('reset') as HTMLButtonElement,
     inputForm: document.getElementById('input-form') as HTMLFormElement,
-    hitTableIframe: document.getElementById('table-container_frame') as HTMLIFrameElement
+    dataTable: document.getElementById('result-table') as HTMLTableElement,
 }
 
 export class Vector {
@@ -24,16 +24,26 @@ export class Vector {
     }
 }
 
+export class HitCoordinates {
+    x: number;
+    y: number;
+    r: number;
+}
+
 export class HitResult {
     readonly x: number;
     readonly y: number;
     readonly r: number;
-    readonly isHit: boolean;
+    readonly hit: boolean;
+    readonly hitTime: Date;
+    readonly executionTimeMs: number;
 
-    constructor(x: number, y: number, r: number, isHit: boolean) {
+    constructor(x: number, y: number, r: number, isHit: boolean, hitTime: Date, executionTimeMs: number) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.isHit = isHit;
+        this.hit = isHit;
+        this.hitTime = hitTime;
+        this.executionTimeMs = executionTimeMs;
     }
 }

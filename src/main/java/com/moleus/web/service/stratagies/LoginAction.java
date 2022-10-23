@@ -5,42 +5,39 @@ import com.moleus.web.dao.HitResultsRepository;
 import com.moleus.web.dao.UsersRepository;
 import com.moleus.web.model.HitResult;
 import com.moleus.web.model.User;
+import com.moleus.web.service.helpers.ActionResult;
 import com.moleus.web.service.helpers.PasswordEncryption;
 import com.moleus.web.service.helpers.SessionAttributes;
 import com.moleus.web.service.helpers.ViewPath;
+import com.moleus.web.service.mapping.UserMapper;
 import com.moleus.web.util.ServletUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
 @Log4j2
 @ApplicationScoped
-public class LoginAction extends PathBasedAction {
-    private static final ApplicationPath APPLICABLE_PATH = ApplicationPath.LOGIN;
-
+public class LoginAction implements Action {
     @Inject
     private UsersRepository usersRepository;
     @Inject
     private HitResultsRepository hitResultsRepository;
 
     @Override
-    public ViewPath execute(ServletApplicationContext context) {
+    public Optional<ActionResult> execute(String[] payload) {
         log.info("Processing login");
-        if (!super.isNotLoggedIn()) {
-            return ViewPath.HOME;
-        }
-        log.info("User not logged in");
 
         String username = ServletUtil.getRequestParameter("username");
         String rawPassword = ServletUtil.getRequestParameter("password");
         if (!checkCredentialsValidity(username, rawPassword)) {
             log.info("Invalid login data; reenter");
-            return ViewPath.LOGIN;
+            return Optional.empty();
         }
 
         Optional<User> user = usersRepository.findByUsername(username);
@@ -51,12 +48,7 @@ public class LoginAction extends PathBasedAction {
         return processRegister(username, rawPassword);
     }
 
-    @Override
-    protected ApplicationPath getProcessPath() {
-        return APPLICABLE_PATH;
-    }
-
-    private ViewPath processRegister(String username, String providedPassword) {
+    private Optional<ActionResult> processRegister(String username, String providedPassword) {
         log.info("Registeing new user: {}", username);
         var hashedPassword = PasswordEncryption.encrypt(providedPassword);
         var user = new User();
@@ -64,7 +56,7 @@ public class LoginAction extends PathBasedAction {
         user.setPasswordHash(hashedPassword);
         usersRepository.save(user);
         setSessionAttributes(user.getId());
-        return ViewPath.HOME;
+        return Optional.of(new ActionResult(UserMapper.INSTANCE.userToDto(user)));
     }
 
     private boolean checkCredentialsValidity(String username, String password) {
@@ -80,14 +72,14 @@ public class LoginAction extends PathBasedAction {
         return true;
     }
 
-    private ViewPath processLogin(User user, String rawPassword) {
+    private Optional<ActionResult> processLogin(User user, String rawPassword) {
         if (PasswordEncryption.isValid(rawPassword.getBytes(StandardCharsets.UTF_8), user.getPasswordHash())) {
             setSessionAttributes(user.getId());
             log.info("Login successful");
-            return ViewPath.HOME;
+            return Optional.of(new ActionResult(UserMapper.INSTANCE.userToDto(user)));
         }
         setError("Invalid Login or Password", HttpServletResponse.SC_UNAUTHORIZED);
-        return ViewPath.LOGIN;
+        return Optional.empty();
     }
 
     private void setError(String message, int responseStatus) {

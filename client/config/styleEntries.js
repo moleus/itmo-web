@@ -3,22 +3,13 @@ const stylesConfig = require('./styles.json');
 
 const cacheGroups = {}
 const entryPoints = {
-    script: "./scripts/main.ts"
+    script: "./scripts/main.ts",
+    login_script: "./scripts/login/loginForm.ts"
 }
 
 module.exports = {
     cacheGroups,
     entryPoints
-}
-
-function recursiveIssuer(m) {
-    if (m.issuer) {
-        return recursiveIssuer(m.issuer);
-    } else if (m.name) {
-        return m.name;
-    } else {
-        return false;
-    }
 }
 
 stylesConfig.scss.forEach(entry => {
@@ -27,9 +18,11 @@ stylesConfig.scss.forEach(entry => {
 
 stylesConfig.scss.forEach(entryPoint => {
     cacheGroups[entryPoint.name] = {
-        name: entryPoint.name,
-        test: (m, c, entry = entryPoint.name) => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-        chunks: 'all',
-        enforce: true
+            type: "css/mini-extract",
+            name: entryPoint.name,
+            test: entryPoint.path,
+            chunks: 'all',
+            enforce: true,
+        }
     }
-});
+);

@@ -63,10 +63,21 @@
     </div>
 
     <section class="grid-section results-table">
-        <iframe name="hit-results" id="table-container_frame" class="full-block">
-        <%--    onload="resizeIframe(this) --%>
-            hits history
-        </iframe>
+        <div id="table-container">
+            <table id="result-table">
+                <thead>
+                <tr>
+                    <th class="coords-col">X</th>
+                    <th class="coords-col">Y</th>
+                    <th class="coords-col">R</th>
+                    <th class="result-col">Hit result</th>
+                    <th class="current_time-col">Current time</th>
+                    <th class="exec_time-col">Execution time</th>
+                </tr>
+                </thead>
+                <tbody> <%-- js fills body --%> </tbody>
+            </table>
+        </div>
     </section>
 </main>
 <script type="module" src="${pageContext.request.contextPath}/static/script.js"></script>

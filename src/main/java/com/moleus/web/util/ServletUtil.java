@@ -19,4 +19,8 @@ public class ServletUtil {
         return ServletApplicationContext.getCurrentInstance().getRequest().getParameter(paramName);
     }
 
+    public static String getRequestPath() {
+        var req = ServletApplicationContext.getCurrentInstance().getRequest();
+        return req.getRequestURI().substring(req.getContextPath().length());
+    }
 }

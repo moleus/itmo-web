@@ -8,14 +8,10 @@ export class RequestProcessor {
         return formData;
     }
 
-    public static makeRequest(path: string, body?: BodyInit): Promise<string> {
+    public static makeRequest(path: string, method: string = "GET", body?: BodyInit): Promise<Response> {
         return fetch(path, {
-            method: 'POST',
+            method: method,
             body: body,
-        }).then((response) => {
-            if (response.redirected || response.status == 302) {
-                window.location.replace(response.url);
-            } else if (response.ok) return response.text();
-        })
+        });
     }
 }

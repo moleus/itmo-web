@@ -1,6 +1,5 @@
 package com.moleus.web.controller;
 
-import com.moleus.web.service.helpers.SessionAttributes;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,26 +19,15 @@ public class MainFilter implements Filter {
         var req = (HttpServletRequest) request;
         var resp = (HttpServletResponse) response;
         String path = req.getRequestURI().substring(req.getContextPath().length());
-        var session = req.getSession(false);
-
-        boolean unauthorized = session == null || session.getAttribute(SessionAttributes.USER_ID.getName()) == null;
-        boolean isLoginURI = path.equals("/login");
 
         log.info("New request to {}", path);
+
         if (path.startsWith("/static")) {
             chain.doFilter(request, response); // Goes to default servlet.
             return;
         }
-
-        if (unauthorized && !(isLoginURI)) {
-            log.info("Redirecting to login page");
-            resp.sendRedirect(req.getContextPath() + "/login");
-            return;
-        } else if (!(unauthorized) && isLoginURI) {
-            resp.sendRedirect(req.getContextPath() + "/index");
-            return;
+        try (ServletApplicationContext ignored = ServletApplicationContext.create(req, resp)) {
+            chain.doFilter(request, response); // Goes to hits and user servlets
         }
-
-        request.getRequestDispatcher("/jsp" + path).forward(request, response);
     }
 }

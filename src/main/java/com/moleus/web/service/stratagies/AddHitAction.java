@@ -6,9 +6,8 @@ import com.moleus.web.dto.HitResultDto;
 import com.moleus.web.model.HitResult;
 import com.moleus.web.service.areaCheck.quadrant.Point;
 import com.moleus.web.service.areaCheck.shapes.Graph;
-import com.moleus.web.service.exceptions.ActionException;
+import com.moleus.web.service.helpers.ActionResult;
 import com.moleus.web.service.helpers.SessionAttributes;
-import com.moleus.web.service.helpers.ViewPath;
 import com.moleus.web.service.mapping.HitResultMapper;
 import com.moleus.web.util.ServletUtil;
 import jakarta.enterprise.context.RequestScoped;
@@ -18,12 +17,11 @@ import lombok.extern.log4j.Log4j2;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @RequestScoped
-public class ValidateHitAction extends PathBasedAction {
-    private static final ApplicationPath APPLICABLE_PATH = ApplicationPath.UPDATE_HITS;
-
+public class AddHitAction implements Action {
     @Inject
     private HitResultsRepository hitResultsRepository;
     @Inject
@@ -33,38 +31,28 @@ public class ValidateHitAction extends PathBasedAction {
     private long requestNano;
 
     @Override
-    public ViewPath execute(ServletApplicationContext context) throws ActionException {
-        if (super.isNotLoggedIn()) {
-            log.error("User not logged in");
-            throw new ActionException(ApplicationPath.UPDATE_HITS, "User not logged in. Session is null");
-        }
+    public Optional<ActionResult> execute(String[] payload) {
         this.requestDate = new Date();
         this.requestNano = System.nanoTime();
+        ServletApplicationContext context = ServletApplicationContext.getCurrentInstance();
 
-        // User must be logged in and has session attributes.
         List<HitResult> hitResults = (List<HitResult>) ServletUtil.getSessionAttribute(SessionAttributes.HIT_RESULTS.getName());
 
         try {
             HitResultDto hitInfo = parseCoordinates();
             calculateHit(hitInfo);
-            HitResult hitResult = HitResultMapper.INSTANCE.hitResultDtoToHitResult(hitInfo);
+            HitResult hitResult = HitResultMapper.INSTANCE.toEntity(hitInfo);
             hitResult.setUserId((long) ServletUtil.getSessionAttribute(SessionAttributes.USER_ID.getName()));
             hitResultsRepository.save(hitResult);
             log.info("Persisted hitResult: {}", hitResult.getId());
             hitResults.add(hitResult);
+            return Optional.of(new ActionResult(HitResultMapper.INSTANCE.toDto(hitResult)));
         } catch (NumberFormatException | NullPointerException e) {
             log.error("Failed to parse params {} with error {}", context.getRequest().getParameterMap().toString(), e.getMessage());
             context.getResponse().setStatus(HttpServletResponse.SC_BAD_REQUEST);
             ServletUtil.setSessionAttribute("errorMessage", e.getMessage());
-            return ViewPath.ERROR;
+            return Optional.empty();
         }
-
-        return ViewPath.HIT_RESULTS;
-    }
-
-    @Override
-    protected ApplicationPath getProcessPath() {
-        return APPLICABLE_PATH;
     }
 
     private HitResultDto parseCoordinates() {

@@ -4,20 +4,22 @@ import {Axis2dView} from "../canvas/Axis2dView";
 import {InputFormModel} from "./InputFormModel";
 import {InputRangeValidator} from "../util/InputRangeValidator";
 import {Axis3dView} from "../axis_3d/Axis3dView";
+import {HitResult} from "../util/common";
+import {HitsModel} from "../table/HitsModel";
 
 export class InputFormController {
     private inputFormView: InputFormView;
     private tableView: TableView;
     private canvasView: Axis2dView;
-    private inputFormModel: InputFormModel;
     private axis3dView: Axis3dView;
+    private hitsModel: HitsModel;
 
-    constructor(inputFormView: InputFormView, inputFormModel: InputFormModel, tableView: TableView, canvasView: Axis2dView, axis3dView: Axis3dView) {
+    constructor(inputFormView: InputFormView, inputFormModel: InputFormModel, tableView: TableView, canvasView: Axis2dView, axis3dView: Axis3dView, hitsModel: HitsModel) {
         this.inputFormView = inputFormView;
-        this.inputFormModel = inputFormModel;
         this.tableView = tableView;
         this.canvasView = canvasView;
         this.axis3dView = axis3dView;
+        this.hitsModel = hitsModel;
 
         this.inputFormView.bindInputX(this.handleInputX);
         this.inputFormView.bindInputY(this.handleInputY);
@@ -25,11 +27,11 @@ export class InputFormController {
         this.inputFormView.bindSubmit(this.handleSubmit);
         this.inputFormView.bindReset(this.handleReset);
 
-        this.inputFormModel.fetchAllData().then(this.processUpdate);
+        this.hitsModel.getHits().then(this.updateViews).catch(reason => (`Initial receiving of hits failed [${reason}]`));
     }
 
     private handleInputX = (event: InputEvent) => {
-        this.inputFormModel.x = Number(event.data);
+        this.hitsModel.constructingHit.x = Number(event.data);
     }
 
     private handleInputY(this: HTMLInputElement) {
@@ -45,33 +47,33 @@ export class InputFormController {
     }
 
     private handleSubmit = () => {
-        this.inputFormModel.x = this.inputFormView.getX();
-        this.inputFormModel.y = this.inputFormView.getY();
-        this.inputFormModel.r = this.inputFormView.getR();
-        this.inputFormModel.setVersion(this.tableView.countRows());
+        this.hitsModel.constructingHit.x = this.inputFormView.getX();
+        this.hitsModel.constructingHit.y = this.inputFormView.getY();
+        this.hitsModel.constructingHit.r = this.inputFormView.getR();
         if (!this.validateInput()) return;
-        this.inputFormModel.fetchUpdates().then(this.processUpdate).catch(reason => console.error("Failed to receive data: ", reason));
+        this.hitsModel.postHit().then(() => this.hitsModel.getHits()
+            .then(this.updateViews)
+            .catch(reason => console.info(`Submit new hit failed [${reason}]`)))
     }
 
-    private processUpdate = (respHtml: string) => {
-        this.tableView.updateTable(respHtml).then(_ =>
-            this.tableView.getRows(this.inputFormModel.version).forEach(
-                result => {
-                    this.canvasView.addPoint(result.x, result.y, result.r, result.isHit);
-                    this.axis3dView.addPoint(result.x, result.y, result.r, result.isHit);
-                }
-            )
-        );
+    private updateViews = (newHits: Array<HitResult>) => {
+        this.tableView.updateTable(newHits);
+        newHits.forEach(result => {
+                this.canvasView.addPoint(result.x, result.y, result.r, result.hit);
+                this.axis3dView.addPoint(result.x, result.y, result.r, result.hit);
+            }
+        )
     }
 
     private validateInput = (): boolean => {
-        return InputRangeValidator.validateValues(this.inputFormModel.x, this.inputFormModel.y, this.inputFormModel.r);
+        return InputRangeValidator.validateValues(this.hitsModel.constructingHit.x, this.hitsModel.constructingHit.y, this.hitsModel.constructingHit.r);
     }
 
     private handleReset = () => {
-        this.inputFormModel.resetData();
+        this.hitsModel.sendDeleteHitsRequest();
         this.canvasView.clear();
         this.axis3dView.clear();
+        this.hitsModel.reset();
         this.tableView.clearTable();
     }
 }

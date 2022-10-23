@@ -40,7 +40,7 @@ const config = {
             $: "jquery",
             jQuery: "jquery",
         }),
-        new RemoveEmptyScriptsPlugin(),
+        // new RemoveEmptyScriptsPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name].css",
         }),
