@@ -6,7 +6,6 @@ export class NetworkUtil {
             throw Error("Redirected");
         }
         if (!response.ok) {
-            console.error(response.statusText);
             throw Error("Response failed");
         }
         return response;

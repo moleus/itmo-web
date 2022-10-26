@@ -27,7 +27,8 @@ function authenticate(path: ApiPaths) {
                         }
                     })
             }
-        ).catch(cause => console.error(cause));
+        ).catch(() => fillMessageBox("Invalid login or password")
+    );
 }
 
 function fillMessageBox(message: string) {
