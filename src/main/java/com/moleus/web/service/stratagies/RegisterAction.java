@@ -10,19 +10,24 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @ApplicationScoped
-public class LoginAction implements Action {
+public class RegisterAction implements Action {
     @Inject
     private AuthManager authManager;
 
     @Override
     public ActionResult execute() {
-        log.info("Processing login");
+        log.info("Processing registration");
 
         authManager.init();
 
-        if (!authManager.satisfiesConstraints()) {
-            return ActionUtil.statusToJson(ProcessStatus.UNSATISFIED_CONSTRAINTS);
+        if (authManager.satisfiesConstraints()) {
+            return processRegister();
         }
-        return ActionUtil.statusToJson(authManager.authenticate());
+        return ActionUtil.statusToJson(ProcessStatus.INVALID_CREDENTIALS);
+    }
+
+    private ActionResult processRegister() {
+        ProcessStatus processStatus = authManager.saveUser();
+        return ActionUtil.statusToJson(processStatus);
     }
 }

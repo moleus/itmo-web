@@ -4,7 +4,7 @@ const stylesConfig = require('./styles.json');
 const cacheGroups = {}
 const entryPoints = {
     script: "./scripts/main.ts",
-    login_script: "./scripts/login/loginForm.ts"
+    login_script: "./scripts/auth/authForm.ts"
 }
 
 module.exports = {

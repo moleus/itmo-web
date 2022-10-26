@@ -9,11 +9,12 @@ import lombok.extern.log4j.Log4j2;
 import java.io.IOException;
 
 /**
- * Split requests for static resources and for business logic.
+ * Logs each request and creates custom context for servlets.
  */
 @Log4j2
 @WebFilter("/*")
 public class MainFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         var req = (HttpServletRequest) request;
@@ -22,10 +23,6 @@ public class MainFilter implements Filter {
 
         log.info("New request to {}", path);
 
-        if (path.startsWith("/static")) {
-            chain.doFilter(request, response); // Goes to default servlet.
-            return;
-        }
         try (ServletApplicationContext ignored = ServletApplicationContext.create(req, resp)) {
             chain.doFilter(request, response); // Goes to hits and user servlets
         }

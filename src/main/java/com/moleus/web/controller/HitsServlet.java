@@ -1,9 +1,13 @@
 package com.moleus.web.controller;
 
 import com.moleus.web.service.rest.RestManager;
-import com.moleus.web.service.stratagies.*;
+import com.moleus.web.service.stratagies.AddHitAction;
+import com.moleus.web.service.stratagies.DeleteHitsAction;
+import com.moleus.web.service.stratagies.GetHitsAction;
 import jakarta.inject.Inject;
+import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +18,9 @@ import java.util.regex.Pattern;
 
 @Log4j2
 @MultipartConfig
-@WebServlet("/hits/*")
+@ServletSecurity(
+    @HttpConstraint(rolesAllowed = "Authorised"))
+@WebServlet("/api/hits/*")
 public class HitsServlet extends HttpServlet {
     private static final Pattern getHitsPattern = Pattern.compile("/");
     private static final Pattern addHitPattern = Pattern.compile("/add");

@@ -12,6 +12,7 @@ export class RequestProcessor {
         return fetch(path, {
             method: method,
             body: body,
+            redirect: "follow"
         });
     }
 }

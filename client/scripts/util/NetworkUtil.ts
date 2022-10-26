@@ -1,6 +1,14 @@
 export class NetworkUtil {
     public static throwIfNotOk = (response: Response): Response => {
-        if (!response.ok) throw Error(response.statusText);
+        if (response.status == 302) {
+            const url = response.url;
+            window.location.replace(url)
+            throw Error("Redirected");
+        }
+        if (!response.ok) {
+            console.error(response.statusText);
+            throw Error("Response failed");
+        }
         return response;
     }
 }

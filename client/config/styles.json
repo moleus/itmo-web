@@ -1,8 +1,8 @@
 {
   "scss": [
     {
-      "path": "login/login.scss",
-      "name": "styles-login"
+      "path": "auth/auth.scss",
+      "name": "styles-auth"
     },
     {
       "path": "main/main.scss",

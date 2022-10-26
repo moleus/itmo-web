@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Web Login</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/styles-login.css"/>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/styles-auth.css"/>
 </head>
 <body>
 <main class="login-page">
@@ -22,9 +22,12 @@
                 <input class="input-field" id="password" name="password" type="password" minlength="4"/>
             </div>
             <div class="input-container">
-                <button class="input-field backlight clickable" id="submit_button" type="button">Login</button>
+                <button class="input-field backlight clickable" id="login-button" type="button">Login</button>
+                <button class="input-field backlight clickable" id="register-button" type="button">Register</button>
             </div>
-            <div class="error-box input-container"></div>
+            <div class="error-box input-container">
+                <p id="message-box"></p>
+            </div>
         </form>
     </section>
 </main>

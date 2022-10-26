@@ -1,6 +1,7 @@
 import {HitCoordinates, HitResult} from "../util/common";
 import {RequestProcessor} from "../form/RequestProcessor";
 import {NetworkUtil} from "../util/NetworkUtil";
+import {ApiPaths} from "../api/ApiPaths";
 
 export class HitsModel {
     public readonly constructingHit: HitCoordinates = new HitCoordinates();
@@ -17,7 +18,7 @@ export class HitsModel {
      */
     public postHit(): Promise<void> {
         const formData = RequestProcessor.prepareBody(this.constructingHit.x, this.constructingHit.y, this.constructingHit.r, this.version());
-        return RequestProcessor.makeRequest("hits/add", "POST", formData)
+        return RequestProcessor.makeRequest(ApiPaths.ADD_HIT, "POST", formData)
             .then(NetworkUtil.throwIfNotOk)
             .then(() => console.log("Hit is sent with success"))
             .catch(reason => console.error(`Sending hit failed [${reason}]`));
@@ -36,7 +37,7 @@ export class HitsModel {
      * Request to delete all hits on server side.
      */
     public sendDeleteHitsRequest() {
-        RequestProcessor.makeRequest("hits", "DELETE");
+        RequestProcessor.makeRequest(ApiPaths.HITS, "DELETE");
     };
 
     /**
@@ -49,10 +50,10 @@ export class HitsModel {
     }
 
     private static getHitsSlice = (version: number = 0): Promise<Response> =>
-        RequestProcessor.makeRequest("hits?" + new URLSearchParams({version: version.toString()}), "GET");
+        RequestProcessor.makeRequest(ApiPaths.HITS + "?" + new URLSearchParams({version: version.toString()}), "GET");
 
     private static toHitResults = (payload: string): Array<HitResult> => {
-        const hits = JSON.parse(payload).body as Array<HitResult>;
+        const hits = JSON.parse(payload) as Array<HitResult>;
         return hits ? hits : [];
     }
 }
