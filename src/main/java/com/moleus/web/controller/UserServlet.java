@@ -37,7 +37,6 @@ public class UserServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) {
         log.info("Processing login form values with pathinfo: {}", request.getPathInfo());
         String path = Objects.requireNonNull(request.getPathInfo(), "/");
-        //TODO: refactor code duplication
         if (registerPattern.matcher(path).matches()) {
             restManager.processAction(registerAction, path, registerPattern);
         } else if (loginPattern.matcher(path).matches()) {
