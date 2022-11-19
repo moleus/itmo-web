@@ -12,10 +12,8 @@ loginButton.onclick = () => authenticate(ApiPaths.LOGIN);
 registerButton.onclick = () => authenticate(ApiPaths.REGISTER);
 
 function authenticate(path: ApiPaths) {
-    const formData = new FormData();
-    formData.append("username", username.value);
-    formData.append("password", password.value);
-    RequestProcessor.makeRequest(path.toString(), "POST", formData)
+    const data = JSON.stringify({"username": username.value, "password": password.value})
+    RequestProcessor.makeRequest(path.toString(), "POST", data)
         .then(NetworkUtil.throwIfNotOk)
         .then(response => {
                 response.text().then(payload => JSON.parse(payload))

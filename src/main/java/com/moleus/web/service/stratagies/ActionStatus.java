@@ -1,6 +1,6 @@
-package com.moleus.web.service.auth;
+package com.moleus.web.service.stratagies;
 
-public enum ProcessStatus {
+public enum ActionStatus {
     OK(200, "Success"),
     USER_EXISTS(200, "User already exists"),
     INVALID_CREDENTIALS(200, "Credentials are invalid"),
@@ -11,7 +11,7 @@ public enum ProcessStatus {
     private final int httpCode;
     private final String message;
 
-    ProcessStatus(int httpCode, String message) {
+    ActionStatus(int httpCode, String message) {
         this.httpCode = httpCode;
         this.message = message;
     }

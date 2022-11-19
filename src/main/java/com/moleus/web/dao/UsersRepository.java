@@ -2,11 +2,11 @@ package com.moleus.web.dao;
 
 import com.moleus.web.model.User;
 import com.moleus.web.model.User_;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
 
 import java.util.Optional;
 
-@ApplicationScoped
+@Stateless
 public class UsersRepository extends AbstractRepository<User> {
     public UsersRepository() {
         super(User.class);

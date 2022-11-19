@@ -26,6 +26,11 @@ dependencies {
     providedCompile('jakarta.enterprise:jakarta.enterprise.cdi-api:4.0.1')
     providedCompile('jakarta.transaction:jakarta.transaction-api:2.0.1')
     providedCompile('jakarta.security.enterprise:jakarta.security.enterprise-api:3.0.0')
+    providedCompile('jakarta.ejb:jakarta.ejb-api:4.0.1')
+    providedCompile('jakarta.ws.rs:jakarta.ws.rs-api:3.1.0')
+    providedCompile('jakarta.validation:jakarta.validation-api:3.0.2')
+
+
 
     providedCompile('org.apache.logging.log4j:log4j-api:2.19.0')
     providedCompile('org.apache.logging.log4j:log4j-core:2.19.0')

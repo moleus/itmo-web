@@ -15,7 +15,7 @@ public abstract class AbstractRepository<T> implements GenericDao<T> {
     protected EntityManager entityManager;
     protected Class<T> clazz;
 
-    public AbstractRepository(Class<T> clazz) {
+    protected AbstractRepository(Class<T> clazz) {
         this.clazz = clazz;
     }
 

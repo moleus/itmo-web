@@ -2,14 +2,14 @@ package com.moleus.web.dao;
 
 import com.moleus.web.model.HitResult;
 import com.moleus.web.model.HitResult_;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Singleton;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
 @Log4j2
-@ApplicationScoped
+@Singleton
 public class HitResultsRepository extends AbstractRepository<HitResult> {
     public HitResultsRepository() {
         super(HitResult.class);

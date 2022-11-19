@@ -1,8 +1,8 @@
 package com.moleus.web.util;
 
 import com.google.gson.Gson;
-import com.moleus.web.service.auth.ProcessStatus;
-import com.moleus.web.service.helpers.ActionResult;
+import com.moleus.web.service.stratagies.ActionResult;
+import com.moleus.web.service.stratagies.ActionStatus;
 import jakarta.json.Json;
 import jakarta.json.JsonValue;
 import lombok.extern.log4j.Log4j2;
@@ -19,9 +19,9 @@ public class ActionUtil {
         return jsonReader.read();
     }
 
-    public static ActionResult statusToJson(ProcessStatus status) {
+    public static ActionResult statusToJson(ActionStatus status) {
         var jsonObjectBuilder = Json.createObjectBuilder().add("message", status.getMessage());
-        if (status != ProcessStatus.OK) {
+        if (status != ActionStatus.OK) {
             jsonObjectBuilder = jsonObjectBuilder.add("isError", true);
         }
         return new ActionResult(status, jsonObjectBuilder.build());

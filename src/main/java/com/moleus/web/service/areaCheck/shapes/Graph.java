@@ -1,10 +1,12 @@
 package com.moleus.web.service.areaCheck.shapes;
 
 import com.moleus.web.service.areaCheck.quadrant.Point;
+import jakarta.ejb.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Singleton
 public class Graph {
     private final List<Shape> shapes = new ArrayList<>();
 

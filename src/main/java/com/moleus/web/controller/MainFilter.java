@@ -24,7 +24,7 @@ public class MainFilter implements Filter {
         log.info("New request to {}", path);
 
         try (ServletApplicationContext ignored = ServletApplicationContext.create(req, resp)) {
-            chain.doFilter(request, response); // Goes to hits and user servlets
+            chain.doFilter(request, response);
         }
     }
 }

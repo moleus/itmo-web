@@ -17,8 +17,8 @@ export class HitsModel {
      * Send new hit to the server.
      */
     public postHit(): Promise<void> {
-        const formData = RequestProcessor.prepareBody(this.constructingHit.x, this.constructingHit.y, this.constructingHit.r, this.version());
-        return RequestProcessor.makeRequest(ApiPaths.ADD_HIT, "POST", formData)
+        const data = JSON.stringify(this.constructingHit);
+        return RequestProcessor.makeRequest(ApiPaths.ADD_HIT, "POST", data)
             .then(NetworkUtil.throwIfNotOk)
             .then(() => console.log("Hit is sent with success"))
             .catch(reason => console.error(`Sending hit failed [${reason}]`));

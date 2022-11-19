@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class HitResultDto {
+public class HitResultDto implements GenericDto {
     private float x;
     private float y;
     private float r;

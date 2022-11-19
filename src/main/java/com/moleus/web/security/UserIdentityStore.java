@@ -2,7 +2,7 @@ package com.moleus.web.security;
 
 import com.moleus.web.dao.UsersRepository;
 import com.moleus.web.model.User;
-import com.moleus.web.service.helpers.PasswordEncryption;
+import com.moleus.web.service.stratagies.auth.PasswordEncryption;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.credential.UsernamePasswordCredential;

@@ -1,4 +1,4 @@
-package com.moleus.web.service.helpers;
+package com.moleus.web.service.stratagies.auth;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
