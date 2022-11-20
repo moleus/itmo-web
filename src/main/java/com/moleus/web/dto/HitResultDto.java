@@ -11,5 +11,5 @@ public class HitResultDto implements GenericDto {
     private float r;
     private boolean hit;
     private Date hitTime;
-    private long executionTimeMs;
+    private long executionTimeMicros;
 }

@@ -9,7 +9,7 @@ export class TableConverter {
                 <td>${hit.r}</td>
                 <td>${hit.hit}</td>
                 <td>${hit.hitTime}</td>
-                <td>${hit.executionTimeMs}</td>
+                <td>${hit.executionTimeMicros}</td>
                 </tr>`
         ).join("");
     }

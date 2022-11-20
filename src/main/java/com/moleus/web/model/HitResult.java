@@ -1,7 +1,10 @@
 package com.moleus.web.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,5 +26,5 @@ public class HitResult implements Serializable {
     private float r;
     private boolean hit;
     private Date hitTime;
-    private long executionTimeMs;
+    private long executionTimeMicros;
 }

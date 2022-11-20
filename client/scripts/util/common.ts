@@ -36,14 +36,14 @@ export class HitResult {
     readonly r: number;
     readonly hit: boolean;
     readonly hitTime: Date;
-    readonly executionTimeMs: number;
+    readonly executionTimeMicros: number;
 
-    constructor(x: number, y: number, r: number, isHit: boolean, hitTime: Date, executionTimeMs: number) {
+    constructor(x: number, y: number, r: number, isHit: boolean, hitTime: Date, executionTimeMicros: number) {
         this.x = x;
         this.y = y;
         this.r = r;
         this.hit = isHit;
         this.hitTime = hitTime;
-        this.executionTimeMs = executionTimeMs;
+        this.executionTimeMicros = executionTimeMicros;
     }
 }

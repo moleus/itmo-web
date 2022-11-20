@@ -14,5 +14,5 @@ public abstract class HitResult_ {
     public static volatile SingularAttribute<HitResult, Float> r;
     public static volatile SingularAttribute<HitResult, Boolean> hit;
     public static volatile SingularAttribute<HitResult, Date> hitTime;
-    public static volatile SingularAttribute<HitResult, Long> executionTimeMs;
+    public static volatile SingularAttribute<HitResult, Long> executionTimeMicros;
 }
