@@ -19,6 +19,15 @@
             <role-name>Authorised</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>api-resources</web-resource-name>
+            <url-pattern>/api/hits/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Authorised</role-name>
+        </auth-constraint>
+    </security-constraint>
     <security-role>
         <role-name>Authorised</role-name>
     </security-role>
