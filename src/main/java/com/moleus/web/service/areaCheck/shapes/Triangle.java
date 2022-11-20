@@ -3,6 +3,8 @@ package com.moleus.web.service.areaCheck.shapes;
 import com.moleus.web.service.areaCheck.quadrant.Point;
 import com.moleus.web.service.areaCheck.quadrant.Quadrant;
 
+import static java.lang.Math.abs;
+
 public class Triangle extends AbstractShape {
     private final float a;
     private final float b;
@@ -16,6 +18,6 @@ public class Triangle extends AbstractShape {
     @Override
     public boolean isInShape(Point point) {
         return super.isInQuadrant(point) &&
-            this.quadrant.x * this.a * point.x() + this.quadrant.y * this.b <= point.y();
+            -this.a * abs(point.x()) + this.b >= abs(point.y());
     }
 }

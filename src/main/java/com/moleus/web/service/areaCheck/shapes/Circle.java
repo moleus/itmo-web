@@ -14,6 +14,6 @@ public class Circle extends AbstractShape {
     @Override
     public boolean isInShape(Point point) {
         return super.isInQuadrant(point) &&
-            point.x() * point.x() + point.y() * point.y() < this.radius * this.radius;
+            point.x() * point.x() + point.y() * point.y() <= this.radius * this.radius;
     }
 }
