@@ -1,6 +1,7 @@
 package com.moleus.web.service.stratagies.hits;
 
-import com.moleus.web.dao.HitsProvider;
+import com.moleus.web.dao.HitResultsRepository;
+import com.moleus.web.service.mapping.HitResultMapper;
 import com.moleus.web.service.stratagies.ActionResult;
 import com.moleus.web.service.stratagies.ActionStatus;
 import com.moleus.web.service.stratagies.ParametricAction;
@@ -18,12 +19,13 @@ public class GetHitsAction implements ParametricAction<String> {
     @EJB
     private UserProvider userProvider;
     @EJB
-    private HitsProvider hitsProvider;
+    private HitResultsRepository hitsProvider;
 
     @Override
-    public ActionResult execute(String user_version) {
+    public ActionResult execute(String userVersion) {
         var hits = hitsProvider.findByUserId(userProvider.getCurrentUser().getId());
-        int version = Integer.parseInt(user_version);
-        return new ActionResult(ActionStatus.OK, ActionUtil.payloadToJson(hits.subList(version, hits.size())));
+        int version = Integer.parseInt(userVersion);
+        var hits_dto_slice = hits.subList(version, hits.size()).stream().map(HitResultMapper.INSTANCE::toDto).toList();
+        return new ActionResult(ActionStatus.OK, ActionUtil.payloadToJson(hits_dto_slice));
     }
 }
