@@ -23,7 +23,7 @@ public class HitResource {
     @POST
     @Path("/add")
     public Response addHits(@Valid HitCoordinatesDto hitCoordinates) {
-        var result = addHitAction.runWithData(hitCoordinates);
+        var result = addHitAction.execute(hitCoordinates);
         return RestUtil.fromActionResult(result);
     }
 
@@ -37,7 +37,7 @@ public class HitResource {
     @GET
     @Path("/")
     public Response getHits(@QueryParam("version") String version) {
-        var result = getHitsAction.runWithData(version);
+        var result = getHitsAction.execute(version);
         return RestUtil.fromActionResult(result);
     }
 }

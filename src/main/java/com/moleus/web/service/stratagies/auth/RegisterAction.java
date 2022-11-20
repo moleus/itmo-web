@@ -1,6 +1,5 @@
 package com.moleus.web.service.stratagies.auth;
 
-import com.moleus.web.dto.UserDto;
 import com.moleus.web.service.stratagies.ActionResult;
 import com.moleus.web.service.stratagies.ActionStatus;
 import com.moleus.web.service.stratagies.ParametricAction;
@@ -15,20 +14,12 @@ import lombok.extern.log4j.Log4j2;
 @Stateful
 @RequestScoped
 @LocalBean
-public class RegisterAction extends ParametricAction<UserDto> {
-    @EJB private AuthManager authManager;
+public class RegisterAction implements ParametricAction<HttpUserCredentials> {
+    @EJB private UserAuthenticator authManager;
 
     @Override
-    public ActionResult execute() {
-        authManager.init(data.getUsername(), data.getPassword());
-        if (authManager.satisfiesConstraints()) {
-            return processRegister();
-        }
-        return ActionUtil.statusToJson(ActionStatus.INVALID_CREDENTIALS);
-    }
-
-    private ActionResult processRegister() {
-        ActionStatus actionStatus = authManager.saveUser();
+    public ActionResult execute(HttpUserCredentials httpUserCredentials) {
+        ActionStatus actionStatus = authManager.saveUser(httpUserCredentials);
         return ActionUtil.statusToJson(actionStatus);
     }
 }

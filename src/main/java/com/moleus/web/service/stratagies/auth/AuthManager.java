@@ -1,12 +1,9 @@
 package com.moleus.web.service.stratagies.auth;
 
-import com.moleus.web.controller.ServletApplicationContext;
-import com.moleus.web.dao.HitResultsRepository;
 import com.moleus.web.dao.UsersRepository;
-import com.moleus.web.model.HitResult;
+import com.moleus.web.dto.UserDto;
 import com.moleus.web.model.User;
 import com.moleus.web.service.stratagies.ActionStatus;
-import com.moleus.web.util.ServletUtil;
 import jakarta.ejb.EJB;
 import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.RequestScoped;
@@ -17,79 +14,65 @@ import jakarta.security.enterprise.SecurityContext;
 import jakarta.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
 import jakarta.security.enterprise.credential.Credential;
 import jakarta.security.enterprise.credential.UsernamePasswordCredential;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.List;
-import java.util.Optional;
 
 @Log4j2
 @Stateful
 @RequestScoped
-public class AuthManager {
-    private String username;
-    private String password;
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+public class AuthManager implements UserProvider, UserAuthenticator {
+    @Inject
+    @SuppressWarnings("CdiInjectionPointsInspection")
+    private SecurityContext securityContext;
+    @EJB
+    private UsersRepository usersRepository;
 
-    @Inject private SecurityContext securityContext;
-    @EJB private UsersRepository usersRepository;
-    @EJB private HitResultsRepository hitResultsRepository;
-
-    public void init(String username, String password) {
-        this.request = ServletApplicationContext.getCurrentInstance().getRequest();
-        this.response = ServletApplicationContext.getCurrentInstance().getResponse();
-
-        this.username = username;
-        this.password = password;
+    @Override
+    public User getCurrentUser() {
+        String username = securityContext.getCallerPrincipal().getName();
+        return usersRepository.findByUsername(username).orElseThrow(IllegalStateException::new);
     }
 
-    public ActionStatus authenticate() {
-        Credential credential = new UsernamePasswordCredential(username, password);
-        AuthenticationStatus authenticate = securityContext.authenticate(request, response,
-            AuthenticationParameters.withParams()
-                .credential(credential)
-                .newAuthentication(true)
-                .rememberMe(false));
+    @Override
+    public ActionStatus authenticate(HttpUserCredentials httpUserCredentials) {
+        var userDto = httpUserCredentials.userDto();
+        Credential credential = new UsernamePasswordCredential(userDto.getUsername(), userDto.getPassword());
+        var authParams = AuthenticationParameters.withParams().credential(credential).newAuthentication(true).rememberMe(false);
+        AuthenticationStatus authenticate = securityContext.authenticate(httpUserCredentials.request(), httpUserCredentials.response(), authParams);
         if (authenticate.equals(AuthenticationStatus.SUCCESS)) {
-            setSessionAttributes();
             return ActionStatus.OK;
         }
         return ActionStatus.INVALID_CREDENTIALS;
     }
 
-    public boolean satisfiesConstraints() {
-        return checkFieldLength(username, 4) &&
-            checkFieldLength(password, 5);
-    }
-
-    private boolean checkFieldLength(String field, int lengthConstraint) {
-        return field.length() >= lengthConstraint;
-    }
-
-    public ActionStatus saveUser() {
-        var hashedPassword = PasswordEncryption.encrypt(password);
-        var user = new User();
-        user.setUsername(username);
-        user.setPasswordHash(hashedPassword);
+    @Override
+    public ActionStatus saveUser(HttpUserCredentials httpUserCredentials) {
+        var userDto = httpUserCredentials.userDto();
+        if (!satisfiesConstraints(userDto.getUsername(), userDto.getPassword())) {
+            return ActionStatus.UNSATISFIED_CONSTRAINTS;
+        }
         try {
             log.info("Saved user successfully");
-            usersRepository.save(user);
-            return this.authenticate();
+            usersRepository.save(toUser(userDto));
+            return this.authenticate(httpUserCredentials);
         } catch (PersistenceException e) {
             log.info("Failed to register. User exists");
             return ActionStatus.USER_EXISTS;
         }
     }
 
-    private void setSessionAttributes() {
-        Optional<User> user = usersRepository.findByUsername(username);
-        if (user.isPresent()) {
-            long userId = user.get().getId();
-            List<HitResult> hitResults = this.hitResultsRepository.findByUser(userId);
-            ServletUtil.setSessionAttribute(SessionAttributes.USER_ID.getName(), userId);
-            ServletUtil.setSessionAttribute(SessionAttributes.HIT_RESULTS.getName(), hitResults);
-        }
+    private User toUser(UserDto userDto) {
+        var hashedPassword = PasswordEncryption.encrypt(userDto.getPassword());
+        var user = new User();
+        user.setUsername(userDto.getUsername());
+        user.setPasswordHash(hashedPassword);
+        return user;
+    }
+
+    private boolean satisfiesConstraints(String username, String password) {
+        return checkFieldLength(username, 4) && checkFieldLength(password, 5);
+    }
+
+    private boolean checkFieldLength(String field, int lengthConstraint) {
+        return field.length() >= lengthConstraint;
     }
 }

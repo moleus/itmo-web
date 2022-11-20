@@ -1,8 +1,6 @@
 package com.moleus.web.service.stratagies.auth;
 
-import com.moleus.web.dto.UserDto;
 import com.moleus.web.service.stratagies.ActionResult;
-import com.moleus.web.service.stratagies.ActionStatus;
 import com.moleus.web.service.stratagies.ParametricAction;
 import com.moleus.web.util.ActionUtil;
 import jakarta.ejb.EJB;
@@ -15,18 +13,12 @@ import lombok.extern.log4j.Log4j2;
 @Stateful
 @RequestScoped
 @LocalBean
-public class LoginAction extends ParametricAction<UserDto> {
-    @EJB private AuthManager authManager;
+public class LoginAction implements ParametricAction<HttpUserCredentials> {
+    @EJB private UserAuthenticator authManager;
 
     @Override
-    public ActionResult execute() {
+    public ActionResult execute(HttpUserCredentials httpUserCredentials) {
         log.info("Processing login");
-
-        authManager.init(data.getUsername(), data.getPassword());
-
-        if (!authManager.satisfiesConstraints()) {
-            return ActionUtil.statusToJson(ActionStatus.UNSATISFIED_CONSTRAINTS);
-        }
-        return ActionUtil.statusToJson(authManager.authenticate());
+        return ActionUtil.statusToJson(authManager.authenticate(httpUserCredentials));
     }
 }
