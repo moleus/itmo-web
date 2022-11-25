@@ -1,5 +1,6 @@
 package com.moleus.web.service.stratagies.hits;
 
+import com.moleus.web.dao.EntityAlreadyExistsException;
 import com.moleus.web.dao.HitResultsRepository;
 import com.moleus.web.dto.HitCoordinatesDto;
 import com.moleus.web.model.HitResult;
@@ -33,7 +34,7 @@ public class AddHitAction {
         }
     }
 
-    private HitResult persistResult(HitCoordinatesDto coordinates) {
+    private HitResult persistResult(HitCoordinatesDto coordinates) throws EntityAlreadyExistsException {
         HitResult result = hitCalculator.runCalculation(coordinates);
         result.setUserId(userProvider.getCurrentUser().getId());
         hitResultsRepository.save(result);

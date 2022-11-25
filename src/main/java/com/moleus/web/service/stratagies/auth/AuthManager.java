@@ -1,5 +1,6 @@
 package com.moleus.web.service.stratagies.auth;
 
+import com.moleus.web.dao.EntityAlreadyExistsException;
 import com.moleus.web.dao.UsersRepository;
 import com.moleus.web.dto.UserDto;
 import com.moleus.web.model.User;
@@ -8,7 +9,6 @@ import jakarta.ejb.EJB;
 import jakarta.ejb.Stateful;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.PersistenceException;
 import jakarta.security.enterprise.AuthenticationStatus;
 import jakarta.security.enterprise.SecurityContext;
 import jakarta.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
@@ -54,7 +54,7 @@ public class AuthManager implements UserProvider, UserAuthenticator {
             log.info("Saved user successfully");
             usersRepository.save(toUser(userDto));
             return this.authenticate(httpUserCredentials);
-        } catch (PersistenceException e) {
+        } catch (EntityAlreadyExistsException e) {
             log.info("Failed to register. User exists");
             return ActionStatus.USER_EXISTS;
         }
