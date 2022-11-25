@@ -20,6 +20,6 @@ public class DeleteHitsAction implements Action {
     public ActionResult execute() {
         long userId = userProvider.getCurrentUser().getId();
         hitResultsRepository.removeByUserId(userId);
-        return ActionUtil.statusToJson(ActionStatus.OK);
+        return ActionUtil.statusToResult(ActionStatus.OK);
     }
 }

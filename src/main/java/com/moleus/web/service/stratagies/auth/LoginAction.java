@@ -19,6 +19,6 @@ public class LoginAction implements ParametricAction<HttpUserCredentials> {
     @Override
     public ActionResult execute(HttpUserCredentials httpUserCredentials) {
         log.info("Processing login");
-        return ActionUtil.statusToJson(authManager.authenticate(httpUserCredentials));
+        return ActionUtil.statusToResult(authManager.authenticate(httpUserCredentials));
     }
 }

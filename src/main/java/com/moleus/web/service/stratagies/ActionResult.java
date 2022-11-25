@@ -1,6 +1,6 @@
 package com.moleus.web.service.stratagies;
 
-import jakarta.json.JsonValue;
+import com.moleus.web.dto.ResponsePayload;
 
-public record ActionResult(ActionStatus status, JsonValue payload) {
+public record ActionResult(ActionStatus status, ResponsePayload payload) {
 }

@@ -1,12 +1,12 @@
 package com.moleus.web.service.stratagies.hits;
 
 import com.moleus.web.dao.HitResultsRepository;
+import com.moleus.web.dto.ResponsePayload;
 import com.moleus.web.service.mapping.HitResultMapper;
 import com.moleus.web.service.stratagies.ActionResult;
 import com.moleus.web.service.stratagies.ActionStatus;
 import com.moleus.web.service.stratagies.ParametricAction;
 import com.moleus.web.service.stratagies.auth.UserProvider;
-import com.moleus.web.util.ActionUtil;
 import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
@@ -26,6 +26,6 @@ public class GetHitsAction implements ParametricAction<String> {
         var hits = hitsProvider.findByUserId(userProvider.getCurrentUser().getId());
         int version = Integer.parseInt(userVersion);
         var hits_dto_slice = hits.subList(version, hits.size()).stream().map(HitResultMapper.INSTANCE::toDto).toList();
-        return new ActionResult(ActionStatus.OK, ActionUtil.payloadToJson(hits_dto_slice));
+        return new ActionResult(ActionStatus.OK, ResponsePayload.okWithPayload(hits_dto_slice));
     }
 }

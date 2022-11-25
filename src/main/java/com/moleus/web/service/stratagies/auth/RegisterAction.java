@@ -20,6 +20,6 @@ public class RegisterAction implements ParametricAction<HttpUserCredentials> {
     @Override
     public ActionResult execute(HttpUserCredentials httpUserCredentials) {
         ActionStatus actionStatus = authManager.saveUser(httpUserCredentials);
-        return ActionUtil.statusToJson(actionStatus);
+        return ActionUtil.statusToResult(actionStatus);
     }
 }

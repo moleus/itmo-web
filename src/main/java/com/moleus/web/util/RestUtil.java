@@ -5,6 +5,6 @@ import jakarta.ws.rs.core.Response;
 
 public class RestUtil {
     public static Response fromActionResult(ActionResult actionResult) {
-        return Response.status(actionResult.status().getHttpCode()).entity(actionResult.payload()).build();
+        return Response.status(actionResult.status().getHttpCode()).entity(ActionUtil.toJson(actionResult.payload())).build();
     }
 }

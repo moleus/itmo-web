@@ -27,10 +27,10 @@ public class AddHitAction {
     public ActionResult execute(HitCoordinatesDto coordinatesDto) {
         try {
             persistResult(coordinatesDto);
-            return ActionUtil.statusToJson(ActionStatus.OK);
-        } catch (NumberFormatException | NullPointerException e) {
+            return ActionUtil.statusToResult(ActionStatus.OK);
+        } catch (NumberFormatException | NullPointerException | EntityAlreadyExistsException e) {
             log.error("Failed to parse params {} with error {}", coordinatesDto, e.getMessage());
-            return ActionUtil.statusToJson(ActionStatus.INVALID_PARAMS);
+            return ActionUtil.statusToResult(ActionStatus.INVALID_PARAMS);
         }
     }
 
