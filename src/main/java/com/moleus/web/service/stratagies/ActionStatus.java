@@ -5,8 +5,7 @@ public enum ActionStatus {
     USER_EXISTS(200, "User already exists"),
     INVALID_CREDENTIALS(200, "Credentials are invalid"),
     INVALID_PARAMS(400, "Invalid parameters provided"),
-    UNSATISFIED_CONSTRAINTS(200, "Login & password should be more than 4 characters long"),
-    UNAUTHORIZED(402, "User unauthorized");
+    UNSATISFIED_CONSTRAINTS(200, "Login & password should be more than 4 characters long");
 
     private final int httpCode;
     private final String message;
