@@ -5,7 +5,6 @@ import com.moleus.web.service.stratagies.auth.HttpUserCredentials;
 import com.moleus.web.service.stratagies.auth.LoginAction;
 import com.moleus.web.service.stratagies.auth.RegisterAction;
 import com.moleus.web.util.RestUtil;
-import jakarta.annotation.security.RolesAllowed;
 import jakarta.ejb.EJB;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,7 +15,6 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.log4j.Log4j2;
 
-@RolesAllowed({"Authorised"})
 @Path("/user")
 @Log4j2
 public class UserResource {
