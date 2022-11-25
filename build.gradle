@@ -39,7 +39,6 @@ dependencies {
     implementation('org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.0')
 
     // providedRuntime - not packaged in war (provided by container)
-    providedRuntime('jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.0')
     providedCompile('org.hibernate.orm:hibernate-core:6.1.5.Final')
     providedRuntime('org.hibernate.orm:hibernate-jpamodelgen:6.1.5.Final')
 

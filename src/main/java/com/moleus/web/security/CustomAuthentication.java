@@ -68,7 +68,7 @@ public class CustomAuthentication implements HttpAuthenticationMechanism {
         } else if (request.getServletPath().startsWith("/api")) {
             return httpMessageContext.responseUnauthorized();
         } else {
-            return httpMessageContext.redirect(request.getContextPath() + "/login.jsp");
+            return httpMessageContext.redirect(request.getContextPath() + "/login");
         }
     }
 }
