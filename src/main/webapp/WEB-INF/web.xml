@@ -28,6 +28,12 @@
             <role-name>Authorised</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <url-pattern>/*</url-pattern>
+            <http-method>OPTIONS</http-method>
+        </web-resource-collection>
+    </security-constraint>
     <security-role>
         <role-name>Authorised</role-name>
     </security-role>
