@@ -1,42 +1,63 @@
 {
-  "name": "lab1",
-  "version": "1.0.0",
-  "main": "scripts/main.ts",
-  "type": "commonjs",
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "tsc": "./node_modules/typescript/bin/tsc",
-    "sass": "./node_modules/sass/sass.js",
-    "dev": "webpack",
-    "build": "webpack --env production=true",
-    "start": "webpack-dev-server",
-    "postinstall": "npm run build"
-  },
-  "devDependencies": {
-    "@types/jquery": "^3.5.14",
-    "@types/node": "^18.6.3",
-    "@types/three": "^0.143.2",
-    "clean-webpack-plugin": "^4.0.0",
-    "css-loader": "^6.7.1",
-    "html-webpack-plugin": "^5.5.0",
-    "jquery": "^3.6.1",
-    "mini-css-extract-plugin": "^2.6.1",
-    "sass": "^1.54.8",
-    "sass-loader": "^13.0.2",
-    "style-loader": "^3.3.1",
-    "ts-loader": "^9.3.1",
-    "typescript": "^4.7.4",
-    "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.1",
-    "webpack-fix-style-only-entries": "^0.6.1",
-    "webpack-merge": "^5.8.0",
-    "webpack-remove-empty-scripts": "^1.0.1"
+    "dev": "cross-env APP_ENV=development webpack serve",
+    "build": "webpack",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
-    "three": "^0.143.0"
+    "@jetbrains/ring-ui": "^5.x",
+    "@reduxjs/toolkit": "^1.9.0",
+    "axios": "^1.2.0",
+    "react-dom": "^18.x",
+    "react-hook-form": "^7.39.5",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.4.3"
   },
-  "engines": {
-    "node": "v18.x.x",
-    "npm": "8.x.x"
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/react": "^18.x",
+    "@types/react-dom": "^18.0.9",
+    "@types/webpack": "^5.1.4",
+    "babel-loader": "^8.2.4",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.7.1",
+    "cypress": "^11.2.0",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.28.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.0",
+    "postcss-loader": "^6.2.1",
+    "react": "^18.x",
+    "react-jsx": "^1.0.0",
+    "sass": "^1.50.0",
+    "sass-loader": "^12.6.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:prettier/recommended",
+      "plugin:cypress/recommended"
+    ],
+    "env": {
+      "cypress/globals": true
+    },
+    "plugins": [
+      "cypress",
+      "prettier"
+    ],
+    "rules": {
+      "no-unused-expressions": 0
+    }
   }
 }

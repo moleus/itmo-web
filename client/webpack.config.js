@@ -1,59 +1,95 @@
-const webpack = require("webpack");
 const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-const {CleanWebpackPlugin} = require("clean-webpack-plugin");
-const moduleConfig = require('./config/module');
-const styleEntries = require('./config/styleEntries')
+const dotenv = require('dotenv');
 
-const devServer = {
-    devMiddleware: {
-        writeToDisk: true
-    },
-    open: false,
-    hot: false,
-    static: false,
-    port: 9999,
-    watchFiles: [
-        path.resolve(__dirname, 'styles/**/*.scss'),
-        path.resolve(__dirname, 'scripts/**/*.ts'),
-    ]
-}
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const config = {
-    entry: styleEntries.entryPoints,
-    module: moduleConfig,
-    output: {
-        filename: "[name].js",
-        path: path.resolve(__dirname, "../src/main/webapp/static"),
-    },
-    optimization: {
-        splitChunks: {
-            cacheGroups: styleEntries.cacheGroups
-        }
-    },
-    resolve: {
-        extensions: [".ts", ".js"],
-    },
-    plugins: [
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-        }),
-        // new RemoveEmptyScriptsPlugin(),
-        new MiniCssExtractPlugin({
-            filename: "[name].css",
-        }),
-        new CleanWebpackPlugin(),
-    ],
-}
+dotenv.config();
 
-module.exports = (env) => {
-    if (env.production) {
-        config["mode"] = "production"
-    } else {
-        config["mode"] = "development"
-        config["devServer"] = devServer
+const { APP_ENV = 'development' } = process.env;
+
+module.exports = (_env) => {
+    return {
+        mode: APP_ENV,
+        entry: path.join(__dirname, 'src', 'index.tsx'),
+        target: 'web',
+
+        devServer: {
+            port: 3000,
+            historyApiFallback: true,
+            host: '127.0.0.1',
+            allowedHosts: "all",
+            hot: false,
+            static: [
+                {
+                    directory: path.resolve(__dirname, 'public'),
+                },
+            ],
+            devMiddleware: {
+                stats: 'minimal',
+            },
+        },
+
+        resolve: {
+            extensions: ['.ts', '.tsx', '.js']
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.(ts|tsx|js)$/,
+                    loader: 'babel-loader',
+                    exclude: /node_modules/,
+                },
+                {
+                    test: /\.css$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                importLoaders: 1,
+                            },
+                        },
+                        'postcss-loader',
+                    ],
+                },
+                {
+                    test: /\.scss$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                modules: {
+                                    exportLocalsConvention: 'camelCase',
+                                    auto: true,
+                                    localIdentName: '[hash:base64]'
+                                }
+                            }
+                        },
+                        'postcss-loader',
+                        'sass-loader',
+                    ],
+                },
+            ],
+        },
+        output: {
+            filename: '[name].[contenthash].js',
+            chunkFilename: '[id].[chunkhash].js',
+            assetModuleFilename: '[name].[contenthash][ext]',
+            path: path.resolve(__dirname, 'dist'),
+            clean: true,
+        },
+
+        plugins: [
+            new HtmlWebpackPlugin({
+                template: 'src/index.html',
+            }),
+            new MiniCssExtractPlugin({
+                filename: '[name].[contenthash].css',
+                chunkFilename: '[name].[chunkhash].css',
+                ignoreOrder: true,
+            }),
+        ]
     }
-    return config
 }

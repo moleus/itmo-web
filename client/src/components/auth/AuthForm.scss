@@ -1,0 +1,8 @@
+@import "../../styles/elements";
+
+.login-input-form {
+  @extend .colored-block;
+  @extend .grid-section;
+  grid-area: form-area;
+  //grid-area: 2 / 2 / 3 / 3;
+}
