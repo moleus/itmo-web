@@ -1,13 +1,13 @@
 package com.moleus.web.service.areaCheck.shapes;
 
 import com.moleus.web.service.areaCheck.quadrant.Quadrant;
-import jakarta.ejb.Startup;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 
 
-@Startup
+@ApplicationScoped
 public class GraphBootstrap {
-    @Produces
+    @Produces @ApplicationScoped
     public Graph getShapesGraph() {
         Graph graph = new Graph();
         graph.addShape(new Circle(Quadrant.FIRST, 0.5f));
