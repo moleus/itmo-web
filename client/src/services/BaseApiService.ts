@@ -14,9 +14,11 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>
     = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
-    if (result.error && result.error.status === 401) {
+    console.log(result);
+    if (result.error) {
         console.error("Error from server. reloading!", result.error);
-        window.location.replace('/login');
+        window.location.reload()
+        return result;
     }
     const payload = result.data as ResponseTemplate;
     if (payload && !payload.isError) {
