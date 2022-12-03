@@ -13,6 +13,8 @@
   },
   "include": [
     "./src",
+    "node_modules/cypress",
+    "cypress/**/*.{ts,tsx}"
   ],
   "exclude": [
     "node_modules"

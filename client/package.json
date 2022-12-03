@@ -11,6 +11,7 @@
     "@jetbrains/ring-ui": "^5.x",
     "@reduxjs/toolkit": "^1.9.0",
     "axios": "^1.2.0",
+    "rc-slider": "^10.1.0",
     "react-dom": "^18.x",
     "react-hook-form": "^7.39.5",
     "react-redux": "^8.0.5",
