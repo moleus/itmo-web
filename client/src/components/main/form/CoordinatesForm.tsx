@@ -37,9 +37,10 @@ const CoordinatesForm = () => {
         <section className="grid-section input-section">
             <TabTrap>
                 <form id="input-form">
+                    {/*//TODO: show errors on invalid input state*/}
                     <div className="input-container">
                         X:
-                        <select {...register("x", {required: true})}>
+                        <select className="input-field" {...register("x", {required: true})}>
                             {
                                 range(5, 0).map(n => (
                                     <option key={n} value={n}>{n}</option>
@@ -64,7 +65,7 @@ const CoordinatesForm = () => {
                     </div>
                     <div className="input-container">
                         Y:
-                        <input defaultValue="0" {...register("y", {
+                        <input className="input-field" defaultValue="0" {...register("y", {
                             required: true,
                             min: 0,
                             max: 5
@@ -78,7 +79,7 @@ const CoordinatesForm = () => {
                     {/*        {errors.y && <div className="ring-error-bubble active">{errors.y.message}</div>}*/}
                     {/*    </div>*/}
                     {/*</div>*/}
-                    <div>
+                    <div className="input-container">
                         <button type="button" className="input-field backlight clickable" onClick={onSubmit}>Add
                         </button>
                         <button type="button" className="input-field backlight clickable" onClick={onReset}>Reset
