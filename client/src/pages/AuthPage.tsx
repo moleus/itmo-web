@@ -9,7 +9,7 @@ import "./AuthPage.scss";
 const AuthPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [loginUser, {}] = userAPI.useLoginUserMutation()
+    const [loginUser] = userAPI.useLoginUserMutation()
     const [registerUser, {}] = userAPI.useRegisterUserMutation()
 
     const fromPage = location.state?.from?.pathname || '/';
@@ -21,6 +21,7 @@ const AuthPage = () => {
     }
 
     const handleRegister = (user: User) => {
+        // TODO: display errror on form
         registerUser(user).then(() => {
             navigate(fromPage, {replace: true});
         })

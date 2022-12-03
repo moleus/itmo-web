@@ -4,8 +4,8 @@
     "x": 1.2,
     "y": 1.3,
     "r": 1.4,
-    "isHit": true,
-    "startDate": "11.11.2020",
+    "hit": true,
+    "hitTime": "11.11.2020",
     "executionTime": 11
   },
   {
@@ -13,8 +13,8 @@
     "x": 2.2,
     "y": 2.3,
     "r": 2.4,
-    "isHit": false,
-    "startDate": "22.22.2022",
+    "hit": false,
+    "hitTime": "22.22.2022",
     "executionTime": 22
   },
   {
@@ -22,8 +22,8 @@
     "x": 3.2,
     "y": 3.3,
     "r": 3.4,
-    "isHit": true,
-    "startDate": "33.33.3033",
+    "hit": true,
+    "hitTime": "33.33.3033",
     "executionTime": 33
   }
 ]
