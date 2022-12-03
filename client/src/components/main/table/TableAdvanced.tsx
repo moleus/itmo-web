@@ -7,6 +7,7 @@ import Selection, {SelectionItem} from '@jetbrains/ring-ui/dist/table/selection'
 
 import '@jetbrains/ring-ui/components/table/table.css'
 import '@jetbrains/ring-ui/dist/style.css'
+import './HitsTable.scss'
 import {HitResult} from "../../../models/HitResult";
 
 export type HitResultItem = HitResult & SelectionItem
@@ -53,20 +54,21 @@ const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
     }
 
     return (
-        <div>
+        <div className="flex-table-parent">
             <Table
-                data={state.data}
+                data={dataPerPage}
                 columns={columns}
                 renderEmpty={() => 'No data'}
                 selectable={false}
                 selection={new Selection({})}
-                onSelect={() => {}}
+                onSelect={() => {
+                }}
 
                 sortKey={state.sortKey}
                 sortOrder={state.sortOrder}
                 onSort={handleSort}
             />
-            <Grid>
+            <Grid style={{marginTop: "auto"}}>
                 <Row>
                     <Col>
                         <Pager

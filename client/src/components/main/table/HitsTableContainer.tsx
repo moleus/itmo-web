@@ -52,7 +52,7 @@ const HitsTableContainer = () => {
     const {data: hits} = hitAPI.useFetchAllHitsQuery();
     return (
         <section className="grid-section results-table">
-            <div className="table-container">
+            <div className="table-container flex-table-parent">
                 <TableAdvanced data={hitResultToItem(hits)} columns={columns}/>
             </div>
         </section>

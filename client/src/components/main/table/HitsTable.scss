@@ -1,14 +1,12 @@
 @import '../../../styles/elements.scss';
 
-.table-container {
+.flex-table-parent {
   height: 100%;
-  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-table {
-  width: calc(100% - 10px);
-  border-collapse: collapse;
-}
 
 //thead th {
 //  position: sticky;
