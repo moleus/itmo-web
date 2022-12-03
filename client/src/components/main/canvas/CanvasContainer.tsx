@@ -28,7 +28,6 @@ const CanvasContainer = () => {
     const {fromPxToUnits, fromUnitsToPx} = useNormalizer({canvasSizePx: SIZE, pxPerRadius: RADIUS_PX});
 
     const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
-        console.log(`Click position x: ${event.nativeEvent.offsetX}; y: ${event.nativeEvent.offsetY}`)
         const {x, y} = fromPxToUnits({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY}, scaleRadius);
         const hitQuery = {x, y, r: scaleRadius} as HitQuery;
         sendHit(hitQuery);

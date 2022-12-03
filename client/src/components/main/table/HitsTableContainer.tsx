@@ -45,12 +45,7 @@ const columns: HitColumn[] = [
 ]
 
 const hitResultToItem = (data: HitResult[]): HitResultItem[] => {
-    if (data) {
-        console.log("Has data");
-        return data.map(hit => hit as HitResultItem)
-    }
-    console.log("No data");
-    return [];
+    return data ? data.map(hit => hit as HitResultItem) : [];
 }
 
 const HitsTableContainer = () => {
