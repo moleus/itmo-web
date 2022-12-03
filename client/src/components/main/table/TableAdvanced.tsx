@@ -31,26 +31,46 @@ const initialState: TableState = {
 }
 
 const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
+    const [state, setState] = React.useState<TableState>({
+        ...initialState,
+        data: data,
+        total: data.length
+    });
+
     const getDataPerPage = (page: number, pageSize: number) => {
-        return data.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+        const startIndex = (page - 1) * pageSize;
+        return state.data.slice(startIndex, startIndex + pageSize);
     }
 
-    const [state, setState] = React.useState<TableState>({...initialState, data: getDataPerPage(initialState.page, initialState.pageSize), total: data.length});
+    const [dataPerPage, setDataPerPage] = React.useState<HitResultItem[]>([]);
 
     React.useEffect(() => {
-        setState((prevState) => ({...prevState, data: getDataPerPage(prevState.page, prevState.pageSize), total: data.length}))
+        setState((prevState) => ({
+            ...prevState,
+            data: getSortedData(prevState.sortKey, prevState.sortOrder),
+            total: data.length
+        }))
     }, [data])
 
+    React.useEffect(() => {
+        setDataPerPage(() => getDataPerPage(state.page, state.pageSize));
+    }, [state.data])
+
+    const getSortedData = (colId: number | string, order: boolean): HitResultItem[] => {
+        return [].concat(data).sort((a, b) =>
+            String(a[colId]).localeCompare(String(b[colId]), undefined, {numeric: true}) * (order ? 1 : -1))
+    }
+
     const handleSort = (params: SortParams) => {
-        const sortKey = params.column.id;
-        const sortOrder = params.order;
-        data.sort((a, b) =>
-            String(a[sortKey]).localeCompare(String(b[sortKey])) * (sortOrder ? 1 : -1));
-        setState(prevState => ({...prevState, data: data, sortKey: params.column.id, sortOrder: params.order}));
+        const colId = params.column.id;
+        const order = params.order;
+        const sorted = getSortedData(colId, order);
+        setState(prevState => ({...prevState, data: sorted, sortKey: colId, sortOrder: order}));
     };
 
     const handlePageChange = (page: number) => {
-        setState(prevState => ({...prevState, page: page, data: getDataPerPage(page, prevState.pageSize)}))
+        setDataPerPage(getDataPerPage(page, state.pageSize))
+        setState(prevState => ({...prevState, page: page}))
     }
 
     return (
