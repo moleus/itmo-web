@@ -28,17 +28,17 @@ const columns: HitColumn[] = [
         title: "r",
     },
     {
-        id: "isHit",
+        id: "hit",
         title: "Is hit",
         getValue: (item) =>item.hit.toString()
     },
     {
-        id: "startDate",
+        id: "hitTime",
         title: "Date",
         sortable: true
     },
     {
-        id: "executionTime",
+        id: "executionTimeMicros",
         title: "execution Time",
         sortable: true
     }

@@ -5,5 +5,5 @@ export interface HitResult {
     r: number;
     hit: boolean;
     hitTime: string;
-    executionTime: number;
+    executionTimeMicros: number;
 }
