@@ -6,7 +6,6 @@ import jakarta.security.enterprise.AuthenticationStatus;
 import jakarta.security.enterprise.authentication.mechanism.http.AutoApplySession;
 import jakarta.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
 import jakarta.security.enterprise.authentication.mechanism.http.HttpMessageContext;
-import jakarta.security.enterprise.authentication.mechanism.http.RememberMe;
 import jakarta.security.enterprise.credential.Credential;
 import jakarta.security.enterprise.credential.UsernamePasswordCredential;
 import jakarta.security.enterprise.identitystore.CredentialValidationResult;
@@ -19,10 +18,6 @@ import java.util.Set;
 
 @Log4j2
 @AutoApplySession
-@RememberMe(
-    cookieHttpOnly = false,
-    cookieName = "TOKEN",
-    cookieSecureOnly = false)
 @ApplicationScoped
 public class CustomAuthentication implements HttpAuthenticationMechanism {
     @Inject
