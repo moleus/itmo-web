@@ -1,14 +1,16 @@
 import React from 'react';
 import CoordinatesForm from "../components/main/form/CoordinatesForm";
-import HitsTable from "../components/main/table/HitsTable";
+import HitsTableContainer from "../components/main/table/HitsTableContainer";
 import CanvasContainer from "../components/main/canvas/CanvasContainer";
 
 import "./MainPage.scss";
+import MainHeader from "../components/main/header/MainHeader";
 
 const MainPage = () => {
     return (
         <main className="main-page">
-            <HitsTable></HitsTable>
+            <MainHeader/>
+            <HitsTableContainer></HitsTableContainer>
             <CanvasContainer/>
             <CoordinatesForm/>
         </main>

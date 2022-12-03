@@ -5,6 +5,7 @@ import {User} from "../models/User";
 import {userAPI} from "../services/AuthService";
 
 import "./AuthPage.scss";
+import AuthPageHeader from "../components/auth/AuthPageHeader";
 
 const AuthPage = () => {
     const navigate = useNavigate();
@@ -29,6 +30,7 @@ const AuthPage = () => {
 
     return (
         <div className="login-page">
+            <AuthPageHeader/>
             <AuthForm onLogin={handleLogin} onRegister={handleRegister}/>
         </div>
     );
