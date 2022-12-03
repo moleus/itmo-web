@@ -50,51 +50,7 @@
   grid-area: table;
 }
 
-.full-block {
-  height: 100%;
-  width: 100%;
-}
-
 #r-container {
   grid-area: r-container;
   display: flex;
-}
-
-.input-label {
-  justify-self: center;
-  align-self: center;
-}
-
-.pretty-checkboxes {
-  justify-content: space-between;
-
-  label {
-    margin: 4px;
-    background-color: var(--white-color);
-    border-radius: 4px;
-    border: 1px solid var(--blue-color);
-    overflow: hidden;
-    float: left;
-    line-height: 2em;
-    width: 2.5em;
-    height: 2em;
-
-    input {
-      position: absolute;
-      display: none;
-      color: var(--white-color);
-
-      &:checked + span {
-        color: var(--white-color);
-        background-color: var(--dark-green-color);
-        text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-      }
-    }
-
-    span {
-      text-align: center;
-      padding: 1px 0;
-      display: block;
-    }
-  }
 }
