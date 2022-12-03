@@ -17,5 +17,11 @@ export const userAPI = emptyApi.injectEndpoints({
                 body: post
             }),
         }),
+        logoutUser: build.mutation<void, void>({
+            query: () => ({
+                url: `user/logout`,
+                method: 'HEAD',
+            }),
+        })
     })
 })

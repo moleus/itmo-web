@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import java.io.IOException;
 
 /**
- * Logs each request and creates custom context for servlets.
+ * Logs each request.
  */
 @Log4j2
 @WebFilter("/*")
