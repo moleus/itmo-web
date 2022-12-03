@@ -12,7 +12,7 @@ export const userAPI = emptyApi.injectEndpoints({
         }),
         registerUser: build.mutation<User, User>({
             query: (post) => ({
-                url: `user/login`,
+                url: `user/register`,
                 method: 'POST',
                 body: post
             }),
