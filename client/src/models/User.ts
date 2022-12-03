@@ -1,4 +1,6 @@
+export type Username = string;
+
 export interface User {
-    username: string;
+    username: Username;
     password: string;
 }

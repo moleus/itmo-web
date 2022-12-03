@@ -1,9 +1,8 @@
 package com.moleus.web.service.stratagies.auth;
 
+import com.moleus.web.dto.ResponsePayload;
 import com.moleus.web.service.stratagies.ActionResult;
-import com.moleus.web.service.stratagies.ActionStatus;
 import com.moleus.web.service.stratagies.ParametricAction;
-import com.moleus.web.util.ActionUtil;
 import jakarta.ejb.EJB;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateful;
@@ -19,7 +18,9 @@ public class RegisterAction implements ParametricAction<HttpUserCredentials> {
 
     @Override
     public ActionResult execute(HttpUserCredentials httpUserCredentials) {
-        ActionStatus actionStatus = authManager.saveUser(httpUserCredentials);
-        return ActionUtil.statusToResult(actionStatus);
+        var status = authManager.saveUser(httpUserCredentials);
+        var payload = ResponsePayload.fromActionStatus(status);
+        payload.setData(httpUserCredentials.userDto().getUsername());
+        return new ActionResult(status, payload);
     }
 }
