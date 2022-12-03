@@ -22,8 +22,7 @@ public class HitCalculator implements Calculator<HitCoordinatesDto, HitResult> {
         var startTimeNano = System.nanoTime();
         var hitResult = new HitResult();
 
-        float r = coordinates.getR();
-        var point = new Point(coordinates.getX() / r, coordinates.getY() / r);
+        var point = new Point(coordinates.getX(), coordinates.getY());
 
         boolean isHit = this.shapesGraph.isInGraph(point);
         hitResult.setHit(isHit);

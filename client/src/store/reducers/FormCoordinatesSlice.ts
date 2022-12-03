@@ -1,18 +1,25 @@
+import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from "@reduxjs/toolkit";
 
 export interface CoordinatesFormState {
-    radius: number;
+    scaleRadius: number;
 }
 
 const initialState: CoordinatesFormState = {
-    radius: 1,
+    scaleRadius: 1,
 }
 
-
-export const CoordinatesSlice = createSlice({
+const coordinatesSlice = createSlice({
     name: "coordinates",
     initialState: initialState,
     reducers: {
-        setR: (state, action) => state.radius = action.payload
+        setR: (state: CoordinatesFormState, action: PayloadAction<number>) => {
+            state.scaleRadius = action.payload
+        }
     }
 });
+
+const { actions, reducer: coordinatesReducer } = coordinatesSlice;
+export const {setR} = actions;
+
+export default coordinatesReducer;

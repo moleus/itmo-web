@@ -35,10 +35,15 @@ const useCanvas = ({sizePx, imageSrc}: CanvasProps) => {
         ctx.fill(dot);
     }
 
+    const clear = () => {
+        const ctx = canvasRef.current.getContext('2d');
+        ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
+    }
+
     const pxToUnits = coordinatesNormalizer.fromPxToUnits;
     const unitsToPx = coordinatesNormalizer.fromUnitsToPx;
 
-    return {canvasRef, draw, pxToUnits, unitsToPx};
+    return {canvasRef, draw, clear, pxToUnits, unitsToPx};
 }
 
 export default useCanvas;

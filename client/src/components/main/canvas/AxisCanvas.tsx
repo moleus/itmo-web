@@ -16,34 +16,29 @@ export interface ClickableCanvasProps {
 const mapHitToPoint = (hit: HitResult, radius: number, normalizer: (coordinatesUnits: Vector, radius: number) => Vector): CanvasPoint => {
     const coordinates = normalizer({x: hit.x, y: hit.y}, radius);
     const color = hit.hit ? DotColor.hit : DotColor.miss;
-    return {coordinates, color, radius: 3}
+    return {coordinates: coordinates, color, radius: 3}
 }
 
 const AxisCanvas = ({canvasProps}: ClickableCanvasProps) => {
     const {data: hits} = hitAPI.useFetchAllHitsQuery();
     const [sendHit, {}] = hitAPI.useCreateHitMutation({fixedCacheKey: 'shared-create-hit'});
-    const {radius} = useAppSelector(state => state.coordinates);
+    const {scaleRadius} = useAppSelector(state => state.coordinatesReducer);
 
-    const {canvasRef, draw, pxToUnits, unitsToPx} = useCanvas(canvasProps);
+    const {canvasRef, draw, clear, pxToUnits, unitsToPx} = useCanvas(canvasProps);
 
     React.useEffect(() => {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, window.innerHeight, window.innerWidth);
-        hits && hits.forEach(hit => draw(mapHitToPoint(hit, radius, unitsToPx)));
-    });
+        clear();
+        hits && hits.forEach(hit => draw(mapHitToPoint(hit, scaleRadius, unitsToPx)));
+    }, [hits, scaleRadius]);
 
     const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
-        console.log(`Click position x: ${event.nativeEvent.offsetX}; y: ${event.nativeEvent.offsetY}`)
-        const {x, y} = pxToUnits({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY}, radius);
-        const hitQuery = {x, y, r: radius} as HitQuery;
+        const {x, y} = pxToUnits({x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY}, scaleRadius);
+        const hitQuery = {x, y, r: scaleRadius} as HitQuery;
         sendHit(hitQuery);
     }
 
     return (
-        <canvas className="axis-canvas" id="axis-canvas" data-test-id="axis-canvas" ref={canvasRef} onClick={handleCanvasClick}>
-              <img src={canvasProps.imageSrc} width={canvasProps.sizePx} height={canvasProps.sizePx} alt="A graph" />
-        </canvas>
+        <canvas className="axis-canvas" id="axis-canvas" data-test-id="axis-canvas" ref={canvasRef} onClick={handleCanvasClick}/>
     );
 }
 
