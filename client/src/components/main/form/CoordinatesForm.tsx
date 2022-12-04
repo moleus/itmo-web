@@ -10,8 +10,11 @@ import "@jetbrains/ring-ui/dist/style.css"
 import {setR} from "../../../store/reducers/FormCoordinatesSlice";
 import {useAppDispatch} from "../../../hooks/redux";
 import Slider from 'rc-slider';
+import {yupResolver} from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 import 'rc-slider/assets/index.css';
+import ValidatedInput from "../common/ValidatedInput";
 
 type FormValues = {
     x: number;
@@ -19,8 +22,13 @@ type FormValues = {
     r: number;
 };
 
+const formSchema = yup.object({
+  x: yup.number().moreThan(-5).lessThan(5).required(),
+  y: yup.number().moreThan(-5).lessThan(5).required(),
+}).required();
+
 const CoordinatesForm = () => {
-    const {register, handleSubmit, formState: {errors}} = useForm<FormValues>();
+    const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({resolver: yupResolver(formSchema)});
     const [createHit, {}] = hitAPI.useCreateHitMutation({fixedCacheKey: 'shared-create-hit'});
     const [deleteHits, {}] = hitAPI.useDeleteAllHitsMutation();
     const dispatch = useAppDispatch();
@@ -37,48 +45,31 @@ const CoordinatesForm = () => {
         <section className="grid-section input-section">
             <TabTrap>
                 <form id="input-form">
-                    {/*//TODO: show errors on invalid input state*/}
-                    <div className="input-container">
-                        X:
+                    <ValidatedInput label="X" error={errors.x}>
                         <select className="input-field" {...register("x", {required: true})}>
                             {
-                                range(5, 0).map(n => (
+                                range(10, -5).map(n => (
                                     <option key={n} value={n}>{n}</option>
                                 ))
                             }
                         </select>
+                    </ValidatedInput>
+                    <ValidatedInput label="Y" error={errors.y}>
+                        <input className={`ring-input ${errors.y && "ring-input_error"} ring-input-size_m`}
+                               {...register("y", {required: true, min: 0, max: 5})}/>
+                    </ValidatedInput>
+                    <div className="ring-form__group">
+                        <label className="ring-form__label">R</label>
+                        <div className="ring-form__control">
+                            <Slider
+                                onChange={onUpdateR}
+                                min={0.3}
+                                max={4}
+                                defaultValue={1}
+                                step={0.1}
+                            />
+                        </div>
                     </div>
-                    <div className="input-container">
-                        <Slider
-                            // defaultValue={[30, 50]}
-                            // draggableTrack
-                            // pushable={5}
-                            // allowCross={false}
-                            onChange={onUpdateR}
-                            // value={value}
-
-                            min={0.3}
-                            max={4}
-                            defaultValue={1}
-                            step={0.1}
-                        />
-                    </div>
-                    <div className="input-container">
-                        Y:
-                        <input className="input-field" defaultValue="0" {...register("y", {
-                            required: true,
-                            min: 0,
-                            max: 5
-                        })} />
-                    </div>
-                    {/*<div className="ring-form__group">*/}
-                    {/*    <label className="ring-form__label">Y</label>*/}
-                    {/*    <div className="ring-form__control">*/}
-                    {/*        <input className="ring-input ring-input_error ring-input-size_m"*/}
-                    {/*               {...register("y", {required: true, min: 0, max: 5})}/>*/}
-                    {/*        {errors.y && <div className="ring-error-bubble active">{errors.y.message}</div>}*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                     <div className="input-container">
                         <button type="button" className="input-field backlight clickable" onClick={onSubmit}>Add
                         </button>

@@ -11,21 +11,22 @@ const AuthPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [loginUser] = userAPI.useLoginUserMutation()
-    const [registerUser, {}] = userAPI.useRegisterUserMutation()
+    const [registerUser] = userAPI.useRegisterUserMutation()
 
     const fromPage = location.state?.from?.pathname || '/';
 
-    const handleLogin = (user: User) => {
-        loginUser(user).then(
-            () => navigate(fromPage, {replace: true})
-        );
+    const handleLogin = (user: User): Promise<string> => {
+        return loginUser(user).unwrap().then((data) => {
+            navigate(fromPage, {replace: true})
+            return data;
+        });
     }
 
     const handleRegister = (user: User) => {
-        // TODO: display errror on form
-        registerUser(user).then(() => {
-            navigate(fromPage, {replace: true});
-        })
+        return registerUser(user).unwrap().then((data) => {
+            navigate(fromPage, {replace: true})
+            return data;
+        });
     }
 
     return (
