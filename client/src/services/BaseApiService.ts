@@ -5,6 +5,7 @@ import {
     fetchBaseQuery,
     FetchBaseQueryError
 } from "@reduxjs/toolkit/dist/query/react";
+import {deleteCookie} from "../components/util/Util";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8080/api',
@@ -14,10 +15,10 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>
     = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
-    console.log(result);
     if (result.error) {
-        console.error("Error from server. reloading!", result.error);
-        window.location.reload()
+        console.error("Session expired. Redirecting to login", result.error);
+        deleteCookie("JSESSIONID");
+        window.location.replace("/login")
         return result;
     }
     const payload = result.data as ResponseTemplate;
