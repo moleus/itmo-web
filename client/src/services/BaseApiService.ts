@@ -15,7 +15,7 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>
     = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
-    if (result.error) {
+    if (result.error && !result.meta.request.url.includes("/user/")) {
         console.error("Session expired. Redirecting to login", result.error);
         deleteCookie("JSESSIONID");
         window.location.replace("/login")
