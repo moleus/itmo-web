@@ -5,8 +5,6 @@ import {Col, Grid, Row} from '@jetbrains/ring-ui/dist/grid/grid';
 import {Column, SortParams} from '@jetbrains/ring-ui/dist/table/header-cell';
 import Selection, {SelectionItem} from '@jetbrains/ring-ui/dist/table/selection';
 
-import '@jetbrains/ring-ui/components/table/table.css'
-import '@jetbrains/ring-ui/dist/style.css'
 import './HitsTable.scss'
 import {HitResult} from "../../../models/HitResult";
 
@@ -27,7 +25,7 @@ interface TableState {
 }
 
 const initialState: TableState = {
-    data: [], page: 1, pageSize: 20, sortKey: "id", sortOrder: true, total: 0
+    data: [], page: 1, pageSize: 18, sortKey: "id", sortOrder: true, total: 0
 }
 
 const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
@@ -74,7 +72,7 @@ const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
     }
 
     return (
-        <div className="flex-table-parent">
+        <div>
             <Table
                 data={dataPerPage}
                 columns={columns}

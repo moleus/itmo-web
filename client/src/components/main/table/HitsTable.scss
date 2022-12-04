@@ -1,12 +1,28 @@
 @import '../../../styles/elements.scss';
 
+
+@media (max-width: 815px) {
+  .table-column {
+    min-width: 5px !important;
+  }
+
+  td {
+    min-width: 5px !important;
+    padding-right: 10px !important;
+  }
+}
+
+.table-column {
+  min-width: 100px !important;
+}
+
 .flex-table-parent {
   height: 100%;
   display: flex;
+  overflow: scroll;
   flex-direction: column;
   flex: 1;
 }
-
 
 //thead th {
 //  position: sticky;

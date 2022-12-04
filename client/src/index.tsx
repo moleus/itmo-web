@@ -9,7 +9,9 @@ import {setupStore} from "./store/store";
 import "./styles/index.scss";
 
 createRoot(document.querySelector('#root')).render(
-    <Provider store={setupStore()}>
-        <App/>
-    </Provider>
+    <React.StrictMode>
+        <Provider store={setupStore()}>
+            <App/>
+        </Provider>
+    </React.StrictMode>
 );

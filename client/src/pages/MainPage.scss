@@ -4,7 +4,7 @@
   @extend .page;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 815px) {
   .main-page {
     grid-template-columns: 1fr;
     grid-template-rows: 0.1fr 1fr 0.5fr 1fr;
@@ -16,7 +16,7 @@
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 815px) {
   .main-page {
     grid-template-columns: auto 1fr;
     grid-template-rows: 0.1fr 1.2fr 2fr;
@@ -27,7 +27,7 @@
   }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1266px) {
   .main-page {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 0.1fr 1.2fr 1fr 1fr;
@@ -47,6 +47,7 @@
 
 .results-table {
   min-height: 0;
+  min-width: 0;
   grid-area: table;
 }
 

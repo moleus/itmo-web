@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Column} from '@jetbrains/ring-ui/dist/table/header-cell';
+
 import TableAdvanced, {HitResultItem} from "./TableAdvanced";
 import {hitAPI} from "../../../services/HitsService";
 import {HitResult} from "../../../models/HitResult";
@@ -13,15 +14,18 @@ const columns: HitColumn[] = [
     {
         id: "id",
         title: "id",
-        sortable: true
+        sortable: true,
+        className: "table-column",
     },
     {
         id: "x",
         title: "x",
+        getValue: (item) => item.x.toFixed(2)
     },
     {
         id: "y",
         title: "y",
+        getValue: (item) => item.y.toFixed(2)
     },
     {
         id: "r",
