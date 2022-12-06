@@ -1,0 +1,20 @@
+# Mark the commands below to be run as a batch
+batch
+
+# disable integrated jaspi. Fixes server crash on authentication try.
+/subsystem=undertow/application-security-domain=other:write-attribute(name=integrated-jaspi, value=false)
+
+# add postgres module
+module add --name=org.postgres --resources=/opt/jdbc/postgresql-42.5.0.jar --module-xml=/opt/jdbc/postgres-module.xml
+
+# Add postgres driver
+/subsystem=datasources/jdbc-driver=postgres:add(driver-name="postgres",driver-module-name="org.postgres",driver-class-name=org.postgresql.Driver,driver-xa-datasource-class-name=org.postgresql.xa.PGXADataSource)
+
+# Add the datasource
+data-source add --name=PostgresDS --driver-name=postgres --jndi-name=java:jboss/datasources/PostgresDS --connection-url=jdbc:postgresql://postgres:5432/${env.DB_NAME} --user-name=${env.POSTGRES_USER} --password=${env.POSTGRES_PASSWORD} --use-ccm=true --max-pool-size=5 --blocking-timeout-wait-millis=5000 --enabled=true --driver-class=org.postgresql.Driver --exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter --jta=true --use-java-context=true --valid-connection-checker-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLValidConnectionChecker
+
+# Execute the batch
+run-batch
+
+# Reload the server configuration
+#:reload
