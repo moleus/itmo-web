@@ -1,6 +1,6 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import {hitAPI} from "../api/HitsService";
-import {userAPI} from "../api/AuthService";
+import {hitAPI} from "../api/hitsService";
+import {userAPI} from "../api/authService";
 import coordinatesReducer from "./reducers/FormCoordinatesSlice";
 
 const rootReducer = combineReducers({

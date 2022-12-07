@@ -3,7 +3,7 @@ import React from 'react';
 import {Column} from '@jetbrains/ring-ui/dist/table/header-cell';
 
 import TableAdvanced, {HitResultItem} from "./TableAdvanced";
-import {hitAPI} from "../../../api/HitsService";
+import {hitAPI} from "../../../api/hitsService";
 import {HitResult} from "../../../api/types/HitResult";
 
 

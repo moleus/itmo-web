@@ -1,7 +1,7 @@
 import React from 'react';
 import {CanvasPoint, DotColor} from "./CanvasPoint";
 import useCanvas, {CanvasProps} from "./useCanvas";
-import {hitAPI} from "../../../api/HitsService";
+import {hitAPI} from "../../../api/hitsService";
 import {HitResult} from "../../../api/types/HitResult";
 
 import "./AxisCanvas.scss"

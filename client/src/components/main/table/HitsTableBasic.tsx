@@ -1,5 +1,5 @@
 import React from 'react';
-import {hitAPI} from "../../../api/HitsService";
+import {hitAPI} from "../../../api/hitsService";
 import {HitResult} from "../../../api/types/HitResult";
 
 const HitsTableBasic = () => {

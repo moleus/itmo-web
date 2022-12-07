@@ -1,5 +1,5 @@
 import {HitResult} from './types/HitResult'
-import {emptyApi} from "./BaseApiService";
+import {emptyApi} from "./baseApiService";
 import {HitQuery} from "./types/HitQuery";
 
 export const hitAPI = emptyApi.enhanceEndpoints({addTagTypes: ['Hits']}).injectEndpoints({

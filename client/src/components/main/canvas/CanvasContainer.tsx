@@ -2,7 +2,7 @@ import React from "react";
 import Axes from "./svg/Axes";
 import Figures from "./svg/Figures";
 import {useAppSelector} from "../../../hooks/redux";
-import {hitAPI} from "../../../api/HitsService";
+import {hitAPI} from "../../../api/hitsService";
 import {HitQuery} from "../../../api/types/HitQuery";
 import useNormalizer from "./UseNormalizer";
 import Point from "./svg/Point";
