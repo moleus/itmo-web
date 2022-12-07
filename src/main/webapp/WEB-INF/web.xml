@@ -6,18 +6,6 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>index-servlet</web-resource-name>
-            <url-pattern>/index.jsp</url-pattern>
-            <http-method>GET</http-method>
-            <http-method-omission>OPTIONS</http-method-omission>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>Authorised</role-name>
-        </auth-constraint>
-    </security-constraint>
-
-    <security-constraint>
-        <web-resource-collection>
             <web-resource-name>api-resources</web-resource-name>
             <url-pattern>/api/hits/*</url-pattern>
             <http-method-omission>OPTIONS</http-method-omission>
