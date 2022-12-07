@@ -1,17 +1,19 @@
 import React from 'react';
-import {FieldError, FieldErrorsImpl, Merge} from 'react-hook-form';
+import {FieldError} from 'react-hook-form';
 
 interface ValidatedInputProps {
     label: string;
-    error: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
-    children: React.ReactNode;
+    error: FieldError;
+    children: React.ReactElement;
 }
 
 const ValidatedInput = ({label, error, children}: ValidatedInputProps) => (
     <div className="ring-form__group">
         <label className="ring-form__label">{label}</label>
         <div className="ring-form__control">
-            {children}
+                <div className={`${error && "ring-input_error"}`}>
+                    {children}
+                </div>
             {error && <div className="ring-error-bubble active">{error.message}</div>}
         </div>
     </div>

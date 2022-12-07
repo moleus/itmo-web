@@ -1,21 +1,21 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import {range} from "../../util/Util";
-
 import {hitAPI} from "../../../services/HitsService";
-
-import "../../../styles/index.scss"
-import TabTrap from "@jetbrains/ring-ui/dist/tab-trap/tab-trap";
-import "@jetbrains/ring-ui/dist/style.css"
 import {setR} from "../../../store/reducers/FormCoordinatesSlice";
 import {useAppDispatch} from "../../../hooks/redux";
-import Slider from 'rc-slider';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-import 'rc-slider/assets/index.css';
+import Text from "@jetbrains/ring-ui/dist/text/text";
+import TabTrap from "@jetbrains/ring-ui/dist/tab-trap/tab-trap";
+
 import ValidatedInput from "../common/ValidatedInput";
 import Button from "../../common/Button";
+import RangeSlider from "../../common/RangeSlider";
+
+import 'rc-slider/assets/index.css';
+import "@jetbrains/ring-ui/dist/style.css";
 
 type FormValues = {
     x: number;
@@ -24,8 +24,8 @@ type FormValues = {
 };
 
 const formSchema = yup.object({
-  x: yup.number().moreThan(-5).lessThan(5).required(),
-  y: yup.number().moreThan(-5).lessThan(5).required(),
+    x: yup.number().moreThan(-5).lessThan(5).required(),
+    y: yup.number().moreThan(-5).lessThan(5).required(),
 }).required();
 
 const CoordinatesForm = () => {
@@ -49,28 +49,20 @@ const CoordinatesForm = () => {
                     <ValidatedInput label="X" error={errors.x}>
                         <select className="input-field" {...register("x", {required: true})}>
                             {
-                                range(10, -5).map(n => (
+                                range(10, -4).map(n => (
                                     <option key={n} value={n}>{n}</option>
                                 ))
                             }
                         </select>
                     </ValidatedInput>
                     <ValidatedInput label="Y" error={errors.y}>
-                        <input className={`ring-input ${errors.y && "ring-input_error"} ring-input-size_m`}
+                        <input className={`ring-input ${errors.y && "ring-input_error"} ring-input-size_m input-field`}
                                {...register("y", {required: true, min: 0, max: 5})}/>
                     </ValidatedInput>
-                    <div className="ring-form__group">
-                        <label className="ring-form__label">R</label>
-                        <div className="ring-form__control">
-                            <Slider
-                                onChange={onUpdateR}
-                                min={0.3}
-                                max={4}
-                                defaultValue={1}
-                                step={0.1}
-                            />
-                        </div>
-                    </div>
+
+                    <Text>R</Text>
+                    <RangeSlider onChange={onUpdateR} min={0.3} max={4} defaultValue={1}/>
+
                     <div className="input-container">
                         <Button onClick={onSubmit} label="Add"/>
                         <Button onClick={onReset} label="Reset"/>
