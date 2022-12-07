@@ -22,6 +22,7 @@ export const userAPI = emptyApi.injectEndpoints({
                 url: `user/logout`,
                 method: 'HEAD',
             }),
+            invalidatesTags: ['Hits'],
         })
     })
 })

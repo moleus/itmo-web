@@ -2,7 +2,7 @@ import {HitResult} from './types/HitResult'
 import {emptyApi} from "./baseApiService";
 import {HitQuery} from "./types/HitQuery";
 
-export const hitAPI = emptyApi.enhanceEndpoints({addTagTypes: ['Hits']}).injectEndpoints({
+export const hitAPI = emptyApi.injectEndpoints({
     endpoints: (build) => ({
         fetchAllHits: build.query<HitResult[], void>({
             query: () => ({
