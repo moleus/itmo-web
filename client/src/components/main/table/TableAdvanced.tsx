@@ -6,7 +6,7 @@ import {Column, SortParams} from '@jetbrains/ring-ui/dist/table/header-cell';
 import Selection, {SelectionItem} from '@jetbrains/ring-ui/dist/table/selection';
 
 import './HitsTable.scss'
-import {HitResult} from "../../../models/HitResult";
+import {HitResult} from "../../../api/types/HitResult";
 
 export type HitResultItem = HitResult & SelectionItem
 

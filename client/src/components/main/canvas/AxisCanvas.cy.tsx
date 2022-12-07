@@ -1,7 +1,7 @@
 /// <reference path="../../../../cypress/global.d.ts" />
 import React from 'react';
 import AxisCanvas from "./AxisCanvas";
-import {HitQuery} from "../../../models/HitQuery";
+import {HitQuery} from "../../../api/types/HitQuery";
 
 const CANVAS_SIZE = 300;
 const IMG_SRC = "/img/graph.svg"

@@ -1,6 +1,6 @@
 import React from "react";
 import {useForm} from "react-hook-form";
-import {User} from "../../models/User";
+import {User} from "../../api/types/User";
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 

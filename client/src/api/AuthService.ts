@@ -1,5 +1,5 @@
 import {emptyApi} from "./BaseApiService";
-import {User, Username} from "../models/User";
+import {User, Username} from "./types/User";
 
 export const userAPI = emptyApi.injectEndpoints({
     endpoints: (build) => ({

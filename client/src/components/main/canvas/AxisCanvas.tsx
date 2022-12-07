@@ -1,13 +1,13 @@
 import React from 'react';
 import {CanvasPoint, DotColor} from "./CanvasPoint";
 import useCanvas, {CanvasProps} from "./useCanvas";
-import {hitAPI} from "../../../services/HitsService";
-import {HitResult} from "../../../models/HitResult";
+import {hitAPI} from "../../../api/HitsService";
+import {HitResult} from "../../../api/types/HitResult";
 
 import "./AxisCanvas.scss"
 import {Vector} from './CoodinatesNormalizer';
 import {useAppSelector} from '../../../hooks/redux';
-import {HitQuery} from "../../../models/HitQuery";
+import {HitQuery} from "../../../api/types/HitQuery";
 
 export interface ClickableCanvasProps {
     canvasProps: CanvasProps;

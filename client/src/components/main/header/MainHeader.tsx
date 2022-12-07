@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {userAPI} from "../../../services/AuthService";
+import {userAPI} from "../../../api/AuthService";
 import Button from "../../common/Button";
 
 const MainHeader = () => {

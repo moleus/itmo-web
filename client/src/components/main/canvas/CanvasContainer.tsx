@@ -2,11 +2,11 @@ import React from "react";
 import Axes from "./svg/Axes";
 import Figures from "./svg/Figures";
 import {useAppSelector} from "../../../hooks/redux";
-import {hitAPI} from "../../../services/HitsService";
-import {HitQuery} from "../../../models/HitQuery";
+import {hitAPI} from "../../../api/HitsService";
+import {HitQuery} from "../../../api/types/HitQuery";
 import useNormalizer from "./UseNormalizer";
 import Point from "./svg/Point";
-import {HitResult} from "../../../models/HitResult";
+import {HitResult} from "../../../api/types/HitResult";
 import {Vector} from "./CoodinatesNormalizer";
 import {CanvasPoint, DotColor} from "./CanvasPoint";
 

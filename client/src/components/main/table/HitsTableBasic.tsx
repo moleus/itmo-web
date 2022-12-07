@@ -1,6 +1,6 @@
 import React from 'react';
-import {hitAPI} from "../../../services/HitsService";
-import {HitResult} from "../../../models/HitResult";
+import {hitAPI} from "../../../api/HitsService";
+import {HitResult} from "../../../api/types/HitResult";
 
 const HitsTableBasic = () => {
     const {data: hits, isLoading, error} = hitAPI.useFetchAllHitsQuery();

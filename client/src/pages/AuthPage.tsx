@@ -1,8 +1,8 @@
 import React from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import AuthForm from "../components/auth/AuthForm";
-import {User} from "../models/User";
-import {userAPI} from "../services/AuthService";
+import {User} from "../api/types/User";
+import {userAPI} from "../api/AuthService";
 
 import "./AuthPage.scss";
 import AuthPageHeader from "../components/auth/AuthPageHeader";
