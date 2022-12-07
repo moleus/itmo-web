@@ -11,7 +11,7 @@ const initialState: CoordinatesFormState = {
 
 const coordinatesSlice = createSlice({
     name: "coordinates",
-    initialState: initialState,
+    initialState,
     reducers: {
         setR: (state: CoordinatesFormState, action: PayloadAction<number>) => {
             state.scaleRadius = action.payload
