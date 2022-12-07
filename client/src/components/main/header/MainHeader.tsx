@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {userAPI} from "../../../services/AuthService";
+import Button from "../../common/Button";
 
 const MainHeader = () => {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ const MainHeader = () => {
     return (
         <section className="grid-section header">
             <span className="centered">Made by Pavel</span>
-            <button className="input-field backlight clickable" onClick={logout}>Logout</button>
+            <Button label="Logout" onClick={logout}/>
         </section>
     )
 };

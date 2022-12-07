@@ -6,6 +6,7 @@ import * as yup from "yup";
 
 import "./AuthForm.scss"
 import ValidatedInput from "../main/common/ValidatedInput";
+import Button from "../common/Button";
 
 interface LoginFormProps {
     onLogin: (user: User) => Promise<string>;
@@ -38,8 +39,8 @@ const AuthForm = ({onLogin, onRegister}: LoginFormProps) => {
                 <input className="input-field" {...register("password", {required: true, minLength: 4})} />
             </ValidatedInput>
             <div className="input-container">
-                <button className="input-field backlight clickable" onClick={handleSubmit(handleLogin)}>Login</button>
-                <button className="input-field backlight clickable" onClick={handleSubmit(handleRegister)}>Register</button>
+                <Button label="Login" onClick={handleSubmit(handleLogin)}/>
+                <Button label="Register" onClick={handleSubmit(handleRegister)}/>
             </div>
         </form>
         </section>

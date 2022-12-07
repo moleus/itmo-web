@@ -15,6 +15,7 @@ import * as yup from "yup";
 
 import 'rc-slider/assets/index.css';
 import ValidatedInput from "../common/ValidatedInput";
+import Button from "../../common/Button";
 
 type FormValues = {
     x: number;
@@ -71,15 +72,13 @@ const CoordinatesForm = () => {
                         </div>
                     </div>
                     <div className="input-container">
-                        <button type="button" className="input-field backlight clickable" onClick={onSubmit}>Add
-                        </button>
-                        <button type="button" className="input-field backlight clickable" onClick={onReset}>Reset
-                        </button>
+                        <Button onClick={onSubmit} label="Add"/>
+                        <Button onClick={onReset} label="Reset"/>
                     </div>
                 </form>
             </TabTrap>
         </section>
-    );
+    )
 }
 
 export default CoordinatesForm;
