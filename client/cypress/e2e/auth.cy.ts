@@ -1,14 +1,4 @@
 describe('Server authentication cases', function () {
-    it('redirect when access /', () => {
-        cy.request({
-            url: '/',
-            followRedirect: false,
-        }).then(resp => {
-            expect(resp.status).to.eq(302)
-            expect(resp.redirectedToUrl).to.eq(Cypress.config().baseUrl + "/login.jsp")
-        })
-    })
-
     it('unauthorised when access api endpoints', () => {
         cy.request({
             method: "POST",
@@ -37,7 +27,7 @@ describe('Server authentication cases', function () {
             body: {username: "aboba", password: "111111"}
         }).should((response) => {
             expect(response.status).to.eq(200)
-            expect(response.body).to.deep.eq({isError: true, errorMessage: "User already exists"})
+            expect(response.body).to.deep.eq({isError: true, errorMessage: "User already exists", data: "aboba"})
         })
     })
 
@@ -59,7 +49,7 @@ describe('Server authentication cases', function () {
             body: {username: "aboba", password: "aboba"}
         }).should((response) => {
             expect(response.status).to.eq(200)
-            expect(response.body).to.deep.eq({isError: false, errorMessage: "Success"})
+            expect(response.body).to.deep.eq({isError: false, errorMessage: "Success", data: "aboba"})
         })
     })
 })

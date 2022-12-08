@@ -4,7 +4,7 @@ export default defineConfig({
   e2e: {
     video: false,
     screenshotOnRunFailure: false,
-    baseUrl: "http://localhost:3000/",
+    baseUrl: "http://localhost:8080/",
   },
 
     component: {
