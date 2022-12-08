@@ -2,8 +2,8 @@ package com.moleus.web.service.stratagies;
 
 public enum ActionStatus {
     OK(200, "Success"),
-    USER_EXISTS(200, "User already exists"),
-    INVALID_CREDENTIALS(200, "Credentials are invalid"),
+    USER_EXISTS(401, "User already exists"),
+    INVALID_CREDENTIALS(401, "Credentials are invalid"),
     INVALID_PARAMS(400, "Invalid parameters provided"),
     UNSATISFIED_CONSTRAINTS(200, "Login & password should be more than 4 characters long");
 

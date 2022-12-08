@@ -26,7 +26,9 @@ const AuthForm = ({onLogin, onRegister}: LoginFormProps) => {
     }
 
     const handleRegister = (user: User) => {
-        onRegister(user).catch(() => setError("password", { type: 'custom', message: "Invalid login or password provided" }))
+        onRegister(user).catch((cause) => {
+            setError("password", { type: 'custom', message: cause.data.errorMessage })
+        })
     }
 
     return (
