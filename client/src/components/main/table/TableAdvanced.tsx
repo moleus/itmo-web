@@ -40,9 +40,8 @@ const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
         return state.data.slice(startIndex, startIndex + pageSize);
     }
 
-    const [dataPerPage, setDataPerPage] = React.useState<HitResultItem[]>([]);
-
     React.useEffect(() => {
+        setCurrentPage(data);
         setState((prevState) => ({
             ...prevState,
             data: getSortedData(prevState.sortKey, prevState.sortOrder),
@@ -50,9 +49,14 @@ const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
         }))
     }, [data])
 
-    React.useEffect(() => {
-        setDataPerPage(() => getDataPerPage(state.page, state.pageSize));
-    }, [state.data])
+    const setCurrentPage = (totalData: HitResultItem[]) => {
+        if (totalData.length <= state.pageSize * state.page) {
+            setState((prevState) => ({
+                ...prevState,
+                page: 1
+            }))
+        }
+    }
 
     const getSortedData = (colId: number | string, order: boolean): HitResultItem[] => {
         return [].concat(data).sort((a, b) =>
@@ -67,14 +71,13 @@ const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
     };
 
     const handlePageChange = (page: number) => {
-        setDataPerPage(getDataPerPage(page, state.pageSize))
         setState(prevState => ({...prevState, page: page}))
     }
 
     return (
         <div>
             <Table
-                data={dataPerPage}
+                data={getDataPerPage(state.page, state.pageSize)}
                 columns={columns}
                 renderEmpty={() => 'No data'}
                 selectable={false}
