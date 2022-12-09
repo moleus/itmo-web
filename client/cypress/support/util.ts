@@ -1,22 +1,18 @@
-/**
- * Function for delaying a request until it is explicitly triggered.
- *
- * Taken from https://blog.dai.codes/cypress-loading-state-tests/.
- */
-import {HttpResponseInterceptor, RouteMatcher, StaticResponse} from "cypress/types/net-stubbing";
+import {faker} from '@faker-js/faker';
+import {HitResult} from "../../src/api/types/HitResult";
 
-export function interceptIndefinitely(
-  requestMatcher: RouteMatcher,
-  response?: StaticResponse | HttpResponseInterceptor,
-): { sendResponse: () => void } {
-  let sendResponse;
-  const trigger = new Promise((resolve) => {
-    sendResponse = resolve;
-  });
-  cy.intercept(requestMatcher, (request) => {
-    return trigger.then(() => {
-      request.reply(response);
-    });
-  });
-  return { sendResponse };
+export const createRandomHit = (id: number) => {
+    return {
+        id: id,
+        x: faker.datatype.float({min: -5, max: 5}),
+        y: faker.datatype.float({min: -5, max: 5}),
+        r: faker.datatype.float({min: -5, max: 5}),
+        hit: faker.datatype.boolean(),
+        hitTime: faker.datatype.datetime().toLocaleTimeString(),
+        executionTimeMicros: faker.datatype.number({min: 5, max: 3000})
+    } as HitResult
+}
+
+export const getRandomHits = (count: number): HitResult[] => {
+    return Array.from({length: count}).map((_, i) => createRandomHit(i));
 }

@@ -11,6 +11,7 @@
     "moduleResolution": "Node",
     "types": [
       "cypress",
+      "@testing-library/cypress",
       "node"
     ],
     "lib": [
