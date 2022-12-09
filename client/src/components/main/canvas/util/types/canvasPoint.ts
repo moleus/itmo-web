@@ -14,3 +14,6 @@ export interface CanvasPoint {
     color: DotColor;
 }
 
+export interface IndexedPoint extends CanvasPoint {
+   id: number;
+}

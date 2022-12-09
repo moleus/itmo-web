@@ -1,5 +1,5 @@
 import React from 'react';
-import {CanvasPoint} from "../CanvasPoint";
+import {CanvasPoint} from "../util/types/canvasPoint";
 
 
 const Point = ({coordinates, radius, color}: CanvasPoint) => {
