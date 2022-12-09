@@ -11,8 +11,9 @@ import {HitResult} from "../../../api/types/HitResult";
 export type HitResultItem = HitResult & SelectionItem
 
 export interface HitsTableAdvancedProps {
-    data: HitResultItem[];
+    data: HitResult[];
     columns: Column<SelectionItem>[];
+    pageSize: number;
 }
 
 interface TableState {
@@ -28,11 +29,12 @@ const initialState: TableState = {
     data: [], page: 1, pageSize: 18, sortKey: "id", sortOrder: true, total: 0
 }
 
-const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
+const TableAdvanced = ({data, columns, pageSize}: HitsTableAdvancedProps) => {
     const [state, setState] = React.useState<TableState>({
         ...initialState,
-        data: data,
-        total: data.length
+        data: data as HitResultItem[],
+        total: data.length,
+        pageSize: pageSize
     });
 
     const getDataPerPage = (page: number, pageSize: number) => {
@@ -49,7 +51,7 @@ const TableAdvanced = ({data, columns}: HitsTableAdvancedProps) => {
         }))
     }, [data])
 
-    const setCurrentPage = (totalData: HitResultItem[]) => {
+    const setCurrentPage = (totalData: HitResult[]) => {
         if (totalData.length <= state.pageSize * state.page) {
             setState((prevState) => ({
                 ...prevState,
