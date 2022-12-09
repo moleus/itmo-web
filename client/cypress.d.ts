@@ -1,8 +1,6 @@
-/// <reference types="cypress" />
-
 import {MountOptions, MountReturn} from "cypress/react";
 import {EnhancedStore} from "@reduxjs/toolkit";
-import {RootState} from "../src/store/store";
+import {RootState} from "./src/store/store";
 
 declare global {
     namespace Cypress {

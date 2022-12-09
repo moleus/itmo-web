@@ -1,18 +1,22 @@
-//{
-//  "compilerOptions": {
-//    "types": ["cypress"],
-//    "lib": ["es5", "dom"],
-//    "target": "es5",
-//  },
-//  "exclude": [],
-//  "include": ["**/*.{tsx, ts}"],
-////  "extends": "../tsconfig.json",
-//}
 {
+  "extends": "../tsconfig.json",
+  "include": [
+    "./**/*.ts",
+    "../cypress.d.ts"
+  ],
   "compilerOptions": {
+//    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowJs": false,
     "target": "es5",
-    "lib": ["es5", "dom"],
-    "types": ["cypress", "node"]
-  },
-  "include": ["**/*.ts"]
+    "lib": [
+      "es5",
+      "dom"
+    ],
+    "types": [
+      "cypress",
+      "node"
+    ]
+  }
 }

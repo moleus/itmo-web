@@ -1,22 +1,25 @@
 {
-  "compilerOptions":  {
-    "outDir":  "./dist",
-    "target":  "es6",
-    "module":  "es6",
-    "sourceMap": true,
-    "jsx":  "react",
-    "noImplicitAny":  true,
-    "allowSyntheticDefaultImports":  true,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "outDir": "./dist",
+    "target": "es6",
+    "module": "es6",
+    "jsx": "react-jsx",
+    "noImplicitAny": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "moduleResolution": "Node",
-    "types": ["cypress", "node"],
-    "lib": ["es6", "dom"]
+    "types": [
+      "cypress",
+      "node"
+    ],
+    "lib": [
+      "es6",
+      "dom"
+    ]
   },
   "include": [
-    "./src",
-    "node_modules/cypress",
-    "cypress/**/*.{ts,tsx}"
-  ],
-  "exclude": [
-    "node_modules"
+    "./src/**/*.cy.tsx",
+    "cypress.d.ts"
   ]
 }
