@@ -6,8 +6,8 @@ interface ButtonProps {
    onClick: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const Button = ({label, onClick}: ButtonProps) => (
-    <button type="button" className="input-field backlight clickable" onClick={onClick}>
+const Button = ({label, onClick, ...other}: ButtonProps) => (
+    <button type="button" className="input-field backlight clickable" onClick={onClick} {...other}>
         {label}
     </button>
 );

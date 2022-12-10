@@ -13,9 +13,9 @@ interface AxisCanvasProps {
     onClick: React.MouseEventHandler<SVGSVGElement>,
 }
 
-const AxisCanvas = ({sizePx, pxPerUnit, onClick, points}: AxisCanvasProps) => {
+const AxisCanvas = ({sizePx, pxPerUnit, onClick, points, ...other}: AxisCanvasProps) => {
     return (
-        <svg width={sizePx} height={sizePx} onClick={onClick}>
+        <svg width={sizePx} height={sizePx} onClick={onClick} {...other}>
             <g>
                 <Figures halfR={pxPerUnit} sizePx={sizePx}/>
                 <Axes strokeDistance={pxPerUnit} sizePx={sizePx}/>

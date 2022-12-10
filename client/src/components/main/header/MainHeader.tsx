@@ -16,7 +16,7 @@ const MainHeader = () => {
     return (
         <section className="grid-section header">
             <span className="centered">Made by Pavel</span>
-            <Button label="Logout" onClick={logout}/>
+            <Button data-test-id="logout-button" label="Logout" onClick={logout}/>
         </section>
     )
 };

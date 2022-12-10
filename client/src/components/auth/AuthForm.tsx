@@ -35,14 +35,14 @@ const AuthForm = ({onLogin, onRegister}: LoginFormProps) => {
         <section className="login-input-form">
         <form className="centered">
             <ValidatedInput label="Username" error={errors.username}>
-                <input className="input-field" defaultValue="aboba" {...register("username", {required: true, minLength: 4})} />
+                <input data-test-id="username-input" className="input-field" defaultValue="aboba" {...register("username", {required: true, minLength: 4})} />
             </ValidatedInput>
             <ValidatedInput label="Password" error={errors.password}>
-                <input className="input-field" {...register("password", {required: true, minLength: 4})} />
+                <input data-test-id="password-input" className="input-field" {...register("password", {required: true, minLength: 4})} />
             </ValidatedInput>
             <div className="input-container">
-                <Button label="Login" onClick={handleSubmit(handleLogin)}/>
-                <Button label="Register" onClick={handleSubmit(handleRegister)}/>
+                <Button data-test-id="login-button" label="Login" onClick={handleSubmit(handleLogin)}/>
+                <Button data-test-id="register-button" label="Register" onClick={handleSubmit(handleRegister)}/>
             </div>
         </form>
         </section>

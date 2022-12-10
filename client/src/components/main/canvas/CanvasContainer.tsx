@@ -28,12 +28,12 @@ const CanvasContainer = () => {
         sendHit({x, y, r: scaleRadius});
     }
 
-    const convertPoints = () => hits.map((h: HitResult) => mapHitToPoint(h, scaleRadius, fromUnitsToPx))
+    const convertPoints = () => hits ? hits.map((h: HitResult) => mapHitToPoint(h, scaleRadius, fromUnitsToPx)) : []
     const scaledPxPerUnit = () => Math.min(INIT_PX_PER_UNIT * scaleRadius, SIZE);
 
     return (
         <section className="grid-section" id="canvas-container">
-            <AxisCanvas onClick={handleClick} sizePx={SIZE} scaleRadius={scaleRadius} points={convertPoints()} pxPerUnit={scaledPxPerUnit()}/>
+            <AxisCanvas data-test-id="axis-canvas" onClick={handleClick} sizePx={SIZE} scaleRadius={scaleRadius} points={convertPoints()} pxPerUnit={scaledPxPerUnit()}/>
         </section>
     )
 }
