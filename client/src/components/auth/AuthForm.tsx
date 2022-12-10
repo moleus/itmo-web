@@ -13,13 +13,18 @@ interface LoginFormProps {
     onRegister: (user: User) => Promise<string>;
 }
 
+interface AuthInputTypes {
+    username: string;
+    password: string;
+}
+
 const formSchema = yup.object({
     username: yup.string().min(4).required(),
     password: yup.string().min(5).required(),
 }).required();
 
 const AuthForm = ({onLogin, onRegister}: LoginFormProps) => {
-    const {register, handleSubmit, setError, formState: {errors}} = useForm({resolver: yupResolver(formSchema)});
+    const {register, handleSubmit, setError, formState: {errors}} = useForm<AuthInputTypes>({resolver: yupResolver(formSchema)});
 
     const handleLogin = (user: User) => {
        onLogin(user).catch(() => setError("password", { type: 'custom', message: "Invalid login or password provided" }))
