@@ -9,12 +9,12 @@ import Theme, {ThemeProvider} from "@jetbrains/ring-ui/dist/global/theme";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/">
+        <Route path="login" element={<AuthPage/>}/>
         <Route index element={
             <RequireAuth>
                 <MainPage/>
             </RequireAuth>
         }/>
-        <Route path="login" element={<AuthPage/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
     </Route>
 ))

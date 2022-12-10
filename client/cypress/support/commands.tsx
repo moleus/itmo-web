@@ -27,3 +27,23 @@ Cypress.Commands.add('clickCanvas', (testId: string, clientX: number, clientY: n
         clientY: clientY,
     })
 })
+
+Cypress.Commands.add('disableSameSiteCookieRestrictions', () => {
+    cy.intercept('*', (req) => {
+        req.on('response', (res) => {
+            if (!res.headers['set-cookie']) {
+                return;
+            }
+
+            const disableSecure = (headerContent: string): string => {
+                return headerContent.replace(/secure/ig, '');
+            }
+
+            if (Array.isArray(res.headers['set-cookie'])) {
+                res.headers['set-cookie'] = res.headers['set-cookie'].map(disableSecure);
+            } else {
+                res.headers['set-cookie'] = disableSecure(res.headers['set-cookie']);
+            }
+        })
+    });
+});

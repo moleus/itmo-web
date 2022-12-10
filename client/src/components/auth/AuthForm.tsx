@@ -35,7 +35,7 @@ const AuthForm = ({onLogin, onRegister}: LoginFormProps) => {
         <section className="login-input-form">
         <form className="centered">
             <ValidatedInput label="Username" error={errors.username}>
-                <input data-test-id="username-input" className="input-field" defaultValue="aboba" {...register("username", {required: true, minLength: 4})} />
+                <input data-test-id="username-input" className="input-field" {...register("username", {required: true, minLength: 4})} />
             </ValidatedInput>
             <ValidatedInput label="Password" error={errors.password}>
                 <input data-test-id="password-input" className="input-field" {...register("password", {required: true, minLength: 4})} />

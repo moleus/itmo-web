@@ -17,6 +17,8 @@ declare global {
 
             getByTestId<T>(value: string): Cypress.Chainable<T>
             clickCanvas(testId: string, x: number, y: number): Cypress.Chainable
+
+            disableSameSiteCookieRestrictions(): void;
         }
     }
 }
