@@ -38,7 +38,7 @@ const AuthForm = ({onLogin, onRegister}: LoginFormProps) => {
                 <input data-test-id="username-input" className="input-field" {...register("username", {required: true, minLength: 4})} />
             </ValidatedInput>
             <ValidatedInput label="Password" error={errors.password}>
-                <input data-test-id="password-input" className="input-field" {...register("password", {required: true, minLength: 4})} />
+                <input data-test-id="password-input" type="password" className="input-field" {...register("password", {required: true, minLength: 4})} />
             </ValidatedInput>
             <div className="input-container">
                 <Button data-test-id="login-button" label="Login" onClick={handleSubmit(handleLogin)}/>
