@@ -24,9 +24,10 @@ describe('Server authentication cases', function () {
         cy.request({
             method: "POST",
             url: "/api/user/register",
+            failOnStatusCode: false,
             body: {username: "aboba", password: "111111"}
         }).should((response) => {
-            expect(response.status).to.eq(200)
+            expect(response.status).to.eq(401)
             expect(response.body).to.deep.eq({isError: true, errorMessage: "User already exists", data: "aboba"})
         })
     })
