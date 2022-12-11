@@ -32,4 +32,6 @@ const Figures = ({halfR, sizePx}: FiguresProps) => {
     )
 }
 
-export default Figures;
+const MemoizedFigures = React.memo(Figures);
+
+export default MemoizedFigures;

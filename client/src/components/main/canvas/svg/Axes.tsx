@@ -31,4 +31,6 @@ const Axes = ({strokeDistance, sizePx}: AxesProps) => {
     )
 }
 
-export default Axes;
+const MemoizedAxes = React.memo(Axes);
+
+export default MemoizedAxes;
