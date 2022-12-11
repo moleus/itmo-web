@@ -49,7 +49,7 @@ describe('authentication process', function () {
 
         cy.disableSameSiteCookieRestrictions();
 
-        cy.visit("/login");
+        cy.visit("/");
         cy.getCookies().should('be.empty')
         shouldSubmitSuccess(newUsername, password, 'register-button')
         shouldBeRootUrl();
@@ -60,6 +60,7 @@ describe('authentication process', function () {
         cy.log("Logout")
         cy.getByTestId('logout-button').click();
         shouldBeLoginUrl();
+        cy.getCookies().should('be.empty')
         shouldHaveErr(newUsername, password + "_invalid", "User already exists", 'register-button')
         shouldSubmitSuccess(newUsername, password, 'login-button');
         cy.get('[data-test=ring-table-body]').find('td').should('not.have.text', "No data");

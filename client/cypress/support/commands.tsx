@@ -34,6 +34,9 @@ Cypress.Commands.add('disableSameSiteCookieRestrictions', () => {
             if (!res.headers['set-cookie']) {
                 return;
             }
+            if (req.headers && req.headers['user-agent'] && req.headers['user-agent'].includes("Chrome")) {
+                return;
+            }
 
             const disableSecure = (headerContent: string): string => {
                 return headerContent.replace(/secure/ig, '');
