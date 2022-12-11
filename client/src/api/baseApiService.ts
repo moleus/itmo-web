@@ -6,6 +6,7 @@ import {
     FetchBaseQueryError
 } from "@reduxjs/toolkit/dist/query/react";
 import {deleteCookie} from "../components/util/Util";
+import {ResponseTemplate} from "./types/ResponseTemplate";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: 'http://localhost:8080/api',
