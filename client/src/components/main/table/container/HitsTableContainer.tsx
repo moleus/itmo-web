@@ -1,11 +1,11 @@
 import React from 'react';
 
-import TableAdvanced, {HitResultItem} from "./TableAdvanced";
-import {hitAPI} from "../../../api/hitsService";
-import {HitResult} from "../../../api/types/HitResult";
-import {columns} from "./columns";
+import HitsTable, {HitResultItem} from "../body/HitsTable";
+import {hitAPI} from "../../../../api/hitsService";
+import {HitResult} from "../../../../api/types/HitResult";
+import {columns} from "../data/columns";
 
-import './HitsTable.scss'
+import './hitsTableContainer.scss'
 
 const hitResultToItem = (data: HitResult[]): HitResultItem[] => {
     return data ? data.map(hit => hit as HitResultItem) : [];
@@ -16,7 +16,7 @@ const HitsTableContainer = () => {
     return (
         <section className="grid-section results-table">
             <div className="table-container flex-table-parent">
-                <TableAdvanced data={hitResultToItem(hits)} columns={columns} pageSize={17}/>
+                <HitsTable data={hitResultToItem(hits)} columns={columns} rowsPerPage={17}/>
             </div>
         </section>
     );

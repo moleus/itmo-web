@@ -1,5 +1,5 @@
 import {Column} from '@jetbrains/ring-ui/dist/table/header-cell';
-import {HitResultItem} from "./TableAdvanced";
+import {HitResultItem} from "../body/HitsTable";
 
 export const columns: Column<HitResultItem>[] = [
     {

@@ -1,13 +1,13 @@
 import React from 'react';
-import TableAdvanced from "./TableAdvanced";
+import HitsTable from "./HitsTable";
 import '@testing-library/cypress/add-commands';
 
-import {columns} from "./columns";
-import {getRandomHits} from "../../../../cypress/support/util";
+import {columns} from "../data/columns";
+import {getRandomHits} from "../../../../../cypress/support/util";
 
-import './HitsTable.scss'
+import '../container/hitsTableContainer.scss'
 import '@jetbrains/ring-ui/dist/style.css';
-import {range} from "../../util/Util";
+import {range} from "../../../util/Util";
 
 const ELEMENTS_COUNT = 30;
 const PAGE_SIZE = 5
@@ -32,16 +32,16 @@ describe('Sortable hits table', function () {
         cy.viewport(720, 720);
     })
     it('mounts', () => {
-        cy.mount(<TableAdvanced columns={columns} data={manyHits} pageSize={17}/>)
+        cy.mount(<HitsTable columns={columns} data={manyHits} rowsPerPage={17}/>)
     })
 
     it('shows only single page rows', () => {
-        cy.mount(<TableAdvanced columns={columns} data={manyHits} pageSize={PAGE_SIZE}/>)
+        cy.mount(<HitsTable columns={columns} data={manyHits} rowsPerPage={PAGE_SIZE}/>)
         cy.get('[data-test=ring-table-body]').find("tr").should("have.length", PAGE_SIZE);
     })
 
     it('sorts data on click', () => {
-        cy.mount(<TableAdvanced columns={columns} data={manyHits} pageSize={PAGE_SIZE}/>)
+        cy.mount(<HitsTable columns={columns} data={manyHits} rowsPerPage={PAGE_SIZE}/>)
         // sorted by id
         cy.get('[data-test=ring-table-body]').find("tr").should("have.length", PAGE_SIZE);
         getColumn("id")
@@ -65,7 +65,7 @@ describe('Sortable hits table', function () {
     })
 
     it('switch pages', () => {
-        cy.mount(<TableAdvanced columns={columns} data={manyHits} pageSize={PAGE_SIZE}/>).then(({rerender}) => {
+        cy.mount(<HitsTable columns={columns} data={manyHits} rowsPerPage={PAGE_SIZE}/>).then(({rerender}) => {
             cy.findByText("Next page").click();
             getColumn("id")
                 .then((values) => {
@@ -74,7 +74,7 @@ describe('Sortable hits table', function () {
                 })
                 .then(() => {
                     cy.log("Clear table data and re-render");
-                    rerender(<TableAdvanced columns={columns} data={singleHit} pageSize={PAGE_SIZE}/>)
+                    rerender(<HitsTable columns={columns} data={singleHit} rowsPerPage={PAGE_SIZE}/>)
                     cy.get('[data-test=ring-table-body]').find("tr").should("have.length", 1);
                 })
         })
