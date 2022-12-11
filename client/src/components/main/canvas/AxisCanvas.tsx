@@ -8,7 +8,6 @@ import {IndexedPoint} from "./util/types/canvasPoint";
 interface AxisCanvasProps {
     sizePx: number,
     pxPerUnit: number,
-    scaleRadius: number,
     points: IndexedPoint[];
     onClick: React.MouseEventHandler<SVGSVGElement>,
 }

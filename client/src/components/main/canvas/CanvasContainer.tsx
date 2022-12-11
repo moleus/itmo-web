@@ -33,7 +33,7 @@ const CanvasContainer = () => {
 
     return (
         <section className="grid-section" id="canvas-container">
-            <AxisCanvas data-test-id="axis-canvas" onClick={handleClick} sizePx={SIZE} scaleRadius={scaleRadius} points={convertPoints()} pxPerUnit={scaledPxPerUnit()}/>
+            <AxisCanvas data-test-id="axis-canvas" onClick={handleClick} sizePx={SIZE} points={convertPoints()} pxPerUnit={scaledPxPerUnit()}/>
         </section>
     )
 }
