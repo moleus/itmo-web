@@ -9,6 +9,7 @@ export const userAPI = emptyApi.injectEndpoints({
                 method: 'POST',
                 body: post
             }),
+            invalidatesTags: ['Hits']
         }),
         registerUser: build.mutation<Username, User>({
             query: (post) => ({
@@ -16,13 +17,13 @@ export const userAPI = emptyApi.injectEndpoints({
                 method: 'POST',
                 body: post
             }),
+            invalidatesTags: ['Hits']
         }),
         logoutUser: build.mutation<void, void>({
             query: () => ({
                 url: `user/logout`,
                 method: 'HEAD',
             }),
-            invalidatesTags: ['Hits'],
         })
     })
 })
