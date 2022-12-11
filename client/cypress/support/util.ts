@@ -16,3 +16,7 @@ export const createRandomHit = (id: number) => {
 export const getRandomHits = (count: number): HitResult[] => {
     return Array.from({length: count}).map((_, i) => createRandomHit(i));
 }
+
+export const getRandomName = (): string => {
+   return "test_" + Math.floor(Math.random() * 100000).toString()
+}

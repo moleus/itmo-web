@@ -1,5 +1,5 @@
 import '@testing-library/cypress/add-commands';
-import {faker} from '@faker-js/faker';
+import {getRandomName} from "../support/util";
 
 const submitCredentials = (username: string, password: string, buttonId: string) => {
     cy.getByTestId('username-input').clear()
@@ -33,7 +33,7 @@ const addPointOnCanvas = () => {
 
 describe('authentication process', function () {
     it('should fail login with invalid credentials', function () {
-        const newUsername = faker.datatype.string(10);
+        const newUsername = getRandomName();
 
         cy.visit("/");
         shouldBeLoginUrl()
@@ -44,7 +44,7 @@ describe('authentication process', function () {
     });
 
     it('should register add hit and logout', function () {
-        const newUsername = "test_" + faker.datatype.string(10);
+        const newUsername = getRandomName();
         const password = "defaultPassword";
 
         cy.disableSameSiteCookieRestrictions();
